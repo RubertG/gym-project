@@ -29,6 +29,10 @@
 - **Prettier Plugin Tailwind**: `prettier-plugin-tailwindcss` ordena automáticamente las clases de Tailwind en archivos Astro y React.
 - **Tailwind v4 Fix**: Se importó `global.css` en `Layout.astro` para que los estilos se carguen correctamente en todas las páginas.
 - **ESLint Plugin Tailwind**: Desactivado temporalmente. `eslint-plugin-tailwindcss` no soporta Tailwind v4 CSS-first config todavía (seguimiento: https://github.com/francoismassart/eslint-plugin-tailwindcss/issues/272).
+- **View Transitions**: Implementado `<ClientRouter />` de `astro:transitions` en `Layout.astro` para transiciones suaves entre páginas.
+- **Cursor Pointer**: Añadido `cursor: pointer` a `.btn-primary` y `.btn-secondary` en `global.css`.
+- **Rutas de Design System**: Creadas `/design-system` (paleta) y `/design-system/components` (componentes).
+- **Landing Invertida**: Nueva página `index.astro` con sección hero de fondo `primary-300` y texto oscuro invertido.
 
 ## Notas
 
@@ -52,7 +56,9 @@
 - `src/lib/stores/workoutStore.ts` — Store Zustand base para la sesión de entreno activa.
 - `src/styles/global.css` — Tokens Tailwind v4 (`@theme`) + componentes base (`@layer components`).
 - `tailwind.config.mjs` — Configuración legacy compatible (no interfiere con v4).
-- `src/pages/index.astro` — Página demo que renderiza los tokens de diseño.
+- `src/pages/index.astro` — Landing page con sección primary invertida.
+- `src/pages/design-system/index.astro` — Paleta completa de colores y tipografía.
+- `src/pages/design-system/components.astro` — Showcase de componentes base.
 - `src/components/ui/Button.tsx` — Componente Button reutilizable (React).
 - `src/components/ui/Input.tsx` — Componente Input reutilizable (React).
 - `src/components/ui/GlowEffect.tsx` — Wrapper Glow Effect reutilizable (React).
