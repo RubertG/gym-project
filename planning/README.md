@@ -30,7 +30,8 @@
 - **Tailwind v4 Fix**: Se importó `global.css` en `Layout.astro` para que los estilos se carguen correctamente en todas las páginas.
 - **ESLint Plugin Tailwind**: Desactivado temporalmente. `eslint-plugin-tailwindcss` no soporta Tailwind v4 CSS-first config todavía (seguimiento: https://github.com/francoismassart/eslint-plugin-tailwindcss/issues/272).
 - **View Transitions**: Implementado `<ClientRouter />` de `astro:transitions` en `Layout.astro` para transiciones suaves entre páginas.
-- **Cursor Pointer**: Añadido `cursor: pointer` a `.btn-primary` y `.btn-secondary` en `global.css`.
+- **Cursor Pointer**: `cursor-pointer` vive en el componente `<Button />` (React), no en CSS global. Toda clase de componente va dentro del componente.
+- **Prettier TabWidth**: Cambiado a `tabWidth: 4` para todo el proyecto.
 - **Rutas de Design System**: Creadas `/design-system` (paleta) y `/design-system/components` (componentes).
 - **Landing Invertida**: Nueva página `index.astro` con sección hero de fondo `primary-300` y texto oscuro invertido.
 
