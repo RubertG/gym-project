@@ -26,6 +26,24 @@ export default [
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
+      'keyword-spacing': [
+        'error',
+        {
+          before: true,
+          after: true,
+          overrides: {
+            if: { before: true, after: true },
+            return: { before: true, after: true },
+            else: { before: true, after: true },
+            while: { before: true, after: true },
+            for: { before: true, after: true },
+            switch: { before: true, after: true },
+            catch: { before: true, after: true },
+          },
+        },
+      ],
+      'space-before-blocks': ['error', 'always'],
+      'block-spacing': ['error', 'always'],
     },
   },
   {
