@@ -22,6 +22,12 @@
 - [x] Zustand está instalado y el store base compila sin errores.
 - [x] El SDK de R2 está instalado pero sin configuración activa todavía.
 
+## Mejoras Post-Completada
+
+- **ESLint Flat Config**: Migrado de `.eslintrc.cjs` a `eslint.config.mjs` para compatibilidad con ESLint v10.
+- **Reglas de Espaciado**: Añadidas reglas `keyword-spacing` y `space-before-blocks` para forzar espacios antes de `if`, `return`, y bloques `{}`.
+- **Prettier Plugin Tailwind**: `prettier-plugin-tailwindcss` ordena automáticamente las clases de Tailwind en archivos Astro y React.
+
 ## Notas
 
 - Cloudflare R2 es la fuente de verdad para imágenes (no Supabase Storage).
