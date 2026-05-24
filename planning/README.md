@@ -25,8 +25,10 @@
 ## Mejoras Post-Completada
 
 - **ESLint Flat Config**: Migrado de `.eslintrc.cjs` a `eslint.config.mjs` para compatibilidad con ESLint v10.
-- **Reglas de Espaciado**: Añadidas reglas `keyword-spacing` y `space-before-blocks` para forzar espacios antes de `if`, `return`, y bloques `{}`.
+- **Reglas de Espaciado**: Añadidas reglas `@stylistic/padding-line-between-statements` para forzar líneas en blanco antes de `if`, `return`, `for`, etc.
 - **Prettier Plugin Tailwind**: `prettier-plugin-tailwindcss` ordena automáticamente las clases de Tailwind en archivos Astro y React.
+- **Tailwind v4 Fix**: Se importó `global.css` en `Layout.astro` para que los estilos se carguen correctamente en todas las páginas.
+- **ESLint Plugin Tailwind**: Desactivado temporalmente. `eslint-plugin-tailwindcss` no soporta Tailwind v4 CSS-first config todavía (seguimiento: https://github.com/francoismassart/eslint-plugin-tailwindcss/issues/272).
 
 ## Notas
 
