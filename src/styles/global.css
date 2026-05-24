@@ -44,12 +44,19 @@
   --spacing-18: 4.5rem;
   --spacing-22: 5.5rem;
   --spacing-30: 7.5rem;
+
+  /* Word colors - text readability scale */
+  --color-word-50: #f7f7f7;
+  --color-word-100: #e5e5e5;
+  --color-word-200: #cccccc;
+  --color-word-300: #999999;
+  --color-word-400: #666666;
 }
 
 @layer base {
   body {
     background-color: var(--color-background-900);
-    color: #ffffff;
+    color: var(--color-word-100);
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
