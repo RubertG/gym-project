@@ -12,6 +12,7 @@ export class AppError extends Error {
         constructor: new (...args: unknown[]) => unknown
       ) => void;
     };
+
     if (typeof ErrorConstructor.captureStackTrace === 'function') {
       ErrorConstructor.captureStackTrace(this, this.constructor);
     }

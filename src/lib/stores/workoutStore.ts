@@ -36,6 +36,7 @@ export const useWorkoutStore = create<WorkoutState>((set) => ({
     set((state) => {
       const exercises = [...state.activeExercises];
       const idx = exercises.findIndex((e) => e.exerciseId === exerciseId);
+
       if (idx >= 0) {
         exercises[idx] = {
           ...exercises[idx],
