@@ -95,10 +95,10 @@ High-emphasis action button.
 
 ```css
 .btn-primary {
-  @apply bg-primary-400 border-primary-400 border-2 px-6 py-3 font-bold text-black transition-all duration-200;
+    @apply bg-primary-400 border-primary-400 border-2 px-6 py-3 font-bold text-black transition-all duration-200;
 }
 .btn-primary:hover {
-  @apply bg-primary-300;
+    @apply bg-primary-300;
 }
 ```
 
@@ -108,10 +108,10 @@ Low-emphasis action button.
 
 ```css
 .btn-secondary {
-  @apply text-secondary-200 border-secondary-400 border-2 bg-transparent px-6 py-3 font-bold transition-all duration-200;
+    @apply text-secondary-200 border-secondary-400 border-2 bg-transparent px-6 py-3 font-bold transition-all duration-200;
 }
 .btn-secondary:hover {
-  @apply bg-secondary-400 text-black;
+    @apply bg-secondary-400 text-black;
 }
 ```
 
@@ -121,7 +121,7 @@ Standard text input.
 
 ```css
 .input-field {
-  @apply bg-background-800 border-secondary-700 focus:border-primary-400 w-full border-2 px-4 py-3 text-white transition-colors focus:outline-none;
+    @apply bg-background-800 border-secondary-700 focus:border-primary-400 w-full border-2 px-4 py-3 text-white transition-colors focus:outline-none;
 }
 ```
 
@@ -131,7 +131,7 @@ Glass-morphism card surface.
 
 ```css
 .card-glass {
-  @apply bg-background-800/80 border-primary-400/20 border backdrop-blur-md;
+    @apply bg-background-800/80 border-primary-400/20 border backdrop-blur-md;
 }
 ```
 
@@ -141,7 +141,7 @@ Subtle neon glow effect.
 
 ```css
 .glow-primary {
-  box-shadow: 0 0 25px rgba(204, 255, 0, 0.3);
+    box-shadow: 0 0 25px rgba(204, 255, 0, 0.3);
 }
 ```
 
@@ -151,18 +151,18 @@ Entrance animation.
 
 ```css
 .animate-fade-in-up {
-  animation: fadeInUp 0.5s ease-out forwards;
+    animation: fadeInUp 0.5s ease-out forwards;
 }
 
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 ```
 

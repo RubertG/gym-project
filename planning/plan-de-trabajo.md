@@ -21,9 +21,9 @@
 ### Tarea 2: Configuración del Sistema de Diseño (Voltage Industrial)
 
 - [ ] Configurar `tailwind.config` con la paleta de colores custom del proyecto:
-  - `primary`: Escala 50-950 (base `#CCFF00` / `#abd600`).
-  - `secondary`: Escala 50-950 (base grises cálidos / `#c8c6c5`).
-  - `background`: Escala 50-950 (base `#131313` / `#000000`).
+    - `primary`: Escala 50-950 (base `#CCFF00` / `#abd600`).
+    - `secondary`: Escala 50-950 (base grises cálidos / `#c8c6c5`).
+    - `background`: Escala 50-950 (base `#131313` / `#000000`).
 - [ ] Configurar fuentes tipográficas: `Space Grotesk`, `Inter`/`Geist`, `JetBrains Mono`.
 - [ ] Definir tokens de spacing custom (8px grid, gutters responsive móvil/desktop).
 - [ ] Crear componentes base reutilizables con Tailwind (`@layer components`): botones, inputs, cards glass, chips.
@@ -56,26 +56,26 @@
 
 - [ ] Documentar el propósito del arnés: acelerar desarrollo por módulos, mantener consistencia arquitectónica, reducir errores.
 - [ ] Definir los 4 agentes principales y sus responsabilidades:
-  - **Planificador:** Descompone módulos grandes en tareas pequeñas y las documenta en archivos MD individuales dentro de `planning/modules/`.
-  - **Implementador:** Genera código de módulos específicos siguiendo lineamientos de arquitectura en capas.
-  - **Reviewer:** Revisa código contra requerimientos, estándares de código y arquitectura en capas.
-  - **Investigador:** Busca patrones, librerías y soluciones para problemas técnicos emergentes.
+    - **Planificador:** Descompone módulos grandes en tareas pequeñas y las documenta en archivos MD individuales dentro de `planning/modules/`.
+    - **Implementador:** Genera código de módulos específicos siguiendo lineamientos de arquitectura en capas.
+    - **Reviewer:** Revisa código contra requerimientos, estándares de código y arquitectura en capas.
+    - **Investigador:** Busca patrones, librerías y soluciones para problemas técnicos emergentes.
 - [ ] Definir lineamientos de prompts: contexto esperado (archivos de planning a incluir), formato de salida (código + tests + documentación), reglas de no-overengineering.
 - [ ] Documentar todo en `planning/ai-harness.md`.
 
 ### Tarea 6: Diseño de skills necesarias
 
 - [ ] Definir catálogo de skills a crear (a nivel diseño/prompts, no implementación técnica todavía):
-  - `skill-astro-api-routes`: Generación de endpoints REST siguiendo la arquitectura en capas.
-  - `skill-react-islands`: Creación de componentes React interactivos con Zustand.
-  - `skill-supabase-schema`: Validación y evolución del schema PostgreSQL.
-  - `skill-testing-backend`: Generación de tests para endpoints e inputs críticos.
+    - `skill-astro-api-routes`: Generación de endpoints REST siguiendo la arquitectura en capas.
+    - `skill-react-islands`: Creación de componentes React interactivos con Zustand.
+    - `skill-supabase-schema`: Validación y evolución del schema PostgreSQL.
+    - `skill-testing-backend`: Generación de tests para endpoints e inputs críticos.
 - [ ] Definir para cada skill: entrada esperada, salida esperada, restricciones y contexto obligatorio.
 - [ ] Definir flujo de trabajo módulo por módulo:
-  1. Planificador genera el MD de tareas del módulo.
-  2. Implementador ejecuta las tareas una por una.
-  3. Reviewer valida el código generado.
-  4. Investigador resuelve bloqueos técnicos emergentes.
+    1. Planificador genera el MD de tareas del módulo.
+    2. Implementador ejecuta las tareas una por una.
+    3. Reviewer valida el código generado.
+    4. Investigador resuelve bloqueos técnicos emergentes.
 - [ ] Documentar flujos en `planning/ai-workflows.md`.
 
 ---
@@ -92,9 +92,9 @@
       `profiles`, `exercises`, `routines`, `routine_days`, `routine_exercises`, `user_active_routine_log`, `workout_sessions`, `workout_sets`, `routine_likes`.
 - [ ] Implementar constraints: PKs, FKs, partial unique index en `routines(user_id, is_active) WHERE is_active = true`, índice funcional `LOWER(name)` en `exercises`.
 - [ ] Implementar triggers PostgreSQL:
-  - Auto-creación de `profile` tras registro en `auth.users`.
-  - Actualización atómica de `routines.likes_count` al insertar/borrar en `routine_likes`.
-  - Cierre de `user_active_routine_log` anterior al activar una nueva rutina.
+    - Auto-creación de `profile` tras registro en `auth.users`.
+    - Actualización atómica de `routines.likes_count` al insertar/borrar en `routine_likes`.
+    - Cierre de `user_active_routine_log` anterior al activar una nueva rutina.
 - [ ] Configurar RLS policies en todas las tablas protegidas (`routines`, `workout_sessions`, `workout_sets`, `profiles`, `user_active_routine_log`).
 - [ ] Crear seed data: **30+ ejercicios preestablecidos** y **2-3 rutinas de ejemplo** listas para usar.
 - [ ] Documentar schema, índices y triggers en `planning/database-schema.md`.
@@ -128,11 +128,11 @@
 
 - [ ] Configurar framework de testing backend (Vitest para lógica de negocio; estrategia de test DB o mocks para Supabase).
 - [ ] Implementar tests para:
-  - **Reglas de RLS:** usuarios no pueden ver/modificar datos de otros usuarios.
-  - **Endpoints de autenticación:** registro, login, logout, protección de rutas.
-  - **Endpoints de rutinas:** soft delete, activación única, duplicación, cambio de rutina activa.
-  - **Endpoints de entrenos:** batch de sets, fecha editable, transición draft → completed.
-  - **Inputs críticos:** validación de peso/reps (números positivos), sanitización de nombres, prevención de XSS en notas.
+    - **Reglas de RLS:** usuarios no pueden ver/modificar datos de otros usuarios.
+    - **Endpoints de autenticación:** registro, login, logout, protección de rutas.
+    - **Endpoints de rutinas:** soft delete, activación única, duplicación, cambio de rutina activa.
+    - **Endpoints de entrenos:** batch de sets, fecha editable, transición draft → completed.
+    - **Inputs críticos:** validación de peso/reps (números positivos), sanitización de nombres, prevención de XSS en notas.
 - [ ] Integrar tests en el pipeline de Husky (ejecutar en `pre-push` de forma opcional o obligatoria según velocidad).
 - [ ] Documentar estrategia de testing, cobertura esperada y cómo ejecutarlos en `planning/testing-strategy.md`.
 

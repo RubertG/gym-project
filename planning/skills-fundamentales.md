@@ -75,9 +75,9 @@
 - Consultas con JOINs para obtener una rutina completa con sus días y ejercicios en una sola petición (o mediante funciones RPC).
 - Uso de Foreign Keys, Constraints, Partial Unique Indexes y Triggers para mantener la integridad referencial.
 - Triggers necesarios:
-  - Auto-creación de `profile` tras registro en `auth.users`.
-  - Actualización atómica de `likes_count`.
-  - Cierre de log de rutina activa al cambiar de rutina.
+    - Auto-creación de `profile` tras registro en `auth.users`.
+    - Actualización atómica de `likes_count`.
+    - Cierre de log de rutina activa al cambiar de rutina.
 
 **Recursos clave:**
 
@@ -129,11 +129,11 @@
 **Aplicación en el proyecto:**
 
 - Configurar `tailwind.config` con:
-  - Paleta `primary`: 50-950 (base `#CCFF00`).
-  - Paleta `secondary`: 50-950 (base `#c8c6c5`).
-  - Paleta `background`: 50-950 (base `#131313`).
-  - Familias tipográficas: `Space Grotesk`, `Inter`, `JetBrains Mono`.
-  - Spacing custom (8px grid, gutters, móvil/desktop).
+    - Paleta `primary`: 50-950 (base `#CCFF00`).
+    - Paleta `secondary`: 50-950 (base `#c8c6c5`).
+    - Paleta `background`: 50-950 (base `#131313`).
+    - Familias tipográficas: `Space Grotesk`, `Inter`, `JetBrains Mono`.
+    - Spacing custom (8px grid, gutters, móvil/desktop).
 - Usar `@apply` o componentes reutilizables para botones, inputs, cards, chips.
 - Implementar glass cards, glow effects y animaciones (`fade-in-up`) con Tailwind + CSS puro.
 

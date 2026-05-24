@@ -33,8 +33,8 @@ Aplicación web para seguimiento de entrenamiento en gimnasio, con enfoque en la
 - Una **Rutina** es una plantilla configurable por el usuario.
 - El **calendario natural tiene 7 días** (Lunes a Domingo), pero la rutina solo existirá en los días que el usuario configure.
 - Cada día configurado puede tener:
-  - Un **nombre personalizado** asignado por el usuario (ej: "Día de Pierna", "Push", "Pull").
-  - Una lista ordenada de ejercicios (con series sugeridas, reps sugeridas, notas).
+    - Un **nombre personalizado** asignado por el usuario (ej: "Día de Pierna", "Push", "Pull").
+    - Una lista ordenada de ejercicios (con series sugeridas, reps sugeridas, notas).
 - Los días sin ejercicios se consideran **descanso**.
 - El usuario puede tener **múltiples rutinas**.
 - El usuario tiene **una Rutina Activa** a la vez.
@@ -55,10 +55,10 @@ Aplicación web para seguimiento de entrenamiento en gimnasio, con enfoque en la
 - La fecha del entreno (`session_date`) es editable por el usuario al crear la sesión (permite registro retroactivo).
 - **Guardado por ejercicio completado (batch):** Cuando el usuario finaliza un ejercicio, se envían **todas sus series de golpe** en una sola petición.
 - Cada serie tiene inputs estructurados:
-  - Número de serie.
-  - Repeticiones realizadas.
-  - Peso efectivo utilizado (kg).
-  - **Nota opcional por serie**.
+    - Número de serie.
+    - Repeticiones realizadas.
+    - Peso efectivo utilizado (kg).
+    - **Nota opcional por serie**.
 - Un mismo ejercicio **no se repite dos veces en el mismo día**. Varias tandas se registran como series adicionales.
 - **Nota opcional** por sesión de entrenamiento (texto libre).
 - Al finalizar todos los ejercicios del día, el usuario marca la sesión como **`completed`**. Una vez completada, la sesión ya no es editable.
@@ -74,8 +74,8 @@ Aplicación web para seguimiento de entrenamiento en gimnasio, con enfoque en la
 
 - El historial es **por ejercicio**, global para el usuario. **No depende de la rutina**.
 - El usuario puede ver:
-  - **Vista Gráfica**: evolución del peso y/o repeticiones en el tiempo.
-  - **Vista Log/Detalle**: registro detallado por día y sesión (series, reps, peso, notas).
+    - **Vista Gráfica**: evolución del peso y/o repeticiones en el tiempo.
+    - **Vista Log/Detalle**: registro detallado por día y sesión (series, reps, peso, notas).
 - Filtros por rango de fechas y por ejercicio.
 - Métricas calculadas sobre `workout_sets`: peso máximo, volumen total (sets × reps × peso), PRs automáticos.
 
@@ -84,13 +84,13 @@ Aplicación web para seguimiento de entrenamiento en gimnasio, con enfoque en la
 - El usuario dispone de una **vista calendario** para visualizar sus días de entreno.
 - El calendario consulta el historial de rutinas activas (`user_active_routine_log`) para saber qué rutina debía seguirse cada día.
 - Comparando los días programados de la rutina activa histórica contra las `workout_sessions` existentes, el sistema identifica:
-  - **Días completados** (sesión registrada).
-  - **Inasistencias** (día programado con ejercicios, pero sin sesión).
-  - **Descanso** (día programado sin ejercicios).
+    - **Días completados** (sesión registrada).
+    - **Inasistencias** (día programado con ejercicios, pero sin sesión).
+    - **Descanso** (día programado sin ejercicios).
 - El usuario puede clicar cualquier día del calendario para:
-  - Ver la sesión existente.
-  - Editar una sesión en estado `draft`.
-  - Crear una sesión retroactiva.
+    - Ver la sesión existente.
+    - Editar una sesión en estado `draft`.
+    - Crear una sesión retroactiva.
 
 ### RF-08 — Autenticación y Roles
 
@@ -350,12 +350,12 @@ Estas funcionalidades están identificadas y la base de datos está preparada pa
 - **Supabase Storage:** Bucket para imágenes de ejercicios. Políticas públicas de lectura, escritura solo para usuarios autenticados.
 - **RLS:** Crítico en `routines`, `workout_sessions`, `workout_sets`, `profiles`, `user_active_routine_log`. La tabla `exercises` (approved) es de lectura pública; escritura solo autenticados con restricciones de propiedad/admin.
 - **Triggers PostgreSQL:**
-  - Auto-creación de `profile` tras registro en `auth.users`.
-  - Actualización atómica de `routines.likes_count` al insertar/borrar en `routine_likes`.
-  - Cierre de `user_active_routine_log` anterior al activar una nueva rutina.
+    - Auto-creación de `profile` tras registro en `auth.users`.
+    - Actualización atómica de `routines.likes_count` al insertar/borrar en `routine_likes`.
+    - Cierre de `user_active_routine_log` anterior al activar una nueva rutina.
 - **Índices clave:**
-  - `LOWER(name)` único en `exercises`.
-  - Partial unique index en `routines(user_id, is_active) WHERE is_active = true`.
+    - `LOWER(name)` único en `exercises`.
+    - Partial unique index en `routines(user_id, is_active) WHERE is_active = true`.
 
 ---
 

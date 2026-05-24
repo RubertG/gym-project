@@ -1,3 +1,3 @@
 {
-  "plugin": ["@warp-dot-dev/opencode-warp"]
+    "plugin": ["@warp-dot-dev/opencode-warp"]
 }

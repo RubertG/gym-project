@@ -1,109 +1,109 @@
 ---
 name: Voltage Industrial
 colors:
-  surface: '#131313'
-  surface-dim: '#131313'
-  surface-bright: '#393939'
-  surface-container-lowest: '#0e0e0e'
-  surface-container-low: '#1b1b1b'
-  surface-container: '#1f1f1f'
-  surface-container-high: '#2a2a2a'
-  surface-container-highest: '#353535'
-  on-surface: '#e2e2e2'
-  on-surface-variant: '#c4c9ac'
-  inverse-surface: '#e2e2e2'
-  inverse-on-surface: '#303030'
-  outline: '#8e9379'
-  outline-variant: '#444933'
-  surface-tint: '#abd600'
-  primary: '#ffffff'
-  on-primary: '#283500'
-  primary-container: '#c3f400'
-  on-primary-container: '#556d00'
-  inverse-primary: '#506600'
-  secondary: '#c8c6c5'
-  on-secondary: '#313030'
-  secondary-container: '#474746'
-  on-secondary-container: '#b7b5b4'
-  tertiary: '#ffffff'
-  on-tertiary: '#303030'
-  tertiary-container: '#e4e2e1'
-  on-tertiary-container: '#656464'
-  error: '#ffb4ab'
-  on-error: '#690005'
-  error-container: '#93000a'
-  on-error-container: '#ffdad6'
-  primary-fixed: '#c3f400'
-  primary-fixed-dim: '#abd600'
-  on-primary-fixed: '#161e00'
-  on-primary-fixed-variant: '#3c4d00'
-  secondary-fixed: '#e5e2e1'
-  secondary-fixed-dim: '#c8c6c5'
-  on-secondary-fixed: '#1c1b1b'
-  on-secondary-fixed-variant: '#474746'
-  tertiary-fixed: '#e4e2e1'
-  tertiary-fixed-dim: '#c8c6c6'
-  on-tertiary-fixed: '#1b1c1c'
-  on-tertiary-fixed-variant: '#474747'
-  background: '#131313'
-  on-background: '#e2e2e2'
-  surface-variant: '#353535'
+    surface: '#131313'
+    surface-dim: '#131313'
+    surface-bright: '#393939'
+    surface-container-lowest: '#0e0e0e'
+    surface-container-low: '#1b1b1b'
+    surface-container: '#1f1f1f'
+    surface-container-high: '#2a2a2a'
+    surface-container-highest: '#353535'
+    on-surface: '#e2e2e2'
+    on-surface-variant: '#c4c9ac'
+    inverse-surface: '#e2e2e2'
+    inverse-on-surface: '#303030'
+    outline: '#8e9379'
+    outline-variant: '#444933'
+    surface-tint: '#abd600'
+    primary: '#ffffff'
+    on-primary: '#283500'
+    primary-container: '#c3f400'
+    on-primary-container: '#556d00'
+    inverse-primary: '#506600'
+    secondary: '#c8c6c5'
+    on-secondary: '#313030'
+    secondary-container: '#474746'
+    on-secondary-container: '#b7b5b4'
+    tertiary: '#ffffff'
+    on-tertiary: '#303030'
+    tertiary-container: '#e4e2e1'
+    on-tertiary-container: '#656464'
+    error: '#ffb4ab'
+    on-error: '#690005'
+    error-container: '#93000a'
+    on-error-container: '#ffdad6'
+    primary-fixed: '#c3f400'
+    primary-fixed-dim: '#abd600'
+    on-primary-fixed: '#161e00'
+    on-primary-fixed-variant: '#3c4d00'
+    secondary-fixed: '#e5e2e1'
+    secondary-fixed-dim: '#c8c6c5'
+    on-secondary-fixed: '#1c1b1b'
+    on-secondary-fixed-variant: '#474746'
+    tertiary-fixed: '#e4e2e1'
+    tertiary-fixed-dim: '#c8c6c6'
+    on-tertiary-fixed: '#1b1c1c'
+    on-tertiary-fixed-variant: '#474747'
+    background: '#131313'
+    on-background: '#e2e2e2'
+    surface-variant: '#353535'
 typography:
-  headline-xl:
-    fontFamily: Space Grotesk
-    fontSize: 64px
-    fontWeight: '700'
-    lineHeight: '1.1'
-    letterSpacing: -0.04em
-  headline-lg:
-    fontFamily: Space Grotesk
-    fontSize: 40px
-    fontWeight: '700'
-    lineHeight: '1.2'
-    letterSpacing: -0.02em
-  headline-lg-mobile:
-    fontFamily: Space Grotesk
-    fontSize: 32px
-    fontWeight: '700'
-    lineHeight: '1.2'
-    letterSpacing: -0.02em
-  headline-md:
-    fontFamily: Space Grotesk
-    fontSize: 24px
-    fontWeight: '600'
-    lineHeight: '1.3'
-  body-lg:
-    fontFamily: Geist
-    fontSize: 18px
-    fontWeight: '400'
-    lineHeight: '1.6'
-  body-md:
-    fontFamily: Geist
-    fontSize: 16px
-    fontWeight: '400'
-    lineHeight: '1.6'
-  label-md:
-    fontFamily: JetBrains Mono
-    fontSize: 14px
-    fontWeight: '500'
-    lineHeight: '1.4'
-  label-sm:
-    fontFamily: JetBrains Mono
-    fontSize: 12px
-    fontWeight: '500'
-    lineHeight: '1.4'
-  code:
-    fontFamily: JetBrains Mono
-    fontSize: 14px
-    fontWeight: '400'
-    lineHeight: '1.5'
+    headline-xl:
+        fontFamily: Space Grotesk
+        fontSize: 64px
+        fontWeight: '700'
+        lineHeight: '1.1'
+        letterSpacing: -0.04em
+    headline-lg:
+        fontFamily: Space Grotesk
+        fontSize: 40px
+        fontWeight: '700'
+        lineHeight: '1.2'
+        letterSpacing: -0.02em
+    headline-lg-mobile:
+        fontFamily: Space Grotesk
+        fontSize: 32px
+        fontWeight: '700'
+        lineHeight: '1.2'
+        letterSpacing: -0.02em
+    headline-md:
+        fontFamily: Space Grotesk
+        fontSize: 24px
+        fontWeight: '600'
+        lineHeight: '1.3'
+    body-lg:
+        fontFamily: Geist
+        fontSize: 18px
+        fontWeight: '400'
+        lineHeight: '1.6'
+    body-md:
+        fontFamily: Geist
+        fontSize: 16px
+        fontWeight: '400'
+        lineHeight: '1.6'
+    label-md:
+        fontFamily: JetBrains Mono
+        fontSize: 14px
+        fontWeight: '500'
+        lineHeight: '1.4'
+    label-sm:
+        fontFamily: JetBrains Mono
+        fontSize: 12px
+        fontWeight: '500'
+        lineHeight: '1.4'
+    code:
+        fontFamily: JetBrains Mono
+        fontSize: 14px
+        fontWeight: '400'
+        lineHeight: '1.5'
 spacing:
-  base: 4px
-  unit: 8px
-  gutter: 24px
-  margin-mobile: 16px
-  margin-desktop: 48px
-  container-max: 1440px
+    base: 4px
+    unit: 8px
+    gutter: 24px
+    margin-mobile: 16px
+    margin-desktop: 48px
+    container-max: 1440px
 ---
 
 ## Brand & Style

@@ -2,299 +2,317 @@
 import Layout from '../../layouts/Layout.astro';
 
 const primaryScale = [
-  { label: '50', class: 'bg-primary-50', text: 'text-black' },
-  { label: '100', class: 'bg-primary-100', text: 'text-black' },
-  { label: '200', class: 'bg-primary-200', text: 'text-black' },
-  { label: '300', class: 'bg-primary-300', text: 'text-black' },
-  { label: '400', class: 'bg-primary-400', text: 'text-black' },
-  { label: '500', class: 'bg-primary-500', text: 'text-black' },
-  { label: '600', class: 'bg-primary-600', text: 'text-white' },
-  { label: '700', class: 'bg-primary-700', text: 'text-white' },
-  { label: '800', class: 'bg-primary-800', text: 'text-white' },
-  { label: '900', class: 'bg-primary-900', text: 'text-white' },
-  { label: '950', class: 'bg-primary-950', text: 'text-white' },
+    { label: '50', class: 'bg-primary-50', text: 'text-black' },
+    { label: '100', class: 'bg-primary-100', text: 'text-black' },
+    { label: '200', class: 'bg-primary-200', text: 'text-black' },
+    { label: '300', class: 'bg-primary-300', text: 'text-black' },
+    { label: '400', class: 'bg-primary-400', text: 'text-black' },
+    { label: '500', class: 'bg-primary-500', text: 'text-black' },
+    { label: '600', class: 'bg-primary-600', text: 'text-white' },
+    { label: '700', class: 'bg-primary-700', text: 'text-white' },
+    { label: '800', class: 'bg-primary-800', text: 'text-white' },
+    { label: '900', class: 'bg-primary-900', text: 'text-white' },
+    { label: '950', class: 'bg-primary-950', text: 'text-white' },
 ];
 
 const secondaryScale = [
-  { label: '50', class: 'bg-secondary-50', text: 'text-black' },
-  { label: '100', class: 'bg-secondary-100', text: 'text-black' },
-  { label: '200', class: 'bg-secondary-200', text: 'text-black' },
-  { label: '300', class: 'bg-secondary-300', text: 'text-black' },
-  { label: '400', class: 'bg-secondary-400', text: 'text-black' },
-  { label: '500', class: 'bg-secondary-500', text: 'text-white' },
-  { label: '600', class: 'bg-secondary-600', text: 'text-white' },
-  { label: '700', class: 'bg-secondary-700', text: 'text-white' },
-  { label: '800', class: 'bg-secondary-800', text: 'text-white' },
-  { label: '900', class: 'bg-secondary-900', text: 'text-white' },
-  { label: '950', class: 'bg-secondary-950', text: 'text-white' },
+    { label: '50', class: 'bg-secondary-50', text: 'text-black' },
+    { label: '100', class: 'bg-secondary-100', text: 'text-black' },
+    { label: '200', class: 'bg-secondary-200', text: 'text-black' },
+    { label: '300', class: 'bg-secondary-300', text: 'text-black' },
+    { label: '400', class: 'bg-secondary-400', text: 'text-black' },
+    { label: '500', class: 'bg-secondary-500', text: 'text-white' },
+    { label: '600', class: 'bg-secondary-600', text: 'text-white' },
+    { label: '700', class: 'bg-secondary-700', text: 'text-white' },
+    { label: '800', class: 'bg-secondary-800', text: 'text-white' },
+    { label: '900', class: 'bg-secondary-900', text: 'text-white' },
+    { label: '950', class: 'bg-secondary-950', text: 'text-white' },
 ];
 
 const backgroundScale = [
-  { label: '50', class: 'bg-background-50', text: 'text-white' },
-  { label: '100', class: 'bg-background-100', text: 'text-white' },
-  { label: '200', class: 'bg-background-200', text: 'text-white' },
-  { label: '300', class: 'bg-background-300', text: 'text-white' },
-  { label: '400', class: 'bg-background-400', text: 'text-white' },
-  { label: '500', class: 'bg-background-500', text: 'text-white' },
-  { label: '600', class: 'bg-background-600', text: 'text-white' },
-  { label: '700', class: 'bg-background-700', text: 'text-white' },
-  { label: '800', class: 'bg-background-800', text: 'text-white' },
-  { label: '900', class: 'bg-background-900', text: 'text-white' },
-  { label: '950', class: 'bg-background-950', text: 'text-white' },
+    { label: '50', class: 'bg-background-50', text: 'text-white' },
+    { label: '100', class: 'bg-background-100', text: 'text-white' },
+    { label: '200', class: 'bg-background-200', text: 'text-white' },
+    { label: '300', class: 'bg-background-300', text: 'text-white' },
+    { label: '400', class: 'bg-background-400', text: 'text-white' },
+    { label: '500', class: 'bg-background-500', text: 'text-white' },
+    { label: '600', class: 'bg-background-600', text: 'text-white' },
+    { label: '700', class: 'bg-background-700', text: 'text-white' },
+    { label: '800', class: 'bg-background-800', text: 'text-white' },
+    { label: '900', class: 'bg-background-900', text: 'text-white' },
+    { label: '950', class: 'bg-background-950', text: 'text-white' },
 ];
 
 const wordScale = [
-  { label: '50', class: 'text-word-50' },
-  { label: '100', class: 'text-word-100' },
-  { label: '200', class: 'text-word-200' },
-  { label: '300', class: 'text-word-300' },
-  { label: '400', class: 'text-word-400' },
+    { label: '50', class: 'text-word-50' },
+    { label: '100', class: 'text-word-100' },
+    { label: '200', class: 'text-word-200' },
+    { label: '300', class: 'text-word-300' },
+    { label: '400', class: 'text-word-400' },
 ];
 ---
 
 <Layout title="IRON TRACK - Design System Palette">
-  <main class="bg-background-900 min-h-screen p-8">
-    <!-- Nav -->
-    <nav class="border-secondary-800 mb-8 flex gap-4 border-b pb-4">
-      <a
-        href="/design-system"
-        class="text-primary-400 font-mono text-sm tracking-widest uppercase"
-      >
-        Palette
-      </a>
-      <a
-        href="/design-system/components"
-        class="text-word-400 hover:text-word-200 font-mono text-sm tracking-widest uppercase transition-colors"
-      >
-        Components
-      </a>
-    </nav>
+    <main class="bg-background-900 min-h-screen p-8">
+        <!-- Nav -->
+        <nav class="border-secondary-800 mb-8 flex gap-4 border-b pb-4">
+            <a
+                href="/design-system"
+                class="text-primary-400 font-mono text-sm tracking-widest uppercase"
+            >
+                Palette
+            </a>
+            <a
+                href="/design-system/components"
+                class="text-word-400 hover:text-word-200 font-mono text-sm tracking-widest uppercase transition-colors"
+            >
+                Components
+            </a>
+        </nav>
 
-    <!-- Header -->
-    <header class="animate-fade-in-up mb-12">
-      <h1
-        class="font-display text-primary-400 text-5xl font-bold tracking-tighter"
-      >
-        VOLTAGE INDUSTRIAL
-      </h1>
-      <p class="font-body text-word-200 mt-2 text-xl">
-        Design System Palette — IRON TRACK
-      </p>
-    </header>
-
-    <!-- Color Scales -->
-    <section class="animate-fade-in-up mb-16 space-y-12">
-      <!-- Primary -->
-      <div>
-        <h2
-          class="font-display text-primary-400 mb-4 text-2xl font-bold tracking-widest uppercase"
-        >
-          Primary Scale
-        </h2>
-        <div class="grid grid-cols-11 gap-2">
-          {
-            primaryScale.map((item) => (
-              <div class="flex flex-col items-center">
-                <div
-                  class={`${item.class} ${item.text} flex h-16 w-full items-center justify-center border border-white/10 font-mono text-sm font-bold`}
-                >
-                  {item.label}
-                </div>
-              </div>
-            ))
-          }
-        </div>
-      </div>
-
-      <!-- Secondary -->
-      <div>
-        <h2
-          class="font-display text-secondary-300 mb-4 text-2xl font-bold tracking-widest uppercase"
-        >
-          Secondary Scale
-        </h2>
-        <div class="grid grid-cols-11 gap-2">
-          {
-            secondaryScale.map((item) => (
-              <div class="flex flex-col items-center">
-                <div
-                  class={`${item.class} ${item.text} flex h-16 w-full items-center justify-center border border-white/10 font-mono text-sm font-bold`}
-                >
-                  {item.label}
-                </div>
-              </div>
-            ))
-          }
-        </div>
-      </div>
-
-      <!-- Background -->
-      <div>
-        <h2
-          class="font-display text-word-300 mb-4 text-2xl font-bold tracking-widest uppercase"
-        >
-          Background Scale
-        </h2>
-        <div class="grid grid-cols-11 gap-2">
-          {
-            backgroundScale.map((item) => (
-              <div class="flex flex-col items-center">
-                <div
-                  class={`${item.class} ${item.text} flex h-16 w-full items-center justify-center border border-white/10 font-mono text-sm font-bold`}
-                >
-                  {item.label}
-                </div>
-              </div>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
-    <!-- Word Colors (Text) -->
-    <section class="animate-fade-in-up mb-16">
-      <h2
-        class="font-display text-word-100 mb-4 text-2xl font-bold tracking-widest uppercase"
-      >
-        Word Scale (Text Colors)
-      </h2>
-      <div class="card-glass space-y-4 p-8">
-        {
-          wordScale.map((item) => (
-            <div class="flex items-center gap-4">
-              <span class={`font-mono text-sm ${item.class} w-20`}>
-                {item.label}
-              </span>
-              <p class={`text-xl ${item.class}`}>
-                The quick brown fox jumps over the lazy dog
-              </p>
-            </div>
-          ))
-        }
-      </div>
-    </section>
-
-    <!-- Typography Samples -->
-    <section class="animate-fade-in-up mb-16">
-      <h2
-        class="font-display text-word-100 mb-4 text-2xl font-bold tracking-widest uppercase"
-      >
-        Typography Samples
-      </h2>
-      <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-        <!-- Display -->
-        <div class="card-glass p-6">
-          <span
-            class="text-word-400 font-mono text-xs tracking-widest uppercase"
-            >Display</span
-          >
-          <h3 class="font-display text-primary-400 mt-2 text-4xl font-bold">
-            IRON<br />TRACK
-          </h3>
-          <p class="font-display text-word-300 mt-4 text-lg">
-            Space Grotesk — Bold & Tight
-          </p>
-        </div>
-
-        <!-- Body -->
-        <div class="card-glass p-6">
-          <span
-            class="text-word-400 font-mono text-xs tracking-widest uppercase"
-            >Body</span
-          >
-          <p class="font-body text-word-200 mt-2 text-lg leading-relaxed">
-            Inter is a clean and highly legible typeface designed for screens.
-            It pairs perfectly with the industrial aesthetic of IRON TRACK.
-          </p>
-          <p class="font-body text-word-300 mt-4 text-sm">
-            Used for all body copy, labels, and UI text.
-          </p>
-        </div>
-
-        <!-- Mono -->
-        <div class="card-glass p-6">
-          <span
-            class="text-word-400 font-mono text-xs tracking-widest uppercase"
-            >Mono</span
-          >
-          <p class="text-word-200 mt-2 font-mono text-lg">
-            SETS: 4<br />
-            REPS: 8-12<br />
-            WEIGHT: 82.5 KG
-          </p>
-          <p class="text-word-300 mt-4 font-mono text-sm">
-            JetBrains Mono — Data & Labels
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Component Showcase (Static) -->
-    <section class="animate-fade-in-up mb-16">
-      <h2
-        class="font-display text-word-100 mb-4 text-2xl font-bold tracking-widest uppercase"
-      >
-        Static Component Showcase
-      </h2>
-      <div class="card-glass space-y-8 p-8">
-        <!-- Buttons -->
-        <div class="space-y-4">
-          <h3 class="text-word-400 font-mono text-sm tracking-widest uppercase">
-            Buttons
-          </h3>
-          <div class="flex flex-wrap gap-4">
-            <button class="btn-primary">Primary Action</button>
-            <button class="btn-secondary">Secondary Action</button>
-          </div>
-        </div>
-
-        <!-- Input -->
-        <div class="max-w-md space-y-4">
-          <h3 class="text-word-400 font-mono text-sm tracking-widest uppercase">
-            Input Field
-          </h3>
-          <input
-            type="text"
-            placeholder="Enter your workout name..."
-            class="input-field"
-          />
-        </div>
-
-        <!-- Glow Effect -->
-        <div class="space-y-4">
-          <h3 class="text-word-400 font-mono text-sm tracking-widest uppercase">
-            Glow Effect
-          </h3>
-          <div
-            class="glow-primary bg-primary-400 inline-block p-6 font-mono font-bold text-black"
-          >
-            GLOW PRIMARY
-          </div>
-        </div>
-
-        <!-- Card Glass -->
-        <div class="space-y-4">
-          <h3 class="text-word-400 font-mono text-sm tracking-widest uppercase">
-            Glass Card
-          </h3>
-          <div class="card-glass max-w-md p-6">
-            <h4 class="font-display text-primary-400 text-xl font-bold">
-              Workout Session
-            </h4>
-            <p class="font-body text-word-300 mt-2">
-              This is a glass card with backdrop blur and a subtle lime border.
-              Used for panels and floating UI elements.
+        <!-- Header -->
+        <header class="animate-fade-in-up mb-12">
+            <h1
+                class="font-display text-primary-400 text-5xl font-bold tracking-tighter"
+            >
+                VOLTAGE INDUSTRIAL
+            </h1>
+            <p class="font-body text-word-200 mt-2 text-xl">
+                Design System Palette — IRON TRACK
             </p>
-          </div>
-        </div>
-      </div>
-    </section>
+        </header>
 
-    <!-- Footer -->
-    <footer class="border-secondary-800 border-t pt-8 text-center">
-      <p class="text-word-400 font-mono text-sm">
-        IRON TRACK — Voltage Industrial Design System v1.0
-      </p>
-    </footer>
-  </main>
+        <!-- Color Scales -->
+        <section class="animate-fade-in-up mb-16 space-y-12">
+            <!-- Primary -->
+            <div>
+                <h2
+                    class="font-display text-primary-400 mb-4 text-2xl font-bold tracking-widest uppercase"
+                >
+                    Primary Scale
+                </h2>
+                <div class="grid grid-cols-11 gap-2">
+                    {
+                        primaryScale.map((item) => (
+                            <div class="flex flex-col items-center">
+                                <div
+                                    class={`${item.class} ${item.text} flex h-16 w-full items-center justify-center border border-white/10 font-mono text-sm font-bold`}
+                                >
+                                    {item.label}
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+
+            <!-- Secondary -->
+            <div>
+                <h2
+                    class="font-display text-secondary-300 mb-4 text-2xl font-bold tracking-widest uppercase"
+                >
+                    Secondary Scale
+                </h2>
+                <div class="grid grid-cols-11 gap-2">
+                    {
+                        secondaryScale.map((item) => (
+                            <div class="flex flex-col items-center">
+                                <div
+                                    class={`${item.class} ${item.text} flex h-16 w-full items-center justify-center border border-white/10 font-mono text-sm font-bold`}
+                                >
+                                    {item.label}
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+
+            <!-- Background -->
+            <div>
+                <h2
+                    class="font-display text-word-300 mb-4 text-2xl font-bold tracking-widest uppercase"
+                >
+                    Background Scale
+                </h2>
+                <div class="grid grid-cols-11 gap-2">
+                    {
+                        backgroundScale.map((item) => (
+                            <div class="flex flex-col items-center">
+                                <div
+                                    class={`${item.class} ${item.text} flex h-16 w-full items-center justify-center border border-white/10 font-mono text-sm font-bold`}
+                                >
+                                    {item.label}
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+        </section>
+
+        <!-- Word Colors (Text) -->
+        <section class="animate-fade-in-up mb-16">
+            <h2
+                class="font-display text-word-100 mb-4 text-2xl font-bold tracking-widest uppercase"
+            >
+                Word Scale (Text Colors)
+            </h2>
+            <div class="card-glass space-y-4 p-8">
+                {
+                    wordScale.map((item) => (
+                        <div class="flex items-center gap-4">
+                            <span
+                                class={`font-mono text-sm ${item.class} w-20`}
+                            >
+                                {item.label}
+                            </span>
+                            <p class={`text-xl ${item.class}`}>
+                                The quick brown fox jumps over the lazy dog
+                            </p>
+                        </div>
+                    ))
+                }
+            </div>
+        </section>
+
+        <!-- Typography Samples -->
+        <section class="animate-fade-in-up mb-16">
+            <h2
+                class="font-display text-word-100 mb-4 text-2xl font-bold tracking-widest uppercase"
+            >
+                Typography Samples
+            </h2>
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+                <!-- Display -->
+                <div class="card-glass p-6">
+                    <span
+                        class="text-word-400 font-mono text-xs tracking-widest uppercase"
+                        >Display</span
+                    >
+                    <h3
+                        class="font-display text-primary-400 mt-2 text-4xl font-bold"
+                    >
+                        IRON<br />TRACK
+                    </h3>
+                    <p class="font-display text-word-300 mt-4 text-lg">
+                        Space Grotesk — Bold & Tight
+                    </p>
+                </div>
+
+                <!-- Body -->
+                <div class="card-glass p-6">
+                    <span
+                        class="text-word-400 font-mono text-xs tracking-widest uppercase"
+                        >Body</span
+                    >
+                    <p
+                        class="font-body text-word-200 mt-2 text-lg leading-relaxed"
+                    >
+                        Inter is a clean and highly legible typeface designed
+                        for screens. It pairs perfectly with the industrial
+                        aesthetic of IRON TRACK.
+                    </p>
+                    <p class="font-body text-word-300 mt-4 text-sm">
+                        Used for all body copy, labels, and UI text.
+                    </p>
+                </div>
+
+                <!-- Mono -->
+                <div class="card-glass p-6">
+                    <span
+                        class="text-word-400 font-mono text-xs tracking-widest uppercase"
+                        >Mono</span
+                    >
+                    <p class="text-word-200 mt-2 font-mono text-lg">
+                        SETS: 4<br />
+                        REPS: 8-12<br />
+                        WEIGHT: 82.5 KG
+                    </p>
+                    <p class="text-word-300 mt-4 font-mono text-sm">
+                        JetBrains Mono — Data & Labels
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Component Showcase (Static) -->
+        <section class="animate-fade-in-up mb-16">
+            <h2
+                class="font-display text-word-100 mb-4 text-2xl font-bold tracking-widest uppercase"
+            >
+                Static Component Showcase
+            </h2>
+            <div class="card-glass space-y-8 p-8">
+                <!-- Buttons -->
+                <div class="space-y-4">
+                    <h3
+                        class="text-word-400 font-mono text-sm tracking-widest uppercase"
+                    >
+                        Buttons
+                    </h3>
+                    <div class="flex flex-wrap gap-4">
+                        <button class="btn-primary">Primary Action</button>
+                        <button class="btn-secondary">Secondary Action</button>
+                    </div>
+                </div>
+
+                <!-- Input -->
+                <div class="max-w-md space-y-4">
+                    <h3
+                        class="text-word-400 font-mono text-sm tracking-widest uppercase"
+                    >
+                        Input Field
+                    </h3>
+                    <input
+                        type="text"
+                        placeholder="Enter your workout name..."
+                        class="input-field"
+                    />
+                </div>
+
+                <!-- Glow Effect -->
+                <div class="space-y-4">
+                    <h3
+                        class="text-word-400 font-mono text-sm tracking-widest uppercase"
+                    >
+                        Glow Effect
+                    </h3>
+                    <div
+                        class="glow-primary bg-primary-400 inline-block p-6 font-mono font-bold text-black"
+                    >
+                        GLOW PRIMARY
+                    </div>
+                </div>
+
+                <!-- Card Glass -->
+                <div class="space-y-4">
+                    <h3
+                        class="text-word-400 font-mono text-sm tracking-widest uppercase"
+                    >
+                        Glass Card
+                    </h3>
+                    <div class="card-glass max-w-md p-6">
+                        <h4
+                            class="font-display text-primary-400 text-xl font-bold"
+                        >
+                            Workout Session
+                        </h4>
+                        <p class="font-body text-word-300 mt-2">
+                            This is a glass card with backdrop blur and a subtle
+                            lime border. Used for panels and floating UI
+                            elements.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="border-secondary-800 border-t pt-8 text-center">
+            <p class="text-word-400 font-mono text-sm">
+                IRON TRACK — Voltage Industrial Design System v1.0
+            </p>
+        </footer>
+    </main>
 </Layout>

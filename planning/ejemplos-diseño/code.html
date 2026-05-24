@@ -1,344 +1,640 @@
-<!DOCTYPE html>
+<!doctype html>
 
-<html class="dark" lang="es"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>IRON TRACK | DOMINA TU RUTINA</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;600;700&amp;family=Inter:wght@400;500;700&amp;family=JetBrains+Mono:wght@500&amp;family=Space+Grotesk:wght@300..700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "on-error-container": "#ffdad6",
-                    "tertiary": "#ffffff",
-                    "on-secondary-fixed-variant": "#474746",
-                    "tertiary-fixed": "#e4e2e1",
-                    "on-surface-variant": "#c4c9ac",
-                    "background": "#131313",
-                    "surface-bright": "#393939",
-                    "on-secondary-container": "#b7b5b4",
-                    "primary-fixed-dim": "#ccff00",
-                    "on-primary-fixed-variant": "#3c4d00",
-                    "surface-variant": "#353535",
-                    "secondary": "#c8c6c5",
-                    "outline-variant": "#444933",
-                    "surface-container-low": "#1b1b1b",
-                    "on-primary": "#161e00",
-                    "error": "#ffb4ab",
-                    "on-tertiary-container": "#656464",
-                    "surface-container-highest": "#353535",
-                    "on-background": "#e2e2e2",
-                    "surface-container": "#1f1f1f",
-                    "surface-tint": "#ccff00",
-                    "outline": "#8e9379",
-                    "on-primary-container": "#161e00",
-                    "surface": "#131313",
-                    "surface-container-lowest": "#0e0e0e",
-                    "secondary-container": "#474746",
-                    "surface-dim": "#131313",
-                    "on-error": "#690005",
-                    "on-tertiary-fixed": "#1b1c1c",
-                    "surface-container-high": "#2a2a2a",
-                    "secondary-fixed": "#e5e2e1",
-                    "inverse-on-surface": "#303030",
-                    "on-primary-fixed": "#161e00",
-                    "on-secondary": "#313030",
-                    "primary-container": "#ccff00",
-                    "on-secondary-fixed": "#1c1b1b",
-                    "on-surface": "#e2e2e2",
-                    "inverse-surface": "#e2e2e2",
-                    "tertiary-fixed-dim": "#c8c6c6",
-                    "primary": "#ffffff",
-                    "error-container": "#93000a",
-                    "on-tertiary": "#303030",
-                    "primary-fixed": "#ccff00",
-                    "secondary-fixed-dim": "#c8c6c5",
-                    "on-tertiary-fixed-variant": "#474747",
-                    "inverse-primary": "#506600",
-                    "tertiary-container": "#e4e2e1"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.125rem",
-                    "lg": "0.25rem",
-                    "xl": "0.5rem",
-                    "full": "9999px"
-            },
-            "spacing": {
-                    "sm": "16px",
-                    "xs": "8px",
-                    "base": "4px",
-                    "margin-desktop": "48px",
-                    "margin-mobile": "20px",
-                    "xl": "64px",
-                    "md": "24px",
-                    "gutter": "16px",
-                    "lg": "40px"
-            },
-            "fontFamily": {
-                    "body-md": ["Inter"],
-                    "stat-lg": ["Archivo Narrow"],
-                    "label-caps": ["JetBrains Mono"],
-                    "headline-lg-mobile": ["Space Grotesk"],
-                    "headline-lg": ["Space Grotesk"],
-                    "display-lg": ["Space Grotesk"]
-            },
-            "fontSize": {
-                    "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
-                    "stat-lg": ["36px", {"lineHeight": "1", "letterSpacing": "-0.03em", "fontWeight": "600"}],
-                    "label-caps": ["12px", {"lineHeight": "1.4", "letterSpacing": "0.1em", "fontWeight": "500"}],
-                    "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "700"}],
-                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
-                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+<html class="dark" lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <title>IRON TRACK | DOMINA TU RUTINA</title>
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;600;700&amp;family=Inter:wght@400;500;700&amp;family=JetBrains+Mono:wght@500&amp;family=Space+Grotesk:wght@300..700&amp;display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+            rel="stylesheet"
+        />
+        <script id="tailwind-config">
+            tailwind.config = {
+                darkMode: 'class',
+                theme: {
+                    extend: {
+                        colors: {
+                            'on-error-container': '#ffdad6',
+                            tertiary: '#ffffff',
+                            'on-secondary-fixed-variant': '#474746',
+                            'tertiary-fixed': '#e4e2e1',
+                            'on-surface-variant': '#c4c9ac',
+                            background: '#131313',
+                            'surface-bright': '#393939',
+                            'on-secondary-container': '#b7b5b4',
+                            'primary-fixed-dim': '#ccff00',
+                            'on-primary-fixed-variant': '#3c4d00',
+                            'surface-variant': '#353535',
+                            secondary: '#c8c6c5',
+                            'outline-variant': '#444933',
+                            'surface-container-low': '#1b1b1b',
+                            'on-primary': '#161e00',
+                            error: '#ffb4ab',
+                            'on-tertiary-container': '#656464',
+                            'surface-container-highest': '#353535',
+                            'on-background': '#e2e2e2',
+                            'surface-container': '#1f1f1f',
+                            'surface-tint': '#ccff00',
+                            outline: '#8e9379',
+                            'on-primary-container': '#161e00',
+                            surface: '#131313',
+                            'surface-container-lowest': '#0e0e0e',
+                            'secondary-container': '#474746',
+                            'surface-dim': '#131313',
+                            'on-error': '#690005',
+                            'on-tertiary-fixed': '#1b1c1c',
+                            'surface-container-high': '#2a2a2a',
+                            'secondary-fixed': '#e5e2e1',
+                            'inverse-on-surface': '#303030',
+                            'on-primary-fixed': '#161e00',
+                            'on-secondary': '#313030',
+                            'primary-container': '#ccff00',
+                            'on-secondary-fixed': '#1c1b1b',
+                            'on-surface': '#e2e2e2',
+                            'inverse-surface': '#e2e2e2',
+                            'tertiary-fixed-dim': '#c8c6c6',
+                            primary: '#ffffff',
+                            'error-container': '#93000a',
+                            'on-tertiary': '#303030',
+                            'primary-fixed': '#ccff00',
+                            'secondary-fixed-dim': '#c8c6c5',
+                            'on-tertiary-fixed-variant': '#474747',
+                            'inverse-primary': '#506600',
+                            'tertiary-container': '#e4e2e1',
+                        },
+                        borderRadius: {
+                            DEFAULT: '0.125rem',
+                            lg: '0.25rem',
+                            xl: '0.5rem',
+                            full: '9999px',
+                        },
+                        spacing: {
+                            sm: '16px',
+                            xs: '8px',
+                            base: '4px',
+                            'margin-desktop': '48px',
+                            'margin-mobile': '20px',
+                            xl: '64px',
+                            md: '24px',
+                            gutter: '16px',
+                            lg: '40px',
+                        },
+                        fontFamily: {
+                            'body-md': ['Inter'],
+                            'stat-lg': ['Archivo Narrow'],
+                            'label-caps': ['JetBrains Mono'],
+                            'headline-lg-mobile': ['Space Grotesk'],
+                            'headline-lg': ['Space Grotesk'],
+                            'display-lg': ['Space Grotesk'],
+                        },
+                        fontSize: {
+                            'body-md': [
+                                '16px',
+                                {
+                                    lineHeight: '1.6',
+                                    letterSpacing: '0',
+                                    fontWeight: '400',
+                                },
+                            ],
+                            'stat-lg': [
+                                '36px',
+                                {
+                                    lineHeight: '1',
+                                    letterSpacing: '-0.03em',
+                                    fontWeight: '600',
+                                },
+                            ],
+                            'label-caps': [
+                                '12px',
+                                {
+                                    lineHeight: '1.4',
+                                    letterSpacing: '0.1em',
+                                    fontWeight: '500',
+                                },
+                            ],
+                            'headline-lg-mobile': [
+                                '24px',
+                                { lineHeight: '1.2', fontWeight: '700' },
+                            ],
+                            'headline-lg': [
+                                '32px',
+                                {
+                                    lineHeight: '1.2',
+                                    letterSpacing: '-0.01em',
+                                    fontWeight: '700',
+                                },
+                            ],
+                            'display-lg': [
+                                '48px',
+                                {
+                                    lineHeight: '1.1',
+                                    letterSpacing: '-0.02em',
+                                    fontWeight: '700',
+                                },
+                            ],
+                        },
+                    },
+                },
+            };
+        </script>
+        <style>
+            .material-symbols-outlined {
+                font-variation-settings:
+                    'FILL' 0,
+                    'wght' 400,
+                    'GRAD' 0,
+                    'opsz' 24;
             }
-          },
-        },
-      }
-    </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .glass-card {
-            background: rgba(26, 26, 26, 0.7);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(204, 255, 0, 0.2);
-            transition: border 0.3s ease;
-        }
-        .glass-card:hover {
-            border-color: rgba(204, 255, 0, 0.5);
-        }
-        .glow-primary {
-            box-shadow: 0 0 25px rgba(204, 255, 0, 0.3);
-        }
-        .btn-hover:active {
-            transform: scale(0.95);
-        }
-        .marquee-container {
-            overflow: hidden;
-            white-space: nowrap;
-            background: #0e0e0e;
-        }
-        .marquee-content {
-            display: inline-block;
-            animation: marquee 20s linear infinite;
-        }
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        .fade-in-up {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .fade-in-up.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .text-outline {
-            -webkit-text-stroke: 1px #ccff00;
-            color: transparent;
-        }
-    </style>
-</head>
-<body class="bg-background text-on-surface selection:bg-primary-container selection:text-on-primary-container">
-<!-- Top Navigation -->
-<nav class="fixed top-0 w-full z-50 bg-surface/70 backdrop-blur-md border-b border-surface-container-highest">
-<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 max-w-7xl mx-auto">
-<div class="font-display-lg text-headline-lg italic font-black text-primary-fixed">IRON TRACK</div>
-<div class="hidden md:flex gap-lg">
-<a class="font-label-caps text-label-caps text-primary-fixed font-bold border-b-2 border-primary-fixed pb-1" href="#">Training</a>
-<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary-fixed transition-colors" href="#">Analytics</a>
-<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary-fixed transition-colors" href="#">Community</a>
-<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary-fixed transition-colors" href="#">Plans</a>
-</div>
-<button class="bg-primary-container text-on-primary font-label-caps text-[10px] md:text-label-caps px-md py-xs rounded-none uppercase font-bold btn-hover transition-all glow-primary">
-                Start Training
-            </button>
-</div>
-</nav>
-<!-- Hero Section -->
-<section class="relative h-screen flex items-center justify-start overflow-hidden">
-<div class="absolute inset-0 z-0">
-<img alt="High-impact fitness" class="w-full h-full object-cover opacity-40 grayscale hover:grayscale-0 transition-all duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDy15MHzLoieItRzwZcC45_aAoRJyAZ8e47KPOJJqGvEv9kYxX2dfOPzTm5N5vVO3KJWVXVNYoja2ejB_MtPZ-71P_u-Kz9eGi6w3uCdMgBN0af60e6Y_u-1kwfnxcRmDAxgHON6AXqVvotJSMdn_1Vhd7LCXWij5ISoCNnJh0ojU3S-dpxXFhbI6h06H7FJRWwszglQ8yy9951MuJg_iRl0K4qAhFAq4H-9rLvL9eaRptSZJf95dT6oVGPHclKNkhCGBlnHoY4f98"/>
-<div class="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent"></div>
-</div>
-<div class="relative z-10 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto w-full fade-in-up section-reveal">
-<div class="max-w-2xl">
-<span class="font-label-caps text-label-caps text-primary-fixed tracking-[0.3em] uppercase block mb-sm">Industrial Performance</span>
-<h1 class="font-display-lg text-display-lg md:text-[96px] leading-[0.85] mb-md uppercase italic font-black">
-                    DOMINA TU <br/>
-<span class="text-primary-fixed">RUTINA</span>
-</h1>
-<p class="font-body-md text-body-md text-on-surface-variant max-w-md mb-lg">
-                    Lleva tu entrenamiento al nivel industrial. Seguimiento de precisión, análisis avanzado y planes diseñados para atletas de élite.
-                </p>
-<div class="flex flex-wrap gap-md">
-<button class="bg-primary-container text-on-primary font-label-caps text-label-caps px-lg py-md rounded-none font-bold uppercase btn-hover glow-primary">
-                        EMPEZAR AHORA
-                    </button>
-<button class="border border-primary-fixed text-primary-fixed font-label-caps text-label-caps px-lg py-md rounded-none font-bold uppercase btn-hover bg-surface/20 backdrop-blur-sm">
-                        VER PLANES
-                    </button>
-</div>
-</div>
-</div>
-<!-- Vertical Metric Decoration -->
-<div class="absolute right-margin-desktop bottom-xl hidden lg:block fade-in-up section-reveal" style="transition-delay: 200ms;">
-<div class="flex flex-col gap-lg items-end">
-<div class="text-right">
-<div class="font-label-caps text-[10px] text-on-surface-variant uppercase">Power Output</div>
-<div class="font-stat-lg text-stat-lg text-primary-fixed">98.4%</div>
-</div>
-<div class="text-right">
-<div class="font-label-caps text-[10px] text-on-surface-variant uppercase">Volume Tracked</div>
-<div class="font-stat-lg text-stat-lg text-on-surface">1.2M LBS</div>
-</div>
-</div>
-</div>
-</section>
-<!-- High-energy Marquee Section -->
-<div class="marquee-container py-md border-y border-primary-fixed/20">
-<div class="marquee-content flex gap-xl items-center">
-<span class="font-display-lg text-display-lg font-black italic tracking-tighter text-primary-fixed px-xl">POWER • PERFORMANCE • PRECISION • EVOLUTION • IRON TRACK</span>
-<span class="font-display-lg text-display-lg font-black italic tracking-tighter text-outline px-xl">POWER • PERFORMANCE • PRECISION • EVOLUTION • IRON TRACK</span>
-<span class="font-display-lg text-display-lg font-black italic tracking-tighter text-primary-fixed px-xl">POWER • PERFORMANCE • PRECISION • EVOLUTION • IRON TRACK</span>
-<span class="font-display-lg text-display-lg font-black italic tracking-tighter text-outline px-xl">POWER • PERFORMANCE • PRECISION • EVOLUTION • IRON TRACK</span>
-</div>
-</div>
-<!-- Features Section (Bento Grid) -->
-<section class="py-xl bg-surface">
-<div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop">
-<div class="grid grid-cols-1 md:grid-cols-12 gap-md items-stretch">
-<!-- App Interface Card -->
-<div class="md:col-span-7 lg:col-span-8 glass-card p-lg relative overflow-hidden group fade-in-up section-reveal">
-<div class="relative z-10">
-<h2 class="font-display-lg text-headline-lg mb-sm uppercase">Seguimiento en <span class="text-primary-fixed">tiempo real</span></h2>
-<p class="font-body-md text-body-md text-on-surface-variant max-w-sm mb-lg">Cada repetición cuenta. Visualiza tu esfuerzo instantáneamente con nuestra interfaz de baja latencia.</p>
-</div>
-<div class="mt-lg transform group-hover:scale-105 transition-transform duration-700">
-<img alt="App Interface" class="w-full max-w-md mx-auto drop-shadow-2xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFbDFSaRBcqWDARLM24S-dTT4cieL9n21M34jN6qdOumFkAmo5hey4vntDWECcZO6uFU9R9ntZQKvp4Ta9q3AVJ8lFvGgU14-VriLZPG_9CXBavIyy2z_YkTBZTc8PyZ6FnCpF7IYZIpmN7wzZdUufUMHzxoAVMrWWts__REfTJTbZDYP_4zSIrAEaJdgbmxKPu054CyAzHXspq4opxUVjCORsjJfIRlx7b78c4kseoE1B5vk0VVuXQqwU5NHjGUkPM2CjKwvdX9o"/>
-</div>
-<div class="absolute top-0 right-0 p-lg opacity-10">
-<span class="material-symbols-outlined text-[120px] text-primary-fixed" style="font-variation-settings: 'FILL' 1;">monitoring</span>
-</div>
-</div>
-<!-- Vertical Feature Stack -->
-<div class="md:col-span-5 lg:col-span-4 flex flex-col gap-md">
-<div class="glass-card p-lg flex-1 border-l-4 border-l-primary-fixed fade-in-up section-reveal" style="transition-delay: 150ms;">
-<span class="material-symbols-outlined text-primary-fixed mb-sm">analytics</span>
-<h3 class="font-display-lg text-headline-lg-mobile mb-xs uppercase">Análisis de progreso</h3>
-<p class="font-body-md text-body-md text-on-surface-variant">Algoritmos avanzados que predicen tu fatiga y optimizan tus descansos automáticamente.</p>
-</div>
-<div class="glass-card p-lg flex-1 border-l-4 border-l-outline fade-in-up section-reveal" style="transition-delay: 300ms;">
-<span class="material-symbols-outlined text-on-surface mb-sm">fitness_center</span>
-<h3 class="font-display-lg text-headline-lg-mobile mb-xs uppercase">Planes personalizados</h3>
-<p class="font-body-md text-body-md text-on-surface-variant">Rutinas adaptativas que evolucionan con tu fuerza, no un simple PDF estático.</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Community Section -->
-<section class="py-xl bg-surface-container-lowest relative">
-<div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop">
-<div class="flex flex-col lg:flex-row items-center gap-xl">
-<div class="w-full lg:w-1/2 order-2 lg:order-1 fade-in-up section-reveal">
-<div class="relative">
-<img alt="Community of Athletes" class="w-full aspect-video object-cover grayscale hover:grayscale-0 transition-all duration-500 rounded-none border border-primary-fixed/20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCV0d2C_2pifg5ixauijVHOz2OnyzyNeq7DpXWioJmV-YT_8IWW9qABuium6137RVAJaBAxptgPj8g2lrqZynTq1Rx7R2xiDXp8zolp38hrxCHPRmkMXoDgbeCD4s4-_DICgzzbMUizXLvIJF93sc0kczLlfn-f0YqLj3clAZQ7ncYeGvFlVR7QXNWYtJNCcB7y2UG8Imgf--qXTybqb7rFBEsDbWkFhfDCBlJ9GNnr2abOAMAYxDDVhuMi7zYDkJjHsewFSshYog"/>
-<div class="absolute -bottom-xs -right-xs bg-primary-container p-md text-on-primary font-black italic text-stat-lg glow-primary">
-                            +50K ELITE
-                        </div>
-</div>
-</div>
-<div class="w-full lg:w-1/2 order-1 lg:order-2 fade-in-up section-reveal">
-<span class="font-label-caps text-label-caps text-primary-fixed uppercase tracking-widest block mb-xs">La Hermandad del Hierro</span>
-<h2 class="font-display-lg text-display-lg uppercase mb-md">ÚNETE A LA <span class="text-primary-fixed">ÉLITE</span></h2>
-<p class="font-body-md text-body-md text-on-surface-variant mb-lg">
-                        Forma parte de la comunidad global de atletas IRON TRACK. Comparte tus récords, compite en desafíos regionales y escala en el ranking global. Aquí no solo entrenas, aquí te superas.
+            .glass-card {
+                background: rgba(26, 26, 26, 0.7);
+                backdrop-filter: blur(20px);
+                border: 1px solid rgba(204, 255, 0, 0.2);
+                transition: border 0.3s ease;
+            }
+            .glass-card:hover {
+                border-color: rgba(204, 255, 0, 0.5);
+            }
+            .glow-primary {
+                box-shadow: 0 0 25px rgba(204, 255, 0, 0.3);
+            }
+            .btn-hover:active {
+                transform: scale(0.95);
+            }
+            .marquee-container {
+                overflow: hidden;
+                white-space: nowrap;
+                background: #0e0e0e;
+            }
+            .marquee-content {
+                display: inline-block;
+                animation: marquee 20s linear infinite;
+            }
+            @keyframes marquee {
+                0% {
+                    transform: translateX(0);
+                }
+                100% {
+                    transform: translateX(-50%);
+                }
+            }
+            .fade-in-up {
+                opacity: 0;
+                transform: translateY(30px);
+                transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .fade-in-up.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            .text-outline {
+                -webkit-text-stroke: 1px #ccff00;
+                color: transparent;
+            }
+        </style>
+    </head>
+    <body
+        class="bg-background text-on-surface selection:bg-primary-container selection:text-on-primary-container"
+    >
+        <!-- Top Navigation -->
+        <nav
+            class="bg-surface/70 border-surface-container-highest fixed top-0 z-50 w-full border-b backdrop-blur-md"
+        >
+            <div
+                class="px-margin-mobile md:px-margin-desktop mx-auto flex max-w-7xl items-center justify-between py-4"
+            >
+                <div
+                    class="font-display-lg text-headline-lg text-primary-fixed font-black italic"
+                >
+                    IRON TRACK
+                </div>
+                <div class="gap-lg hidden md:flex">
+                    <a
+                        class="font-label-caps text-label-caps text-primary-fixed border-primary-fixed border-b-2 pb-1 font-bold"
+                        href="#"
+                        >Training</a
+                    >
+                    <a
+                        class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary-fixed transition-colors"
+                        href="#"
+                        >Analytics</a
+                    >
+                    <a
+                        class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary-fixed transition-colors"
+                        href="#"
+                        >Community</a
+                    >
+                    <a
+                        class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary-fixed transition-colors"
+                        href="#"
+                        >Plans</a
+                    >
+                </div>
+                <button
+                    class="bg-primary-container text-on-primary font-label-caps md:text-label-caps px-md py-xs btn-hover glow-primary rounded-none text-[10px] font-bold uppercase transition-all"
+                >
+                    Start Training
+                </button>
+            </div>
+        </nav>
+        <!-- Hero Section -->
+        <section
+            class="relative flex h-screen items-center justify-start overflow-hidden"
+        >
+            <div class="absolute inset-0 z-0">
+                <img
+                    alt="High-impact fitness"
+                    class="h-full w-full object-cover opacity-40 grayscale transition-all duration-1000 hover:grayscale-0"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDy15MHzLoieItRzwZcC45_aAoRJyAZ8e47KPOJJqGvEv9kYxX2dfOPzTm5N5vVO3KJWVXVNYoja2ejB_MtPZ-71P_u-Kz9eGi6w3uCdMgBN0af60e6Y_u-1kwfnxcRmDAxgHON6AXqVvotJSMdn_1Vhd7LCXWij5ISoCNnJh0ojU3S-dpxXFhbI6h06H7FJRWwszglQ8yy9951MuJg_iRl0K4qAhFAq4H-9rLvL9eaRptSZJf95dT6oVGPHclKNkhCGBlnHoY4f98"
+                />
+                <div
+                    class="from-background via-background/60 absolute inset-0 bg-gradient-to-r to-transparent"
+                ></div>
+            </div>
+            <div
+                class="px-margin-mobile md:px-margin-desktop fade-in-up section-reveal relative z-10 mx-auto w-full max-w-7xl"
+            >
+                <div class="max-w-2xl">
+                    <span
+                        class="font-label-caps text-label-caps text-primary-fixed mb-sm block tracking-[0.3em] uppercase"
+                        >Industrial Performance</span
+                    >
+                    <h1
+                        class="font-display-lg text-display-lg mb-md leading-[0.85] font-black uppercase italic md:text-[96px]"
+                    >
+                        DOMINA TU <br />
+                        <span class="text-primary-fixed">RUTINA</span>
+                    </h1>
+                    <p
+                        class="font-body-md text-body-md text-on-surface-variant mb-lg max-w-md"
+                    >
+                        Lleva tu entrenamiento al nivel industrial. Seguimiento
+                        de precisión, análisis avanzado y planes diseñados para
+                        atletas de élite.
                     </p>
-<div class="grid grid-cols-2 gap-md mb-lg">
-<div class="border-t border-primary-fixed/30 pt-sm">
-<div class="font-stat-lg text-stat-lg text-on-surface">150+</div>
-<div class="font-label-caps text-[10px] text-on-surface-variant uppercase">Países activos</div>
-</div>
-<div class="border-t border-primary-fixed/30 pt-sm">
-<div class="font-stat-lg text-stat-lg text-on-surface">500k+</div>
-<div class="font-label-caps text-[10px] text-on-surface-variant uppercase">Workouts Semanales</div>
-</div>
-</div>
-<button class="bg-transparent border-2 border-primary-fixed text-primary-fixed font-label-caps text-label-caps px-lg py-md rounded-none font-bold uppercase hover:bg-primary-fixed hover:text-on-primary transition-all">
-                        UNIRSE AHORA
-                    </button>
-</div>
-</div>
-</div>
-</section>
-<!-- Data Visualization Teaser -->
-<section class="py-xl bg-black overflow-hidden fade-in-up section-reveal">
-<div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop text-center">
-<h2 class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-xl tracking-[0.5em]">System Status: Optimization</h2>
-<div class="flex flex-wrap justify-center gap-xl opacity-40">
-<div class="font-stat-lg text-[64px] text-primary-fixed/20 select-none">TRACK</div>
-<div class="font-stat-lg text-[64px] text-on-surface/20 select-none">ANALYZE</div>
-<div class="font-stat-lg text-[64px] text-primary-fixed/20 select-none">EVOLVE</div>
-<div class="font-stat-lg text-[64px] text-on-surface/20 select-none">REPEAT</div>
-</div>
-</div>
-</section>
-<!-- Footer -->
-<footer class="bg-surface-container-lowest border-t border-surface-container-highest py-xl">
-<div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row justify-between items-start md:items-center gap-md">
-<div>
-<div class="font-display-lg text-headline-lg font-black text-on-surface mb-xs italic uppercase">IRON TRACK</div>
-<p class="font-body-md text-body-md text-on-secondary-container">© 2024 IRON TRACK INDUSTRIAL TECH. ALL RIGHTS RESERVED.</p>
-</div>
-<div class="flex flex-wrap gap-md">
-<a class="font-body-md text-body-md text-on-secondary-container hover:text-primary-fixed transition-colors" href="#">Privacy Policy</a>
-<a class="font-body-md text-body-md text-on-secondary-container hover:text-primary-fixed transition-colors" href="#">Terms of Service</a>
-<a class="font-body-md text-body-md text-on-secondary-container hover:text-primary-fixed transition-colors" href="#">Support</a>
-<a class="font-body-md text-body-md text-on-secondary-container hover:text-primary-fixed transition-colors" href="#">Contact</a>
-</div>
-</div>
-</footer>
-<script>
-        // Intersection Observer for entrance animations
-        const observerOptions = {
-            threshold: 0.1
-        };
+                    <div class="gap-md flex flex-wrap">
+                        <button
+                            class="bg-primary-container text-on-primary font-label-caps text-label-caps px-lg py-md btn-hover glow-primary rounded-none font-bold uppercase"
+                        >
+                            EMPEZAR AHORA
+                        </button>
+                        <button
+                            class="border-primary-fixed text-primary-fixed font-label-caps text-label-caps px-lg py-md btn-hover bg-surface/20 rounded-none border font-bold uppercase backdrop-blur-sm"
+                        >
+                            VER PLANES
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Vertical Metric Decoration -->
+            <div
+                class="right-margin-desktop bottom-xl fade-in-up section-reveal absolute hidden lg:block"
+                style="transition-delay: 200ms"
+            >
+                <div class="gap-lg flex flex-col items-end">
+                    <div class="text-right">
+                        <div
+                            class="font-label-caps text-on-surface-variant text-[10px] uppercase"
+                        >
+                            Power Output
+                        </div>
+                        <div
+                            class="font-stat-lg text-stat-lg text-primary-fixed"
+                        >
+                            98.4%
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div
+                            class="font-label-caps text-on-surface-variant text-[10px] uppercase"
+                        >
+                            Volume Tracked
+                        </div>
+                        <div class="font-stat-lg text-stat-lg text-on-surface">
+                            1.2M LBS
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- High-energy Marquee Section -->
+        <div class="marquee-container py-md border-primary-fixed/20 border-y">
+            <div class="marquee-content gap-xl flex items-center">
+                <span
+                    class="font-display-lg text-display-lg text-primary-fixed px-xl font-black tracking-tighter italic"
+                    >POWER • PERFORMANCE • PRECISION • EVOLUTION • IRON
+                    TRACK</span
+                >
+                <span
+                    class="font-display-lg text-display-lg text-outline px-xl font-black tracking-tighter italic"
+                    >POWER • PERFORMANCE • PRECISION • EVOLUTION • IRON
+                    TRACK</span
+                >
+                <span
+                    class="font-display-lg text-display-lg text-primary-fixed px-xl font-black tracking-tighter italic"
+                    >POWER • PERFORMANCE • PRECISION • EVOLUTION • IRON
+                    TRACK</span
+                >
+                <span
+                    class="font-display-lg text-display-lg text-outline px-xl font-black tracking-tighter italic"
+                    >POWER • PERFORMANCE • PRECISION • EVOLUTION • IRON
+                    TRACK</span
+                >
+            </div>
+        </div>
+        <!-- Features Section (Bento Grid) -->
+        <section class="py-xl bg-surface">
+            <div
+                class="px-margin-mobile md:px-margin-desktop mx-auto max-w-7xl"
+            >
+                <div
+                    class="gap-md grid grid-cols-1 items-stretch md:grid-cols-12"
+                >
+                    <!-- App Interface Card -->
+                    <div
+                        class="glass-card p-lg group fade-in-up section-reveal relative overflow-hidden md:col-span-7 lg:col-span-8"
+                    >
+                        <div class="relative z-10">
+                            <h2
+                                class="font-display-lg text-headline-lg mb-sm uppercase"
+                            >
+                                Seguimiento en
+                                <span class="text-primary-fixed"
+                                    >tiempo real</span
+                                >
+                            </h2>
+                            <p
+                                class="font-body-md text-body-md text-on-surface-variant mb-lg max-w-sm"
+                            >
+                                Cada repetición cuenta. Visualiza tu esfuerzo
+                                instantáneamente con nuestra interfaz de baja
+                                latencia.
+                            </p>
+                        </div>
+                        <div
+                            class="mt-lg transform transition-transform duration-700 group-hover:scale-105"
+                        >
+                            <img
+                                alt="App Interface"
+                                class="mx-auto w-full max-w-md drop-shadow-2xl"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFbDFSaRBcqWDARLM24S-dTT4cieL9n21M34jN6qdOumFkAmo5hey4vntDWECcZO6uFU9R9ntZQKvp4Ta9q3AVJ8lFvGgU14-VriLZPG_9CXBavIyy2z_YkTBZTc8PyZ6FnCpF7IYZIpmN7wzZdUufUMHzxoAVMrWWts__REfTJTbZDYP_4zSIrAEaJdgbmxKPu054CyAzHXspq4opxUVjCORsjJfIRlx7b78c4kseoE1B5vk0VVuXQqwU5NHjGUkPM2CjKwvdX9o"
+                            />
+                        </div>
+                        <div class="p-lg absolute top-0 right-0 opacity-10">
+                            <span
+                                class="material-symbols-outlined text-primary-fixed text-[120px]"
+                                style="font-variation-settings: 'FILL' 1"
+                                >monitoring</span
+                            >
+                        </div>
+                    </div>
+                    <!-- Vertical Feature Stack -->
+                    <div
+                        class="gap-md flex flex-col md:col-span-5 lg:col-span-4"
+                    >
+                        <div
+                            class="glass-card p-lg border-l-primary-fixed fade-in-up section-reveal flex-1 border-l-4"
+                            style="transition-delay: 150ms"
+                        >
+                            <span
+                                class="material-symbols-outlined text-primary-fixed mb-sm"
+                                >analytics</span
+                            >
+                            <h3
+                                class="font-display-lg text-headline-lg-mobile mb-xs uppercase"
+                            >
+                                Análisis de progreso
+                            </h3>
+                            <p
+                                class="font-body-md text-body-md text-on-surface-variant"
+                            >
+                                Algoritmos avanzados que predicen tu fatiga y
+                                optimizan tus descansos automáticamente.
+                            </p>
+                        </div>
+                        <div
+                            class="glass-card p-lg border-l-outline fade-in-up section-reveal flex-1 border-l-4"
+                            style="transition-delay: 300ms"
+                        >
+                            <span
+                                class="material-symbols-outlined text-on-surface mb-sm"
+                                >fitness_center</span
+                            >
+                            <h3
+                                class="font-display-lg text-headline-lg-mobile mb-xs uppercase"
+                            >
+                                Planes personalizados
+                            </h3>
+                            <p
+                                class="font-body-md text-body-md text-on-surface-variant"
+                            >
+                                Rutinas adaptativas que evolucionan con tu
+                                fuerza, no un simple PDF estático.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Community Section -->
+        <section class="py-xl bg-surface-container-lowest relative">
+            <div
+                class="px-margin-mobile md:px-margin-desktop mx-auto max-w-7xl"
+            >
+                <div class="gap-xl flex flex-col items-center lg:flex-row">
+                    <div
+                        class="fade-in-up section-reveal order-2 w-full lg:order-1 lg:w-1/2"
+                    >
+                        <div class="relative">
+                            <img
+                                alt="Community of Athletes"
+                                class="border-primary-fixed/20 aspect-video w-full rounded-none border object-cover grayscale transition-all duration-500 hover:grayscale-0"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCV0d2C_2pifg5ixauijVHOz2OnyzyNeq7DpXWioJmV-YT_8IWW9qABuium6137RVAJaBAxptgPj8g2lrqZynTq1Rx7R2xiDXp8zolp38hrxCHPRmkMXoDgbeCD4s4-_DICgzzbMUizXLvIJF93sc0kczLlfn-f0YqLj3clAZQ7ncYeGvFlVR7QXNWYtJNCcB7y2UG8Imgf--qXTybqb7rFBEsDbWkFhfDCBlJ9GNnr2abOAMAYxDDVhuMi7zYDkJjHsewFSshYog"
+                            />
+                            <div
+                                class="-bottom-xs -right-xs bg-primary-container p-md text-on-primary text-stat-lg glow-primary absolute font-black italic"
+                            >
+                                +50K ELITE
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="fade-in-up section-reveal order-1 w-full lg:order-2 lg:w-1/2"
+                    >
+                        <span
+                            class="font-label-caps text-label-caps text-primary-fixed mb-xs block tracking-widest uppercase"
+                            >La Hermandad del Hierro</span
+                        >
+                        <h2
+                            class="font-display-lg text-display-lg mb-md uppercase"
+                        >
+                            ÚNETE A LA
+                            <span class="text-primary-fixed">ÉLITE</span>
+                        </h2>
+                        <p
+                            class="font-body-md text-body-md text-on-surface-variant mb-lg"
+                        >
+                            Forma parte de la comunidad global de atletas IRON
+                            TRACK. Comparte tus récords, compite en desafíos
+                            regionales y escala en el ranking global. Aquí no
+                            solo entrenas, aquí te superas.
+                        </p>
+                        <div class="gap-md mb-lg grid grid-cols-2">
+                            <div class="border-primary-fixed/30 pt-sm border-t">
+                                <div
+                                    class="font-stat-lg text-stat-lg text-on-surface"
+                                >
+                                    150+
+                                </div>
+                                <div
+                                    class="font-label-caps text-on-surface-variant text-[10px] uppercase"
+                                >
+                                    Países activos
+                                </div>
+                            </div>
+                            <div class="border-primary-fixed/30 pt-sm border-t">
+                                <div
+                                    class="font-stat-lg text-stat-lg text-on-surface"
+                                >
+                                    500k+
+                                </div>
+                                <div
+                                    class="font-label-caps text-on-surface-variant text-[10px] uppercase"
+                                >
+                                    Workouts Semanales
+                                </div>
+                            </div>
+                        </div>
+                        <button
+                            class="border-primary-fixed text-primary-fixed font-label-caps text-label-caps px-lg py-md hover:bg-primary-fixed hover:text-on-primary rounded-none border-2 bg-transparent font-bold uppercase transition-all"
+                        >
+                            UNIRSE AHORA
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Data Visualization Teaser -->
+        <section
+            class="py-xl fade-in-up section-reveal overflow-hidden bg-black"
+        >
+            <div
+                class="px-margin-mobile md:px-margin-desktop mx-auto max-w-7xl text-center"
+            >
+                <h2
+                    class="font-label-caps text-label-caps text-on-surface-variant mb-xl tracking-[0.5em] uppercase"
+                >
+                    System Status: Optimization
+                </h2>
+                <div class="gap-xl flex flex-wrap justify-center opacity-40">
+                    <div
+                        class="font-stat-lg text-primary-fixed/20 text-[64px] select-none"
+                    >
+                        TRACK
+                    </div>
+                    <div
+                        class="font-stat-lg text-on-surface/20 text-[64px] select-none"
+                    >
+                        ANALYZE
+                    </div>
+                    <div
+                        class="font-stat-lg text-primary-fixed/20 text-[64px] select-none"
+                    >
+                        EVOLVE
+                    </div>
+                    <div
+                        class="font-stat-lg text-on-surface/20 text-[64px] select-none"
+                    >
+                        REPEAT
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Footer -->
+        <footer
+            class="bg-surface-container-lowest border-surface-container-highest py-xl border-t"
+        >
+            <div
+                class="px-margin-mobile md:px-margin-desktop gap-md mx-auto flex max-w-7xl flex-col items-start justify-between md:flex-row md:items-center"
+            >
+                <div>
+                    <div
+                        class="font-display-lg text-headline-lg text-on-surface mb-xs font-black uppercase italic"
+                    >
+                        IRON TRACK
+                    </div>
+                    <p
+                        class="font-body-md text-body-md text-on-secondary-container"
+                    >
+                        © 2024 IRON TRACK INDUSTRIAL TECH. ALL RIGHTS RESERVED.
+                    </p>
+                </div>
+                <div class="gap-md flex flex-wrap">
+                    <a
+                        class="font-body-md text-body-md text-on-secondary-container hover:text-primary-fixed transition-colors"
+                        href="#"
+                        >Privacy Policy</a
+                    >
+                    <a
+                        class="font-body-md text-body-md text-on-secondary-container hover:text-primary-fixed transition-colors"
+                        href="#"
+                        >Terms of Service</a
+                    >
+                    <a
+                        class="font-body-md text-body-md text-on-secondary-container hover:text-primary-fixed transition-colors"
+                        href="#"
+                        >Support</a
+                    >
+                    <a
+                        class="font-body-md text-body-md text-on-secondary-container hover:text-primary-fixed transition-colors"
+                        href="#"
+                        >Contact</a
+                    >
+                </div>
+            </div>
+        </footer>
+        <script>
+            // Intersection Observer for entrance animations
+            const observerOptions = {
+                threshold: 0.1,
+            };
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            document
+                .querySelectorAll('.section-reveal')
+                .forEach((el) => observer.observe(el));
+
+            // Parallax effect for hero
+            window.addEventListener('scroll', () => {
+                const scrollPos = window.pageYOffset;
+                const heroImg = document.querySelector('section img');
+                if (heroImg) {
+                    heroImg.style.transform = `translateY(${scrollPos * 0.3}px)`;
                 }
             });
-        }, observerOptions);
 
-        document.querySelectorAll('.section-reveal').forEach(el => observer.observe(el));
-
-        // Parallax effect for hero
-        window.addEventListener('scroll', () => {
-            const scrollPos = window.pageYOffset;
-            const heroImg = document.querySelector('section img');
-            if(heroImg) {
-                heroImg.style.transform = `translateY(${scrollPos * 0.3}px)`;
-            }
-        });
-
-        // Interactive card movement
-        document.querySelectorAll('.glass-card').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                card.style.setProperty('--mouse-x', `${x}px`);
-                card.style.setProperty('--mouse-y', `${y}px`);
+            // Interactive card movement
+            document.querySelectorAll('.glass-card').forEach((card) => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                });
             });
-        });
-    </script>
-</body></html>
+        </script>
+    </body>
+</html>
