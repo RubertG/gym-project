@@ -1,0 +1,61 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  darkMode: 'class',
+  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          50: '#f7ffe6',
+          100: '#eeffcc',
+          200: '#ddff99',
+          300: '#ccff00',
+          400: '#abd600',
+          500: '#8fb300',
+          600: '#6d8a00',
+          700: '#4d6100',
+          800: '#2e3900',
+          900: '#1a2000',
+          950: '#0d1100',
+        },
+        secondary: {
+          50: '#f7f6f6',
+          100: '#efeceb',
+          200: '#e0dcdb',
+          300: '#c8c6c5',
+          400: '#a09e9d',
+          500: '#787675',
+          600: '#504e4d',
+          700: '#383635',
+          800: '#242221',
+          900: '#141312',
+          950: '#0a0909',
+        },
+        background: {
+          50: '#262626',
+          100: '#1f1f1f',
+          200: '#1c1c1c',
+          300: '#1a1a1a',
+          400: '#171717',
+          500: '#131313',
+          600: '#101010',
+          700: '#0d0d0d',
+          800: '#080808',
+          900: '#040404',
+          950: '#000000',
+        },
+      },
+      fontFamily: {
+        display: ['"Space Grotesk"', 'sans-serif'],
+        body: ['Inter', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'monospace'],
+      },
+      spacing: {
+        18: '4.5rem',
+        22: '5.5rem',
+        30: '7.5rem',
+      },
+    },
+  },
+  plugins: [],
+};

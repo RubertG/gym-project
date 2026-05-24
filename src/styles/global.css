@@ -1,0 +1,155 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-primary-50: #f7ffe6;
+  --color-primary-100: #eeffcc;
+  --color-primary-200: #ddff99;
+  --color-primary-300: #ccff00;
+  --color-primary-400: #abd600;
+  --color-primary-500: #8fb300;
+  --color-primary-600: #6d8a00;
+  --color-primary-700: #4d6100;
+  --color-primary-800: #2e3900;
+  --color-primary-900: #1a2000;
+  --color-primary-950: #0d1100;
+
+  --color-secondary-50: #f7f6f6;
+  --color-secondary-100: #efeceb;
+  --color-secondary-200: #e0dcdb;
+  --color-secondary-300: #c8c6c5;
+  --color-secondary-400: #a09e9d;
+  --color-secondary-500: #787675;
+  --color-secondary-600: #504e4d;
+  --color-secondary-700: #383635;
+  --color-secondary-800: #242221;
+  --color-secondary-900: #141312;
+  --color-secondary-950: #0a0909;
+
+  --color-background-50: #262626;
+  --color-background-100: #1f1f1f;
+  --color-background-200: #1c1c1c;
+  --color-background-300: #1a1a1a;
+  --color-background-400: #171717;
+  --color-background-500: #131313;
+  --color-background-600: #101010;
+  --color-background-700: #0d0d0d;
+  --color-background-800: #080808;
+  --color-background-900: #040404;
+  --color-background-950: #000000;
+
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --spacing-18: 4.5rem;
+  --spacing-22: 5.5rem;
+  --spacing-30: 7.5rem;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-background-900);
+    color: #ffffff;
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+  }
+}
+
+@layer components {
+  .btn-primary {
+    background-color: var(--color-primary-400);
+    color: #000000;
+    font-weight: 700;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-width: 2px;
+    border-color: var(--color-primary-400);
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 200ms;
+  }
+  .btn-primary:hover {
+    background-color: var(--color-primary-300);
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    color: var(--color-secondary-200);
+    font-weight: 700;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-width: 2px;
+    border-color: var(--color-secondary-400);
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 200ms;
+  }
+  .btn-secondary:hover {
+    background-color: var(--color-secondary-400);
+    color: #000000;
+  }
+
+  .input-field {
+    background-color: var(--color-background-800);
+    color: #ffffff;
+    border-width: 2px;
+    border-color: var(--color-secondary-700);
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    width: 100%;
+    outline: none;
+    transition-property:
+      color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+  .input-field:focus {
+    border-color: var(--color-primary-400);
+  }
+
+  .card-glass {
+    background-color: color-mix(
+      in srgb,
+      var(--color-background-800) 80%,
+      transparent
+    );
+    backdrop-filter: blur(12px);
+    border-width: 1px;
+    border-color: color-mix(in srgb, var(--color-primary-400) 20%, transparent);
+  }
+
+  .glow-primary {
+    box-shadow: 0 0 25px rgba(204, 255, 0, 0.3);
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.5s ease-out forwards;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
