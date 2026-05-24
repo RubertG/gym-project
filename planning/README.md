@@ -53,3 +53,7 @@
 - `src/styles/global.css` — Tokens Tailwind v4 (`@theme`) + componentes base (`@layer components`).
 - `tailwind.config.mjs` — Configuración legacy compatible (no interfiere con v4).
 - `src/pages/index.astro` — Página demo que renderiza los tokens de diseño.
+- `src/components/ui/Button.tsx` — Componente Button reutilizable (React).
+- `src/components/ui/Input.tsx` — Componente Input reutilizable (React).
+- `src/components/ui/GlowEffect.tsx` — Wrapper Glow Effect reutilizable (React).
+- `src/components/index.ts` — Barrel export de todos los componentes UI.
