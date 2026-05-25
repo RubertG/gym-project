@@ -7,6 +7,7 @@ export interface InputProps extends Omit<
 > {
     variant?: 'default' | 'ghost';
     size?: 'sm' | 'md' | 'lg';
+    surface?: 'dark' | 'light';
     label?: string;
     error?: string;
     helperText?: string;
@@ -18,9 +19,16 @@ export interface InputProps extends Omit<
 }
 
 const variantStyles = {
-    default:
-        'bg-background-800 text-white border-2 border-secondary-700 outline-none transition-colors duration-150 focus:border-primary-400',
-    ghost: 'bg-transparent border-0 border-b-2 border-secondary-700 rounded-none px-0 py-2 focus:border-primary-400 focus:ring-0',
+    dark: {
+        default:
+            'bg-background-800 text-white border-2 border-secondary-700 outline-none transition-colors duration-150 focus:border-primary-400',
+        ghost: 'bg-transparent border-0 border-b-2 border-secondary-700 rounded-none px-0 py-2 focus:border-primary-400 focus:ring-0',
+    },
+    light: {
+        default:
+            'bg-secondary-50 text-background-900 border-2 border-secondary-300 outline-none transition-colors duration-150 focus:border-primary-600',
+        ghost: 'bg-transparent border-0 border-b-2 border-secondary-300 rounded-none px-0 py-2 focus:border-primary-600 focus:ring-0',
+    },
 };
 
 const sizeStyles = {
@@ -34,6 +42,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {
             variant = 'default',
             size = 'md',
+            surface = 'dark',
             label,
             error,
             helperText,
@@ -62,15 +71,24 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         const errorId = `${inputId}-error`;
         const helperId = `${inputId}-helper`;
 
+        const textColor =
+            surface === 'light'
+                ? 'text-background-900 placeholder:text-secondary-500'
+                : 'text-word-100 placeholder:text-word-400';
+
+        const focusBorder = error
+            ? 'border-red-500 focus:border-red-500'
+            : surface === 'light'
+              ? 'focus:border-primary-600'
+              : 'focus:border-primary-400';
+
         const inputClasses = [
             'w-full',
-            'text-word-100 placeholder:text-word-400',
+            textColor,
             'focus:outline-none',
-            variant === 'default' ? variantStyles.default : variantStyles.ghost,
+            variantStyles[surface][variant],
             variant === 'default' ? sizeStyles[size] : '',
-            error
-                ? 'border-red-500 focus:border-red-500'
-                : 'focus:border-primary-400',
+            focusBorder,
             isDisabled ? 'opacity-50 cursor-not-allowed' : '',
             leftIcon ? 'pl-10' : '',
             rightIcon || isPassword ? 'pr-10' : '',
@@ -79,17 +97,30 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             .filter(Boolean)
             .join(' ');
 
+        const labelColor =
+            surface === 'light' ? 'text-secondary-600' : 'text-word-300';
+        const requiredColor =
+            surface === 'light' ? 'text-primary-600' : 'text-primary-400';
+        const iconColor =
+            surface === 'light' ? 'text-secondary-500' : 'text-word-400';
+        const iconHover =
+            surface === 'light'
+                ? 'hover:text-secondary-800'
+                : 'hover:text-word-200';
+        const helperColor =
+            surface === 'light' ? 'text-secondary-500' : 'text-word-400';
+
         return (
             <div className="w-full">
                 {label && (
                     <label
                         htmlFor={inputId}
-                        className="text-word-300 mb-2 block font-mono text-xs font-bold tracking-widest uppercase"
+                        className={`${labelColor} mb-2 block font-mono text-xs font-bold tracking-widest uppercase`}
                     >
                         {label}
                         {isRequired && (
                             <span
-                                className="text-primary-400 ml-1"
+                                className={`${requiredColor} ml-1`}
                                 aria-hidden="true"
                             >
                                 *
@@ -100,7 +131,9 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
                 <div className="relative">
                     {leftIcon && (
-                        <div className="text-word-400 pointer-events-none absolute top-1/2 left-3 -translate-y-1/2">
+                        <div
+                            className={`${iconColor} pointer-events-none absolute top-1/2 left-3 -translate-y-1/2`}
+                        >
                             {leftIcon}
                         </div>
                     )}
@@ -125,7 +158,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
                         <button
                             type="button"
                             onClick={togglePassword}
-                            className="text-word-400 hover:text-word-200 absolute top-1/2 right-3 -translate-y-1/2 focus:outline-none"
+                            className={`${iconColor} ${iconHover} absolute top-1/2 right-3 -translate-y-1/2 focus:outline-none`}
                             aria-label={
                                 showPassword ? 'Hide password' : 'Show password'
                             }
@@ -139,7 +172,9 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
                     )}
 
                     {rightIcon && !isPassword && (
-                        <div className="text-word-400 absolute top-1/2 right-3 -translate-y-1/2">
+                        <div
+                            className={`${iconColor} absolute top-1/2 right-3 -translate-y-1/2`}
+                        >
                             {rightIcon}
                         </div>
                     )}
@@ -156,7 +191,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 )}
 
                 {helperText && !error && (
-                    <p id={helperId} className="text-word-400 mt-1 text-sm">
+                    <p id={helperId} className={`${helperColor} mt-1 text-sm`}>
                         {helperText}
                     </p>
                 )}

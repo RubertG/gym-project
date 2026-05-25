@@ -4,6 +4,7 @@ import { Loader2 } from 'lucide-react';
 export interface ButtonProps extends React.HTMLAttributes<HTMLElement> {
     variant?: 'primary' | 'secondary' | 'ghost' | 'danger';
     size?: 'sm' | 'md' | 'lg';
+    surface?: 'dark' | 'light';
     loading?: boolean;
     leftIcon?: React.ReactNode;
     rightIcon?: React.ReactNode;
@@ -13,12 +14,22 @@ export interface ButtonProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 const variantStyles = {
-    primary:
-        'bg-primary-400 text-black border-2 border-primary-400 hover:bg-primary-300',
-    secondary:
-        'bg-transparent text-secondary-200 border-2 border-secondary-400 hover:bg-secondary-400 hover:text-black',
-    ghost: 'bg-transparent text-word-200 border-2 border-transparent hover:border-secondary-400 hover:text-white',
-    danger: 'bg-red-600 text-white border-2 border-red-600 hover:bg-red-500 hover:border-red-500',
+    dark: {
+        primary:
+            'bg-primary-400 text-black border-2 border-primary-400 hover:bg-primary-300',
+        secondary:
+            'bg-transparent text-secondary-200 border-2 border-secondary-400 hover:bg-secondary-400 hover:text-black',
+        ghost: 'bg-transparent text-word-200 border-2 border-transparent hover:border-secondary-400 hover:text-white',
+        danger: 'bg-red-600 text-white border-2 border-red-600 hover:bg-red-500 hover:border-red-500',
+    },
+    light: {
+        primary:
+            'bg-background-900 text-primary-400 border-2 border-background-900 hover:bg-background-800 hover:border-background-800 hover:text-primary-300',
+        secondary:
+            'bg-transparent text-secondary-800 border-2 border-secondary-700 hover:bg-secondary-800 hover:text-white',
+        ghost: 'bg-transparent text-word-400 border-2 border-transparent hover:border-secondary-700 hover:text-background-900',
+        danger: 'bg-transparent text-red-600 border-2 border-red-600 hover:bg-red-600 hover:text-white',
+    },
 };
 
 const sizeStyles = {
@@ -32,6 +43,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {
             variant = 'primary',
             size = 'md',
+            surface = 'dark',
             loading = false,
             leftIcon,
             rightIcon,
@@ -44,12 +56,17 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         },
         ref
     ) => {
+        const ringOffset =
+            surface === 'light'
+                ? 'focus:ring-offset-white'
+                : 'focus:ring-offset-background-900';
+
         const baseClasses = [
-            'inline-flex items-center justify-center gap-2 font-bold tracking-wide',
-            'focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-background-900',
+            'inline-flex items-center justify-center gap-2 font-bold tracking-wide cursor-pointer',
+            `focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 ${ringOffset}`,
             'disabled:opacity-50 disabled:cursor-not-allowed',
             'transition-all duration-200',
-            variantStyles[variant],
+            variantStyles[surface][variant],
             sizeStyles[size],
             glow && variant === 'primary'
                 ? 'shadow-[0_0_25px_rgba(204,255,0,0.3)]'

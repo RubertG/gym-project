@@ -61,6 +61,29 @@ import Card from '../../components/ui/Card.tsx';
                     </div>
                 </div>
 
+                <!-- Variants (Light Surface) -->
+                <div class="bg-secondary-50 space-y-4 rounded-lg p-4">
+                    <h3
+                        class="text-secondary-600 font-mono text-xs tracking-widest uppercase md:text-sm"
+                    >
+                        Variants — Light Surface
+                    </h3>
+                    <div class="flex flex-wrap gap-4">
+                        <Button variant="primary" surface="light" client:load
+                            >Primary</Button
+                        >
+                        <Button variant="secondary" surface="light" client:load
+                            >Secondary</Button
+                        >
+                        <Button variant="ghost" surface="light" client:load
+                            >Ghost</Button
+                        >
+                        <Button variant="danger" surface="light" client:load
+                            >Danger</Button
+                        >
+                    </div>
+                </div>
+
                 <!-- Sizes -->
                 <div class="space-y-4">
                     <h3
@@ -81,6 +104,35 @@ import Card from '../../components/ui/Card.tsx';
                     </div>
                 </div>
 
+                <!-- Sizes (Light Surface) -->
+                <div class="bg-secondary-50 space-y-4 rounded-lg p-4">
+                    <h3
+                        class="text-secondary-600 font-mono text-xs tracking-widest uppercase md:text-sm"
+                    >
+                        Sizes — Light Surface
+                    </h3>
+                    <div class="flex flex-wrap items-center gap-4">
+                        <Button
+                            variant="primary"
+                            size="sm"
+                            surface="light"
+                            client:load>Small</Button
+                        >
+                        <Button
+                            variant="primary"
+                            size="md"
+                            surface="light"
+                            client:load>Medium</Button
+                        >
+                        <Button
+                            variant="primary"
+                            size="lg"
+                            surface="light"
+                            client:load>Large</Button
+                        >
+                    </div>
+                </div>
+
                 <!-- States -->
                 <div class="space-y-4">
                     <h3
@@ -94,6 +146,36 @@ import Card from '../../components/ui/Card.tsx';
                             Disabled
                         </Button>
                         <Button variant="primary" glow client:load>
+                            With Glow
+                        </Button>
+                    </div>
+                </div>
+
+                <!-- States (Light Surface) -->
+                <div class="bg-secondary-50 space-y-4 rounded-lg p-4">
+                    <h3
+                        class="text-secondary-600 font-mono text-xs tracking-widest uppercase md:text-sm"
+                    >
+                        States — Light Surface
+                    </h3>
+                    <div class="flex flex-wrap gap-4">
+                        <Button variant="primary" surface="light" client:load
+                            >Default</Button
+                        >
+                        <Button
+                            variant="primary"
+                            surface="light"
+                            disabled
+                            client:load
+                        >
+                            Disabled
+                        </Button>
+                        <Button
+                            variant="primary"
+                            surface="light"
+                            glow
+                            client:load
+                        >
                             With Glow
                         </Button>
                     </div>
@@ -124,6 +206,22 @@ import Card from '../../components/ui/Card.tsx';
                     />
                 </div>
 
+                <!-- Default (Light Surface) -->
+                <div class="bg-secondary-50 max-w-md space-y-4 rounded-lg p-4">
+                    <h3
+                        class="text-secondary-600 font-mono text-xs tracking-widest uppercase md:text-sm"
+                    >
+                        Default — Light Surface
+                    </h3>
+                    <Input
+                        type="text"
+                        label="Workout Name"
+                        placeholder="Enter your workout name..."
+                        surface="light"
+                        client:load
+                    />
+                </div>
+
                 <!-- With Error -->
                 <div class="max-w-md space-y-4">
                     <h3
@@ -142,6 +240,25 @@ import Card from '../../components/ui/Card.tsx';
                     />
                 </div>
 
+                <!-- With Error (Light Surface) -->
+                <div class="bg-secondary-50 max-w-md space-y-4 rounded-lg p-4">
+                    <h3
+                        class="text-secondary-600 font-mono text-xs tracking-widest uppercase md:text-sm"
+                    >
+                        With Error — Light Surface
+                    </h3>
+                    <Input
+                        type="email"
+                        label="Email"
+                        placeholder="your@email.com"
+                        error="Please enter a valid email address"
+                        value="invalid-email"
+                        isRequired
+                        surface="light"
+                        client:load
+                    />
+                </div>
+
                 <!-- Ghost Variant -->
                 <div class="max-w-md space-y-4">
                     <h3
@@ -153,6 +270,22 @@ import Card from '../../components/ui/Card.tsx';
                         type="text"
                         placeholder="Search exercises..."
                         variant="ghost"
+                        client:load
+                    />
+                </div>
+
+                <!-- Ghost Variant (Light Surface) -->
+                <div class="bg-secondary-50 max-w-md space-y-4 rounded-lg p-4">
+                    <h3
+                        class="text-secondary-600 font-mono text-xs tracking-widest uppercase md:text-sm"
+                    >
+                        Ghost Variant — Light Surface
+                    </h3>
+                    <Input
+                        type="text"
+                        placeholder="Search exercises..."
+                        variant="ghost"
+                        surface="light"
                         client:load
                     />
                 </div>
