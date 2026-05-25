@@ -22,12 +22,12 @@ const variantStyles = {
     dark: {
         default:
             'bg-background-800 text-white border-2 border-secondary-700 outline-none transition-colors duration-150 focus:border-primary-400',
-        ghost: 'bg-transparent border-0 border-b-2 border-secondary-700 rounded-none px-0 py-2 focus:border-primary-400 focus:ring-0',
+        ghost: 'bg-transparent border-0 border-b-2 border-secondary-700 rounded-none transition-colors duration-150 px-0 py-2 focus:border-primary-400 focus:ring-0',
     },
     light: {
         default:
             'bg-secondary-50 text-background-900 border-2 border-secondary-300 outline-none transition-colors duration-150 focus:border-primary-600',
-        ghost: 'bg-transparent border-0 border-b-2 border-secondary-300 rounded-none px-0 py-2 focus:border-primary-600 focus:ring-0',
+        ghost: 'bg-transparent border-0 border-b-2 border-secondary-300 rounded-none transition-colors duration-150 px-0 py-2 focus:border-primary-600 focus:ring-0',
     },
 };
 
