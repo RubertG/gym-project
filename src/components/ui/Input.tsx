@@ -18,7 +18,8 @@ export interface InputProps extends Omit<
 }
 
 const variantStyles = {
-    default: 'input-field',
+    default:
+        'bg-background-800 text-white border-2 border-secondary-700 outline-none transition-colors duration-150 focus:border-primary-400',
     ghost: 'bg-transparent border-0 border-b-2 border-secondary-700 rounded-none px-0 py-2 focus:border-primary-400 focus:ring-0',
 };
 
@@ -165,3 +166,4 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 );
 
 Input.displayName = 'Input';
+export default Input;

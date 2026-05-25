@@ -45,3 +45,4 @@ export const GlowEffect = React.forwardRef<HTMLDivElement, GlowEffectProps>(
 );
 
 GlowEffect.displayName = 'GlowEffect';
+export default GlowEffect;

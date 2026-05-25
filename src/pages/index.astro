@@ -1,79 +1,90 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Button from '../components/ui/Button.tsx';
+import Card from '../components/ui/Card.tsx';
 ---
 
 <Layout title="IRON TRACK - Voltage Industrial">
     <main class="min-h-screen">
         <!-- Hero Section - Dark -->
         <section
-            class="animate-fade-in-up bg-background-900 flex min-h-screen flex-col items-center justify-center p-8 text-center"
+            class="animate-fade-in-up bg-background-900 flex min-h-screen flex-col items-center justify-center p-4 text-center md:p-8"
         >
             <h1
-                class="font-display text-primary-400 text-6xl font-black tracking-tighter md:text-8xl"
+                class="font-display text-primary-400 text-4xl font-black tracking-tighter sm:text-5xl md:text-6xl lg:text-8xl"
             >
                 IRON TRACK
             </h1>
             <p
-                class="font-body text-word-200 mt-4 max-w-2xl text-xl leading-relaxed md:text-2xl"
+                class="font-body text-word-200 mt-4 max-w-2xl text-lg leading-relaxed md:text-xl lg:text-2xl"
             >
                 Industrial Brutalism meets Cyber-Minimalism. Track your workouts
                 with precision and style.
             </p>
             <div class="mt-8 flex flex-wrap justify-center gap-4">
-                <a href="/design-system" class="btn-primary inline-block">
+                <Button
+                    href="/design-system"
+                    variant="primary"
+                    className="inline-block"
+                    client:load
+                >
                     Explore Design System
-                </a>
-                <a
+                </Button>
+                <Button
                     href="/design-system/components"
-                    class="btn-secondary inline-block"
+                    variant="secondary"
+                    className="inline-block"
+                    client:load
                 >
                     View Components
-                </a>
+                </Button>
             </div>
         </section>
 
         <!-- Inverted Section - Primary Background -->
-        <section class="bg-primary-400 px-8 py-24">
+        <section class="bg-primary-400 px-4 py-16 md:px-8 md:py-24">
             <div class="mx-auto max-w-4xl text-center">
                 <h2
-                    class="font-display text-background-900 text-4xl font-bold tracking-tighter md:text-5xl"
+                    class="font-display text-background-900 text-3xl font-bold tracking-tighter md:text-4xl lg:text-5xl"
                 >
                     VOLTAGE INDUSTRIAL
                 </h2>
                 <p
-                    class="font-body text-background-800 mt-6 text-xl leading-relaxed"
+                    class="font-body text-background-800 mt-6 text-lg leading-relaxed md:text-xl"
                 >
                     Our design system fuses Industrial Brutalism with
                     Cyber-Minimalism. Sharp edges, electric lime accents, and
                     absolute darkness create an interface built for heavy use.
                 </p>
                 <div class="mt-8">
-                    <a
+                    <Button
                         href="/design-system"
-                        class="border-background-900 bg-background-900 text-word-100 hover:bg-background-800 inline-block border-2 px-8 py-4 font-bold transition-all duration-200"
+                        variant="primary"
+                        className="border-background-900 bg-background-900 text-word-100 hover:bg-background-800 inline-block border-2"
+                        client:load
                     >
                         View Full Palette
-                    </a>
+                    </Button>
                 </div>
             </div>
         </section>
 
         <!-- Features Section - Dark -->
-        <section class="bg-background-900 px-8 py-24">
+        <section class="bg-background-900 px-4 py-16 md:px-8 md:py-24">
             <div class="mx-auto max-w-6xl">
                 <h2
-                    class="font-display text-primary-400 mb-12 text-center text-4xl font-bold tracking-tighter"
+                    class="font-display text-primary-400 mb-8 text-center text-3xl font-bold tracking-tighter md:mb-12 md:text-4xl"
                 >
                     FEATURES
                 </h2>
-                <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-                    <div class="card-glass p-8">
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
+                    <Card className="p-6 md:p-8">
                         <span
                             class="text-word-400 font-mono text-xs tracking-widest uppercase"
                             >01</span
                         >
                         <h3
-                            class="font-display text-word-100 mt-2 text-2xl font-bold"
+                            class="font-display text-word-100 mt-2 text-xl font-bold md:text-2xl"
                         >
                             Track Workouts
                         </h3>
@@ -81,14 +92,14 @@ import Layout from '../layouts/Layout.astro';
                             Log sets, reps, and weight with precision. Batch
                             entry per exercise for efficiency.
                         </p>
-                    </div>
-                    <div class="card-glass p-8">
+                    </Card>
+                    <Card className="p-6 md:p-8">
                         <span
                             class="text-word-400 font-mono text-xs tracking-widest uppercase"
                             >02</span
                         >
                         <h3
-                            class="font-display text-word-100 mt-2 text-2xl font-bold"
+                            class="font-display text-word-100 mt-2 text-xl font-bold md:text-2xl"
                         >
                             Visualize Progress
                         </h3>
@@ -96,14 +107,14 @@ import Layout from '../layouts/Layout.astro';
                             Charts and graphs showing your strength evolution
                             over time. PR tracking included.
                         </p>
-                    </div>
-                    <div class="card-glass p-8">
+                    </Card>
+                    <Card className="p-6 md:p-8">
                         <span
                             class="text-word-400 font-mono text-xs tracking-widest uppercase"
                             >03</span
                         >
                         <h3
-                            class="font-display text-word-100 mt-2 text-2xl font-bold"
+                            class="font-display text-word-100 mt-2 text-xl font-bold md:text-2xl"
                         >
                             Community
                         </h3>
@@ -111,37 +122,39 @@ import Layout from '../layouts/Layout.astro';
                             Share routines, discover new exercises, and build
                             your gym network.
                         </p>
-                    </div>
+                    </Card>
                 </div>
             </div>
         </section>
 
         <!-- CTA Section - Dark with Glow -->
-        <section class="bg-background-900 px-8 py-24">
-            <div class="card-glass mx-auto max-w-3xl p-12 text-center">
+        <section class="bg-background-900 px-4 py-16 md:px-8 md:py-24">
+            <Card className="mx-auto max-w-3xl p-6 text-center md:p-10 lg:p-12">
                 <h2
-                    class="font-display text-primary-400 text-3xl font-bold tracking-tighter md:text-4xl"
+                    class="font-display text-primary-400 text-2xl font-bold tracking-tighter md:text-3xl lg:text-4xl"
                 >
                     READY TO LIFT?
                 </h2>
-                <p class="font-body text-word-300 mt-4 text-lg">
+                <p class="font-body text-word-300 mt-4 text-base md:text-lg">
                     Start tracking your gains with the most brutal workout app
                     on the web.
                 </p>
                 <div class="mt-8">
-                    <a
+                    <Button
                         href="/design-system/components"
-                        class="btn-primary inline-block"
+                        variant="primary"
+                        className="inline-block"
+                        client:load
                     >
                         Get Started
-                    </a>
+                    </Button>
                 </div>
-            </div>
+            </Card>
         </section>
 
         <!-- Footer -->
         <footer
-            class="border-secondary-800 bg-background-900 border-t px-8 py-12"
+            class="border-secondary-800 bg-background-900 border-t px-4 py-8 md:px-8 md:py-12"
         >
             <div class="mx-auto max-w-6xl">
                 <div
