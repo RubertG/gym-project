@@ -56,7 +56,7 @@ const wordScale = [
 ];
 ---
 
-<Layout title="IRON TRACK - Design System Palette">
+<Layout title="IRON TRACK - Paleta del Design System">
     <main class="bg-background-900 min-h-screen p-4 md:p-6 lg:p-8">
         <!-- Nav -->
         <nav class="border-secondary-800 mb-6 flex gap-4 border-b pb-4 md:mb-8">
@@ -64,13 +64,13 @@ const wordScale = [
                 href="/design-system"
                 class="text-primary-400 font-mono text-xs tracking-widest uppercase md:text-sm"
             >
-                Palette
+                Paleta
             </a>
             <a
                 href="/design-system/components"
                 class="text-word-400 hover:text-word-200 font-mono text-xs tracking-widest uppercase transition-colors md:text-sm"
             >
-                Components
+                Componentes
             </a>
         </nav>
 
@@ -82,7 +82,7 @@ const wordScale = [
                 VOLTAGE INDUSTRIAL
             </h1>
             <p class="font-body text-word-200 mt-2 text-lg md:text-xl">
-                Design System Palette — IRON TRACK
+                Paleta del Design System — IRON TRACK
             </p>
         </header>
 
@@ -95,7 +95,7 @@ const wordScale = [
                 <h2
                     class="font-display text-primary-400 mb-3 text-xl font-bold tracking-widest uppercase md:mb-4 md:text-2xl"
                 >
-                    Primary Scale
+                    Escala Primaria
                 </h2>
                 <div
                     class="grid grid-cols-5 gap-1 sm:grid-cols-7 md:grid-cols-9 md:gap-2 lg:grid-cols-11"
@@ -119,7 +119,7 @@ const wordScale = [
                 <h2
                     class="font-display text-secondary-300 mb-3 text-xl font-bold tracking-widest uppercase md:mb-4 md:text-2xl"
                 >
-                    Secondary Scale
+                    Escala Secundaria
                 </h2>
                 <div
                     class="grid grid-cols-5 gap-1 sm:grid-cols-7 md:grid-cols-9 md:gap-2 lg:grid-cols-11"
@@ -143,7 +143,7 @@ const wordScale = [
                 <h2
                     class="font-display text-word-300 mb-3 text-xl font-bold tracking-widest uppercase md:mb-4 md:text-2xl"
                 >
-                    Background Scale
+                    Escala de Fondo
                 </h2>
                 <div
                     class="grid grid-cols-5 gap-1 sm:grid-cols-7 md:grid-cols-9 md:gap-2 lg:grid-cols-11"
@@ -168,7 +168,7 @@ const wordScale = [
             <h2
                 class="font-display text-word-100 mb-3 text-xl font-bold tracking-widest uppercase md:mb-4 md:text-2xl"
             >
-                Word Scale (Text Colors)
+                Escala Word (Colores de Texto)
             </h2>
             <Card className="space-y-4 p-4 md:p-6 lg:p-8">
                 {
@@ -180,7 +180,8 @@ const wordScale = [
                                 {item.label}
                             </span>
                             <p class={`text-base md:text-xl ${item.class}`}>
-                                The quick brown fox jumps over the lazy dog
+                                El veloz murciélago hindú comía feliz cardillo y
+                                kiwi
                             </p>
                         </div>
                     ))
@@ -193,7 +194,7 @@ const wordScale = [
             <h2
                 class="font-display text-word-100 mb-3 text-xl font-bold tracking-widest uppercase md:mb-4 md:text-2xl"
             >
-                Typography Samples
+                Muestras Tipográficas
             </h2>
             <div class="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
                 <!-- Display -->
@@ -210,7 +211,7 @@ const wordScale = [
                     <p
                         class="font-display text-word-300 mt-4 text-base md:text-lg"
                     >
-                        Space Grotesk — Bold & Tight
+                        Space Grotesk — Negrita y Compacta
                     </p>
                 </Card>
 
@@ -218,17 +219,18 @@ const wordScale = [
                 <Card className="p-4 md:p-6">
                     <span
                         class="text-word-400 font-mono text-xs tracking-widest uppercase"
-                        >Body</span
+                        >Cuerpo</span
                     >
                     <p
                         class="font-body text-word-200 mt-2 text-base leading-relaxed md:text-lg"
                     >
-                        Inter is a clean and highly legible typeface designed
-                        for screens. It pairs perfectly with the industrial
-                        aesthetic of IRON TRACK.
+                        Inter es una tipografía limpia y muy legible diseñada
+                        para pantallas. Combina perfectamente con la estética
+                        industrial de IRON TRACK.
                     </p>
                     <p class="font-body text-word-300 mt-4 text-xs md:text-sm">
-                        Used for all body copy, labels, and UI text.
+                        Usada para todo el texto de cuerpo, etiquetas y texto de
+                        interfaz.
                     </p>
                 </Card>
 
@@ -241,12 +243,12 @@ const wordScale = [
                     <p
                         class="text-word-200 mt-2 font-mono text-base md:text-lg"
                     >
-                        SETS: 4<br />
+                        SERIES: 4<br />
                         REPS: 8-12<br />
-                        WEIGHT: 82.5 KG
+                        PESO: 82.5 KG
                     </p>
                     <p class="text-word-300 mt-4 font-mono text-xs md:text-sm">
-                        JetBrains Mono — Data & Labels
+                        JetBrains Mono — Datos y Etiquetas
                     </p>
                 </Card>
             </div>
@@ -257,7 +259,7 @@ const wordScale = [
             <h2
                 class="font-display text-word-100 mb-3 text-xl font-bold tracking-widest uppercase md:mb-4 md:text-2xl"
             >
-                Static Component Showcase
+                Muestra Estática de Componentes
             </h2>
             <Card className="space-y-8 p-4 md:p-6 lg:p-8">
                 <!-- Buttons -->
@@ -265,14 +267,14 @@ const wordScale = [
                     <h3
                         class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
                     >
-                        Buttons
+                        Botones
                     </h3>
                     <div class="flex flex-wrap gap-4">
                         <Button variant="primary" client:load
-                            >Primary Action</Button
+                            >Acción Principal</Button
                         >
                         <Button variant="secondary" client:load
-                            >Secondary Action</Button
+                            >Acción Secundaria</Button
                         >
                     </div>
                 </div>
@@ -282,11 +284,11 @@ const wordScale = [
                     <h3
                         class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
                     >
-                        Input Field
+                        Campo de Texto
                     </h3>
                     <Input
                         type="text"
-                        placeholder="Enter your workout name..."
+                        placeholder="Ingresa el nombre de tu entrenamiento..."
                         client:load
                     />
                 </div>
@@ -296,14 +298,14 @@ const wordScale = [
                     <h3
                         class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
                     >
-                        Glow Effect
+                        Efecto Glow
                     </h3>
                     <GlowEffect
                         color="primary"
                         intensity="md"
                         className="bg-primary-400 inline-block p-4 font-mono font-bold text-black md:p-6"
                     >
-                        GLOW PRIMARY
+                        GLOW PRIMARIO
                     </GlowEffect>
                 </div>
 
@@ -312,20 +314,20 @@ const wordScale = [
                     <h3
                         class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
                     >
-                        Glass Card
+                        Tarjeta Glass
                     </h3>
                     <Card className="max-w-md p-4 md:p-6">
                         <h4
                             class="font-display text-primary-400 text-lg font-bold md:text-xl"
                         >
-                            Workout Session
+                            Sesión de Entrenamiento
                         </h4>
                         <p
                             class="font-body text-word-300 mt-2 text-sm md:text-base"
                         >
-                            This is a glass card with backdrop blur and a subtle
-                            lime border. Used for panels and floating UI
-                            elements.
+                            Esta es una tarjeta glass con desenfoque de fondo y
+                            un borde lima sutil. Usada para paneles y elementos
+                            flotantes de interfaz.
                         </p>
                     </Card>
                 </div>

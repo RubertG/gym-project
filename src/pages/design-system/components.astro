@@ -6,7 +6,7 @@ import GlowEffect from '../../components/ui/GlowEffect.tsx';
 import Card from '../../components/ui/Card.tsx';
 ---
 
-<Layout title="IRON TRACK - Components">
+<Layout title="IRON TRACK - Componentes">
     <main class="bg-background-900 min-h-screen p-4 md:p-6 lg:p-8">
         <!-- Nav -->
         <nav class="border-secondary-800 mb-6 flex gap-4 border-b pb-4 md:mb-8">
@@ -14,13 +14,13 @@ import Card from '../../components/ui/Card.tsx';
                 href="/design-system"
                 class="text-word-400 hover:text-word-200 font-mono text-xs tracking-widest uppercase transition-colors md:text-sm"
             >
-                Palette
+                Paleta
             </a>
             <a
                 href="/design-system/components"
                 class="text-primary-400 font-mono text-xs tracking-widest uppercase md:text-sm"
             >
-                Components
+                Componentes
             </a>
         </nav>
 
@@ -29,10 +29,10 @@ import Card from '../../components/ui/Card.tsx';
             <h1
                 class="font-display text-primary-400 text-3xl font-bold tracking-tighter md:text-4xl lg:text-5xl"
             >
-                COMPONENTS
+                COMPONENTES
             </h1>
             <p class="font-body text-word-200 mt-2 text-lg md:text-xl">
-                Reusable React UI Components — IRON TRACK
+                Componentes React Reutilizables — IRON TRACK
             </p>
         </header>
 
@@ -41,7 +41,7 @@ import Card from '../../components/ui/Card.tsx';
             <h2
                 class="font-display text-word-100 mb-3 text-xl font-bold tracking-widest uppercase md:mb-4 md:text-2xl"
             >
-                Button
+                Botón
             </h2>
             <Card className="space-y-8 p-4 md:p-6 lg:p-8">
                 <!-- Variants -->
@@ -49,15 +49,15 @@ import Card from '../../components/ui/Card.tsx';
                     <h3
                         class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
                     >
-                        Variants
+                        Variantes
                     </h3>
                     <div class="flex flex-wrap gap-4">
-                        <Button variant="primary" client:load>Primary</Button>
+                        <Button variant="primary" client:load>Primario</Button>
                         <Button variant="secondary" client:load
-                            >Secondary</Button
+                            >Secundario</Button
                         >
                         <Button variant="ghost" client:load>Ghost</Button>
-                        <Button variant="danger" client:load>Danger</Button>
+                        <Button variant="danger" client:load>Peligro</Button>
                     </div>
                 </div>
 
@@ -66,20 +66,20 @@ import Card from '../../components/ui/Card.tsx';
                     <h3
                         class="text-secondary-600 font-mono text-xs tracking-widest uppercase md:text-sm"
                     >
-                        Variants — Light Surface
+                        Variantes — Superficie Clara
                     </h3>
                     <div class="flex flex-wrap gap-4">
                         <Button variant="primary" surface="light" client:load
-                            >Primary</Button
+                            >Primario</Button
                         >
                         <Button variant="secondary" surface="light" client:load
-                            >Secondary</Button
+                            >Secundario</Button
                         >
                         <Button variant="ghost" surface="light" client:load
                             >Ghost</Button
                         >
                         <Button variant="danger" surface="light" client:load
-                            >Danger</Button
+                            >Peligro</Button
                         >
                     </div>
                 </div>
@@ -89,17 +89,17 @@ import Card from '../../components/ui/Card.tsx';
                     <h3
                         class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
                     >
-                        Sizes
+                        Tamaños
                     </h3>
                     <div class="flex flex-wrap items-center gap-4">
                         <Button variant="primary" size="sm" client:load
-                            >Small</Button
+                            >Pequeño</Button
                         >
                         <Button variant="primary" size="md" client:load
-                            >Medium</Button
+                            >Mediano</Button
                         >
                         <Button variant="primary" size="lg" client:load
-                            >Large</Button
+                            >Grande</Button
                         >
                     </div>
                 </div>
@@ -109,26 +109,26 @@ import Card from '../../components/ui/Card.tsx';
                     <h3
                         class="text-secondary-600 font-mono text-xs tracking-widest uppercase md:text-sm"
                     >
-                        Sizes — Light Surface
+                        Tamaños — Superficie Clara
                     </h3>
                     <div class="flex flex-wrap items-center gap-4">
                         <Button
                             variant="primary"
                             size="sm"
                             surface="light"
-                            client:load>Small</Button
+                            client:load>Pequeño</Button
                         >
                         <Button
                             variant="primary"
                             size="md"
                             surface="light"
-                            client:load>Medium</Button
+                            client:load>Mediano</Button
                         >
                         <Button
                             variant="primary"
                             size="lg"
                             surface="light"
-                            client:load>Large</Button
+                            client:load>Grande</Button
                         >
                     </div>
                 </div>
@@ -138,15 +138,17 @@ import Card from '../../components/ui/Card.tsx';
                     <h3
                         class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
                     >
-                        States
+                        Estados
                     </h3>
                     <div class="flex flex-wrap gap-4">
-                        <Button variant="primary" client:load>Default</Button>
+                        <Button variant="primary" client:load
+                            >Predeterminado</Button
+                        >
                         <Button variant="primary" disabled client:load>
-                            Disabled
+                            Desactivado
                         </Button>
                         <Button variant="primary" glow client:load>
-                            With Glow
+                            Con Glow
                         </Button>
                     </div>
                 </div>
@@ -156,11 +158,11 @@ import Card from '../../components/ui/Card.tsx';
                     <h3
                         class="text-secondary-600 font-mono text-xs tracking-widest uppercase md:text-sm"
                     >
-                        States — Light Surface
+                        Estados — Superficie Clara
                     </h3>
                     <div class="flex flex-wrap gap-4">
                         <Button variant="primary" surface="light" client:load
-                            >Default</Button
+                            >Predeterminado</Button
                         >
                         <Button
                             variant="primary"
@@ -168,7 +170,7 @@ import Card from '../../components/ui/Card.tsx';
                             disabled
                             client:load
                         >
-                            Disabled
+                            Desactivado
                         </Button>
                         <Button
                             variant="primary"
@@ -176,7 +178,7 @@ import Card from '../../components/ui/Card.tsx';
                             glow
                             client:load
                         >
-                            With Glow
+                            Con Glow
                         </Button>
                     </div>
                 </div>
@@ -188,7 +190,7 @@ import Card from '../../components/ui/Card.tsx';
             <h2
                 class="font-display text-word-100 mb-3 text-xl font-bold tracking-widest uppercase md:mb-4 md:text-2xl"
             >
-                Input
+                Campo de Texto
             </h2>
             <Card className="space-y-8 p-4 md:p-6 lg:p-8">
                 <!-- Default -->
@@ -196,12 +198,12 @@ import Card from '../../components/ui/Card.tsx';
                     <h3
                         class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
                     >
-                        Default
+                        Predeterminado
                     </h3>
                     <Input
                         type="text"
-                        label="Workout Name"
-                        placeholder="Enter your workout name..."
+                        label="Nombre del Entrenamiento"
+                        placeholder="Ingresa el nombre de tu entrenamiento..."
                         client:load
                     />
                 </div>
@@ -211,12 +213,12 @@ import Card from '../../components/ui/Card.tsx';
                     <h3
                         class="text-secondary-600 font-mono text-xs tracking-widest uppercase md:text-sm"
                     >
-                        Default — Light Surface
+                        Predeterminado — Superficie Clara
                     </h3>
                     <Input
                         type="text"
-                        label="Workout Name"
-                        placeholder="Enter your workout name..."
+                        label="Nombre del Entrenamiento"
+                        placeholder="Ingresa el nombre de tu entrenamiento..."
                         surface="light"
                         client:load
                     />
@@ -227,14 +229,14 @@ import Card from '../../components/ui/Card.tsx';
                     <h3
                         class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
                     >
-                        With Error
+                        Con Error
                     </h3>
                     <Input
                         type="email"
-                        label="Email"
-                        placeholder="your@email.com"
-                        error="Please enter a valid email address"
-                        value="invalid-email"
+                        label="Correo Electrónico"
+                        placeholder="tu@correo.com"
+                        error="Por favor, ingresa un correo electrónico válido"
+                        value="correo-invalido"
                         isRequired
                         client:load
                     />
@@ -245,14 +247,14 @@ import Card from '../../components/ui/Card.tsx';
                     <h3
                         class="text-secondary-600 font-mono text-xs tracking-widest uppercase md:text-sm"
                     >
-                        With Error — Light Surface
+                        Con Error — Superficie Clara
                     </h3>
                     <Input
                         type="email"
-                        label="Email"
-                        placeholder="your@email.com"
-                        error="Please enter a valid email address"
-                        value="invalid-email"
+                        label="Correo Electrónico"
+                        placeholder="tu@correo.com"
+                        error="Por favor, ingresa un correo electrónico válido"
+                        value="correo-invalido"
                         isRequired
                         surface="light"
                         client:load
@@ -264,11 +266,11 @@ import Card from '../../components/ui/Card.tsx';
                     <h3
                         class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
                     >
-                        Ghost Variant
+                        Variante Ghost
                     </h3>
                     <Input
                         type="text"
-                        placeholder="Search exercises..."
+                        placeholder="Buscar ejercicios..."
                         variant="ghost"
                         client:load
                     />
@@ -279,11 +281,11 @@ import Card from '../../components/ui/Card.tsx';
                     <h3
                         class="text-secondary-600 font-mono text-xs tracking-widest uppercase md:text-sm"
                     >
-                        Ghost Variant — Light Surface
+                        Variante Ghost — Superficie Clara
                     </h3>
                     <Input
                         type="text"
-                        placeholder="Search exercises..."
+                        placeholder="Buscar ejercicios..."
                         variant="ghost"
                         surface="light"
                         client:load
@@ -297,7 +299,7 @@ import Card from '../../components/ui/Card.tsx';
             <h2
                 class="font-display text-word-100 mb-3 text-xl font-bold tracking-widest uppercase md:mb-4 md:text-2xl"
             >
-                Glow Effect
+                Efecto Glow
             </h2>
             <Card className="space-y-8 p-4 md:p-6 lg:p-8">
                 <div class="flex flex-wrap gap-8">
@@ -310,7 +312,7 @@ import Card from '../../components/ui/Card.tsx';
                             SM
                         </GlowEffect>
                         <span class="text-word-400 font-mono text-xs"
-                            >Small</span
+                            >Pequeño</span
                         >
                     </div>
                     <div class="space-y-2 text-center">
@@ -322,7 +324,7 @@ import Card from '../../components/ui/Card.tsx';
                             MD
                         </GlowEffect>
                         <span class="text-word-400 font-mono text-xs"
-                            >Medium</span
+                            >Mediano</span
                         >
                     </div>
                     <div class="space-y-2 text-center">
@@ -334,7 +336,7 @@ import Card from '../../components/ui/Card.tsx';
                             LG
                         </GlowEffect>
                         <span class="text-word-400 font-mono text-xs"
-                            >Large</span
+                            >Grande</span
                         >
                     </div>
                 </div>
