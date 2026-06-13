@@ -15,6 +15,7 @@ export interface ToastProps {
     duration?: number;
     onClose: () => void;
     position?: ToastPosition;
+    className?: string;
 }
 
 const typeConfig = {
