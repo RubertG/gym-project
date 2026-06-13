@@ -5,6 +5,7 @@ export interface SwitchProps extends Omit<
     'type' | 'size'
 > {
     checked?: boolean;
+    defaultChecked?: boolean;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     disabled?: boolean;
     size?: 'sm' | 'md';
@@ -19,6 +20,7 @@ export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
     (
         {
             checked,
+            defaultChecked,
             onChange,
             disabled = false,
             size = 'md',
@@ -29,6 +31,9 @@ export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
     ) => {
         const { track, thumb, translate } = sizeMap[size];
 
+        const isControlled = checked !== undefined;
+        const isChecked = isControlled ? checked : defaultChecked;
+
         return (
             <label
                 className={`inline-flex cursor-pointer items-center select-none ${disabled ? 'cursor-not-allowed opacity-50' : ''} ${className}`.trim()}
@@ -37,6 +42,7 @@ export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
                     ref={ref}
                     type="checkbox"
                     checked={checked}
+                    defaultChecked={defaultChecked}
                     onChange={onChange}
                     disabled={disabled}
                     className="sr-only"
@@ -44,13 +50,13 @@ export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
                 />
                 <div
                     className={`relative inline-flex items-center rounded-full transition-colors duration-200 ${track} ${
-                        checked ? 'bg-primary-400' : 'bg-secondary-700'
+                        isChecked ? 'bg-primary-400' : 'bg-secondary-700'
                     } ${!disabled ? 'active:scale-[0.97]' : ''}`}
                     aria-hidden="true"
                 >
                     <div
                         className={`absolute left-1 rounded-full bg-white transition-transform duration-200 ${thumb} ${
-                            checked ? translate : 'translate-x-0'
+                            isChecked ? translate : 'translate-x-0'
                         }`}
                     />
                 </div>

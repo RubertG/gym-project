@@ -6,6 +6,7 @@ export interface CheckboxProps extends Omit<
     'type'
 > {
     checked?: boolean;
+    defaultChecked?: boolean;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     disabled?: boolean;
     label?: string;
@@ -16,6 +17,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
     (
         {
             checked,
+            defaultChecked,
             onChange,
             disabled = false,
             label,
@@ -28,6 +30,9 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
         const generatedId = React.useId();
         const checkboxId = id || generatedId;
 
+        const isControlled = checked !== undefined;
+        const isChecked = isControlled ? checked : defaultChecked;
+
         return (
             <label
                 htmlFor={checkboxId}
@@ -39,6 +44,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
                         id={checkboxId}
                         type="checkbox"
                         checked={checked}
+                        defaultChecked={defaultChecked}
                         onChange={onChange}
                         disabled={disabled}
                         className="sr-only"
@@ -46,17 +52,17 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
                     />
                     <div
                         className={`h-5 w-5 border-2 transition-colors duration-150 ${
-                            checked
+                            isChecked
                                 ? 'bg-primary-400 border-primary-400'
                                 : 'border-secondary-400 bg-transparent'
                         } ${
-                            !disabled && !checked
+                            !disabled && !isChecked
                                 ? 'hover:border-primary-400'
                                 : ''
                         } ${!disabled ? 'active:scale-[0.97]' : ''}`}
                         aria-hidden="true"
                     >
-                        {checked && (
+                        {isChecked && (
                             <Check
                                 className="h-4 w-4 text-black"
                                 strokeWidth={3}
