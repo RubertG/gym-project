@@ -4,13 +4,18 @@
  */
 
 import type { DbClient } from '@/lib/db/types';
-import type { UserActiveRoutineLog, WorkoutSession, WorkoutSet } from '@/lib/models';
+import type {
+    UserActiveRoutineLog,
+    WorkoutSession,
+    WorkoutSet,
+} from '@/lib/models';
+import { AppError, NotFoundError } from '@/lib/utils/errors';
 
 /* ─────────── workout_sessions ─────────── */
 
 export async function findSessionsByUser(
     db: DbClient,
-    userId: string,
+    userId: string
 ): Promise<WorkoutSession[]> {
     const { data, error } = await db
         .from<WorkoutSession>('workout_sessions')
@@ -19,13 +24,13 @@ export async function findSessionsByUser(
         .is('deleted_at', null)
         .order('session_date', { ascending: false });
 
-    if (error) throw new Error(error.message);
+    if (error) throw new AppError(error.message, 500);
     return data ?? [];
 }
 
 export async function findSessionById(
     db: DbClient,
-    id: string,
+    id: string
 ): Promise<WorkoutSession | null> {
     const { data, error } = await db
         .from<WorkoutSession>('workout_sessions')
@@ -33,7 +38,7 @@ export async function findSessionById(
         .eq('id', id)
         .maybeSingle();
 
-    if (error) throw new Error(error.message);
+    if (error) throw new AppError(error.message, 500);
     return data ?? null;
 }
 
@@ -45,7 +50,7 @@ export async function createSession(
         routineDayId: string | null;
         sessionDate: string;
         note?: string | null;
-    },
+    }
 ): Promise<WorkoutSession> {
     const { data, error } = await db
         .from<WorkoutSession>('workout_sessions')
@@ -60,11 +65,15 @@ export async function createSession(
         .select()
         .single();
 
-    if (error || !data) throw new Error(error?.message ?? 'Error al crear sesión');
+    if (error || !data)
+        throw new AppError(error?.message ?? 'Error al crear sesión', 500);
     return data;
 }
 
-export async function completeSession(db: DbClient, id: string): Promise<WorkoutSession> {
+export async function completeSession(
+    db: DbClient,
+    id: string
+): Promise<WorkoutSession> {
     const { data, error } = await db
         .from<WorkoutSession>('workout_sessions')
         .update({ status: 'completed', completed_at: new Date().toISOString() })
@@ -72,24 +81,27 @@ export async function completeSession(db: DbClient, id: string): Promise<Workout
         .select()
         .single();
 
-    if (error || !data) throw new Error(error?.message ?? 'Error al completar sesión');
+    if (error || !data) throw new NotFoundError('Sesión');
     return data;
 }
 
-export async function softDeleteSession(db: DbClient, id: string): Promise<void> {
+export async function softDeleteSession(
+    db: DbClient,
+    id: string
+): Promise<void> {
     const { error } = await db
         .from<WorkoutSession>('workout_sessions')
         .update({ deleted_at: new Date().toISOString() })
         .eq('id', id);
 
-    if (error) throw new Error(error.message);
+    if (error) throw new AppError(error.message, 500);
 }
 
 /* ─────────── workout_sets ─────────── */
 
 export async function findSetsBySessionId(
     db: DbClient,
-    sessionId: string,
+    sessionId: string
 ): Promise<WorkoutSet[]> {
     const { data, error } = await db
         .from<WorkoutSet>('workout_sets')
@@ -98,13 +110,13 @@ export async function findSetsBySessionId(
         .is('deleted_at', null)
         .order('set_number', { ascending: true });
 
-    if (error) throw new Error(error.message);
+    if (error) throw new AppError(error.message, 500);
     return data ?? [];
 }
 
 export async function findSetsByExerciseId(
     db: DbClient,
-    exerciseId: string,
+    exerciseId: string
 ): Promise<WorkoutSet[]> {
     const { data, error } = await db
         .from<WorkoutSet>('workout_sets')
@@ -113,7 +125,7 @@ export async function findSetsByExerciseId(
         .is('deleted_at', null)
         .order('created_at', { ascending: true });
 
-    if (error) throw new Error(error.message);
+    if (error) throw new AppError(error.message, 500);
     return data ?? [];
 }
 
@@ -123,7 +135,7 @@ export async function createWorkoutSets(
         workoutSessionId: string;
         exerciseId: string;
         sets: Pick<WorkoutSet, 'setNumber' | 'reps' | 'weightKg' | 'note'>[];
-    },
+    }
 ): Promise<WorkoutSet[]> {
     const rows = payload.sets.map((s) => ({
         workout_session_id: payload.workoutSessionId,
@@ -139,7 +151,8 @@ export async function createWorkoutSets(
         .insert(rows as unknown[])
         .select();
 
-    if (error || !data) throw new Error(error?.message ?? 'Error al insertar series');
+    if (error || !data)
+        throw new AppError(error?.message ?? 'Error al insertar series', 500);
     return data;
 }
 
@@ -149,7 +162,7 @@ export async function findSessionsInDateRange(
     db: DbClient,
     userId: string,
     startDate: string,
-    endDate: string,
+    endDate: string
 ): Promise<WorkoutSession[]> {
     const { data, error } = await db
         .from<WorkoutSession>('workout_sessions')
@@ -160,14 +173,14 @@ export async function findSessionsInDateRange(
         .is('deleted_at', null)
         .order('session_date', { ascending: true });
 
-    if (error) throw new Error(error.message);
+    if (error) throw new AppError(error.message, 500);
     return data ?? [];
 }
 
 export async function findSetsByUserAndExercise(
     db: DbClient,
     userId: string,
-    exerciseId: string,
+    exerciseId: string
 ): Promise<(WorkoutSet & { session_date: string })[]> {
     const { data, error } = await db
         .from<WorkoutSet & { session_date: string }>('workout_sets')
@@ -177,7 +190,7 @@ export async function findSetsByUserAndExercise(
         .is('deleted_at', null)
         .order('created_at', { ascending: true });
 
-    if (error) throw new Error(error.message);
+    if (error) throw new AppError(error.message, 500);
     return data ?? [];
 }
 
@@ -185,7 +198,7 @@ export async function findSetsByUserAndExercise(
 
 export async function findActiveRoutineLog(
     db: DbClient,
-    userId: string,
+    userId: string
 ): Promise<UserActiveRoutineLog | null> {
     const { data, error } = await db
         .from<UserActiveRoutineLog>('user_active_routine_log')
@@ -194,6 +207,6 @@ export async function findActiveRoutineLog(
         .is('deactivated_at', null)
         .maybeSingle();
 
-    if (error) throw new Error(error.message);
+    if (error) throw new AppError(error.message, 500);
     return data ?? null;
 }

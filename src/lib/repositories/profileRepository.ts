@@ -5,10 +5,11 @@
 
 import type { DbClient } from '@/lib/db/types';
 import type { Profile } from '@/lib/models';
+import { AppError, NotFoundError } from '@/lib/utils/errors';
 
 export async function findProfileByUserId(
     db: DbClient,
-    userId: string,
+    userId: string
 ): Promise<Profile | null> {
     const { data, error } = await db
         .from<Profile>('profiles')
@@ -16,13 +17,13 @@ export async function findProfileByUserId(
         .eq('user_id', userId)
         .maybeSingle();
 
-    if (error) throw new Error(error.message);
+    if (error) throw new AppError(error.message, 500);
     return data ?? null;
 }
 
 export async function findProfileByUsername(
     db: DbClient,
-    username: string,
+    username: string
 ): Promise<Profile | null> {
     const { data, error } = await db
         .from<Profile>('profiles')
@@ -30,14 +31,14 @@ export async function findProfileByUsername(
         .ilike('username', username)
         .maybeSingle();
 
-    if (error) throw new Error(error.message);
+    if (error) throw new AppError(error.message, 500);
     return data ?? null;
 }
 
 export async function createProfile(
     db: DbClient,
     userId: string,
-    username?: string,
+    username?: string
 ): Promise<Profile> {
     const { data, error } = await db
         .from<Profile>('profiles')
@@ -45,14 +46,15 @@ export async function createProfile(
         .select()
         .single();
 
-    if (error || !data) throw new Error(error?.message ?? 'Error al crear perfil');
+    if (error || !data)
+        throw new AppError(error?.message ?? 'Error al crear perfil', 500);
     return data;
 }
 
 export async function updateProfile(
     db: DbClient,
     userId: string,
-    payload: Partial<Pick<Profile, 'username' | 'avatarUrl'>>,
+    payload: Partial<Pick<Profile, 'username' | 'avatarUrl'>>
 ): Promise<Profile> {
     const mapped: Record<string, unknown> = {};
 
@@ -66,15 +68,18 @@ export async function updateProfile(
         .select()
         .single();
 
-    if (error || !data) throw new Error(error?.message ?? 'Error al actualizar perfil');
+    if (error || !data) throw new NotFoundError('Perfil');
     return data;
 }
 
-export async function softDeleteProfile(db: DbClient, userId: string): Promise<void> {
+export async function softDeleteProfile(
+    db: DbClient,
+    userId: string
+): Promise<void> {
     const { error } = await db
         .from<Profile>('profiles')
         .update({ deleted_at: new Date().toISOString() })
         .eq('user_id', userId);
 
-    if (error) throw new Error(error.message);
+    if (error) throw new AppError(error.message, 500);
 }
