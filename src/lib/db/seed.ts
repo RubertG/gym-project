@@ -15,58 +15,60 @@ import type { RoutineDayInput } from '@/lib/models';
 
 const EXERCISES_BY_CATEGORY: Record<string, string[]> = {
     Pecho: [
-        'Press de banca plano',
-        'Press de banca inclinado',
-        'Press de banca declinado',
-        'Aperturas con mancuernas',
-        'Fondos en paralelas',
-        'Cruces en polea alta',
-        'Flexiones',
-        'Press con mancuernas en banco plano',
-        'Aperturas en máquina',
+        'Press Banca Plano',
+        'Press Banca Inclinado',
+        'Press Banca Declinado',
+        'Aperturas con Mancuernas',
+        'Fondos en Paralelas',
+        'Cruces en Polea Baja',
+        'Pullover con Mancuerna',
     ],
     Espalda: [
         'Dominadas',
-        'Jalón al pecho',
-        'Remo con barra',
-        'Remo con mancuerna',
-        'Pullover',
-        'Face pull',
-        'Hiperextensiones',
-        'Remo en máquina',
-        'Peso muerto convencional',
-        'Peso muerto rumano',
+        'Jalón al Pecho',
+        'Remo con Barra',
+        'Remo con Mancuerna',
+        'Remo en Máquina',
+        'Pulldown con Agarre Neutro',
+        'Hiperextensiones de Espalda',
     ],
-    Pierna: [
-        'Sentadilla libre',
-        'Sentadilla frontal',
-        'Prensa de piernas',
-        'Extensiones de cuádriceps',
-        'Curl femoral acostado',
-        'Curl femoral sentado',
-        'Hip thrust',
-        'Zancadas caminando',
-        'Peso muerto sumo',
-        'Elevación de talones',
+    Piernas: [
+        'Sentadilla Tradicional',
+        'Sentadilla Frontal',
+        'Prensa de Piernas',
+        'Peso Muerto',
+        'Peso Muerto Rumano',
+        'Zancadas con Mancuernas',
+        'Extensión de Cuádriceps',
+        'Curl Femoral Acostado',
+        'Elevación de Talones',
     ],
-    Hombro: [
-        'Press militar con barra',
-        'Press Arnold',
-        'Elevaciones laterales',
-        'Elevaciones frontales',
-        'Pájaro invertido',
-        'Face pull de hombro',
-        'Encogimientos con mancuernas',
+    Hombros: [
+        'Press Militar con Barra',
+        'Press Militar con Mancuernas',
+        'Elevaciones Laterales',
+        'Elevaciones Frontales',
+        'Pájaro con Mancuernas',
+        'Face Pull',
     ],
-    Brazo: [
-        'Curl con barra',
-        'Curl con mancuernas',
-        'Curl martillo',
-        'Curl en banco Scott',
-        'Extensión de tríceps en polea',
-        'Press francés',
-        'Fondos en banco',
-        'Kickbacks de tríceps',
+    Brazos: [
+        'Curl con Barra',
+        'Curl con Mancuernas',
+        'Curl Martillo',
+        'Curl en Banco Scott',
+        'Curl en Polea',
+        'Press Francés',
+        'Extensiones de Tríceps en Polea',
+        'Fondos para Tríceps',
+    ],
+    'Core y Cardio': [
+        'Crunch Abdominal',
+        'Plancha Frontal',
+        'Elevación de Piernas',
+        'Russian Twist',
+        'Cinta de Correr',
+        'Bicicleta Estática',
+        'Elíptica',
     ],
 };
 
@@ -87,10 +89,34 @@ const ROUTINES: { name: string; days: RoutineDayInput[] }[] = [
                 dayName: 'Lunes - Full Body A',
                 orderIndex: 0,
                 exercises: [
-                    { exerciseId: '', orderIndex: 0, suggestedSets: 4, suggestedReps: '6-8', notes: 'Pesado' },
-                    { exerciseId: '', orderIndex: 1, suggestedSets: 3, suggestedReps: '8-10', notes: null },
-                    { exerciseId: '', orderIndex: 2, suggestedSets: 3, suggestedReps: '10-12', notes: null },
-                    { exerciseId: '', orderIndex: 3, suggestedSets: 3, suggestedReps: '10-12', notes: null },
+                    {
+                        exerciseId: '',
+                        orderIndex: 0,
+                        suggestedSets: 4,
+                        suggestedReps: '6-8',
+                        notes: 'Pesado',
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 1,
+                        suggestedSets: 3,
+                        suggestedReps: '8-10',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 2,
+                        suggestedSets: 3,
+                        suggestedReps: '10-12',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 3,
+                        suggestedSets: 3,
+                        suggestedReps: '10-12',
+                        notes: null,
+                    },
                 ],
             },
             {
@@ -98,10 +124,34 @@ const ROUTINES: { name: string; days: RoutineDayInput[] }[] = [
                 dayName: 'Miércoles - Full Body B',
                 orderIndex: 1,
                 exercises: [
-                    { exerciseId: '', orderIndex: 0, suggestedSets: 4, suggestedReps: '6-8', notes: 'Pesado' },
-                    { exerciseId: '', orderIndex: 1, suggestedSets: 3, suggestedReps: '8-10', notes: null },
-                    { exerciseId: '', orderIndex: 2, suggestedSets: 3, suggestedReps: '10-12', notes: null },
-                    { exerciseId: '', orderIndex: 3, suggestedSets: 3, suggestedReps: '10-12', notes: null },
+                    {
+                        exerciseId: '',
+                        orderIndex: 0,
+                        suggestedSets: 4,
+                        suggestedReps: '6-8',
+                        notes: 'Pesado',
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 1,
+                        suggestedSets: 3,
+                        suggestedReps: '8-10',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 2,
+                        suggestedSets: 3,
+                        suggestedReps: '10-12',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 3,
+                        suggestedSets: 3,
+                        suggestedReps: '10-12',
+                        notes: null,
+                    },
                 ],
             },
             {
@@ -109,10 +159,34 @@ const ROUTINES: { name: string; days: RoutineDayInput[] }[] = [
                 dayName: 'Viernes - Full Body C',
                 orderIndex: 2,
                 exercises: [
-                    { exerciseId: '', orderIndex: 0, suggestedSets: 4, suggestedReps: '6-8', notes: 'Pesado' },
-                    { exerciseId: '', orderIndex: 1, suggestedSets: 3, suggestedReps: '8-10', notes: null },
-                    { exerciseId: '', orderIndex: 2, suggestedSets: 3, suggestedReps: '10-12', notes: null },
-                    { exerciseId: '', orderIndex: 3, suggestedSets: 3, suggestedReps: '10-12', notes: null },
+                    {
+                        exerciseId: '',
+                        orderIndex: 0,
+                        suggestedSets: 4,
+                        suggestedReps: '6-8',
+                        notes: 'Pesado',
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 1,
+                        suggestedSets: 3,
+                        suggestedReps: '8-10',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 2,
+                        suggestedSets: 3,
+                        suggestedReps: '10-12',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 3,
+                        suggestedSets: 3,
+                        suggestedReps: '10-12',
+                        notes: null,
+                    },
                 ],
             },
         ],
@@ -125,11 +199,41 @@ const ROUTINES: { name: string; days: RoutineDayInput[] }[] = [
                 dayName: 'Lunes - Upper',
                 orderIndex: 0,
                 exercises: [
-                    { exerciseId: '', orderIndex: 0, suggestedSets: 4, suggestedReps: '6-8', notes: null },
-                    { exerciseId: '', orderIndex: 1, suggestedSets: 4, suggestedReps: '6-8', notes: null },
-                    { exerciseId: '', orderIndex: 2, suggestedSets: 3, suggestedReps: '10-12', notes: null },
-                    { exerciseId: '', orderIndex: 3, suggestedSets: 3, suggestedReps: '10-12', notes: null },
-                    { exerciseId: '', orderIndex: 4, suggestedSets: 3, suggestedReps: '12-15', notes: null },
+                    {
+                        exerciseId: '',
+                        orderIndex: 0,
+                        suggestedSets: 4,
+                        suggestedReps: '6-8',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 1,
+                        suggestedSets: 4,
+                        suggestedReps: '6-8',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 2,
+                        suggestedSets: 3,
+                        suggestedReps: '10-12',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 3,
+                        suggestedSets: 3,
+                        suggestedReps: '10-12',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 4,
+                        suggestedSets: 3,
+                        suggestedReps: '12-15',
+                        notes: null,
+                    },
                 ],
             },
             {
@@ -137,10 +241,34 @@ const ROUTINES: { name: string; days: RoutineDayInput[] }[] = [
                 dayName: 'Martes - Lower',
                 orderIndex: 1,
                 exercises: [
-                    { exerciseId: '', orderIndex: 0, suggestedSets: 4, suggestedReps: '6-8', notes: null },
-                    { exerciseId: '', orderIndex: 1, suggestedSets: 3, suggestedReps: '8-10', notes: null },
-                    { exerciseId: '', orderIndex: 2, suggestedSets: 3, suggestedReps: '10-12', notes: null },
-                    { exerciseId: '', orderIndex: 3, suggestedSets: 3, suggestedReps: '12-15', notes: null },
+                    {
+                        exerciseId: '',
+                        orderIndex: 0,
+                        suggestedSets: 4,
+                        suggestedReps: '6-8',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 1,
+                        suggestedSets: 3,
+                        suggestedReps: '8-10',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 2,
+                        suggestedSets: 3,
+                        suggestedReps: '10-12',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 3,
+                        suggestedSets: 3,
+                        suggestedReps: '12-15',
+                        notes: null,
+                    },
                 ],
             },
             {
@@ -148,11 +276,41 @@ const ROUTINES: { name: string; days: RoutineDayInput[] }[] = [
                 dayName: 'Jueves - Upper',
                 orderIndex: 2,
                 exercises: [
-                    { exerciseId: '', orderIndex: 0, suggestedSets: 4, suggestedReps: '6-8', notes: null },
-                    { exerciseId: '', orderIndex: 1, suggestedSets: 4, suggestedReps: '6-8', notes: null },
-                    { exerciseId: '', orderIndex: 2, suggestedSets: 3, suggestedReps: '10-12', notes: null },
-                    { exerciseId: '', orderIndex: 3, suggestedSets: 3, suggestedReps: '10-12', notes: null },
-                    { exerciseId: '', orderIndex: 4, suggestedSets: 3, suggestedReps: '12-15', notes: null },
+                    {
+                        exerciseId: '',
+                        orderIndex: 0,
+                        suggestedSets: 4,
+                        suggestedReps: '6-8',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 1,
+                        suggestedSets: 4,
+                        suggestedReps: '6-8',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 2,
+                        suggestedSets: 3,
+                        suggestedReps: '10-12',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 3,
+                        suggestedSets: 3,
+                        suggestedReps: '10-12',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 4,
+                        suggestedSets: 3,
+                        suggestedReps: '12-15',
+                        notes: null,
+                    },
                 ],
             },
             {
@@ -160,10 +318,34 @@ const ROUTINES: { name: string; days: RoutineDayInput[] }[] = [
                 dayName: 'Viernes - Lower',
                 orderIndex: 3,
                 exercises: [
-                    { exerciseId: '', orderIndex: 0, suggestedSets: 4, suggestedReps: '6-8', notes: null },
-                    { exerciseId: '', orderIndex: 1, suggestedSets: 3, suggestedReps: '8-10', notes: null },
-                    { exerciseId: '', orderIndex: 2, suggestedSets: 3, suggestedReps: '10-12', notes: null },
-                    { exerciseId: '', orderIndex: 3, suggestedSets: 3, suggestedReps: '12-15', notes: null },
+                    {
+                        exerciseId: '',
+                        orderIndex: 0,
+                        suggestedSets: 4,
+                        suggestedReps: '6-8',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 1,
+                        suggestedSets: 3,
+                        suggestedReps: '8-10',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 2,
+                        suggestedSets: 3,
+                        suggestedReps: '10-12',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 3,
+                        suggestedSets: 3,
+                        suggestedReps: '12-15',
+                        notes: null,
+                    },
                 ],
             },
         ],
@@ -176,10 +358,34 @@ const ROUTINES: { name: string; days: RoutineDayInput[] }[] = [
                 dayName: 'Lunes - Push',
                 orderIndex: 0,
                 exercises: [
-                    { exerciseId: '', orderIndex: 0, suggestedSets: 4, suggestedReps: '6-8', notes: null },
-                    { exerciseId: '', orderIndex: 1, suggestedSets: 4, suggestedReps: '8-10', notes: null },
-                    { exerciseId: '', orderIndex: 2, suggestedSets: 3, suggestedReps: '10-12', notes: null },
-                    { exerciseId: '', orderIndex: 3, suggestedSets: 3, suggestedReps: '12-15', notes: null },
+                    {
+                        exerciseId: '',
+                        orderIndex: 0,
+                        suggestedSets: 4,
+                        suggestedReps: '6-8',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 1,
+                        suggestedSets: 4,
+                        suggestedReps: '8-10',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 2,
+                        suggestedSets: 3,
+                        suggestedReps: '10-12',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 3,
+                        suggestedSets: 3,
+                        suggestedReps: '12-15',
+                        notes: null,
+                    },
                 ],
             },
             {
@@ -187,10 +393,34 @@ const ROUTINES: { name: string; days: RoutineDayInput[] }[] = [
                 dayName: 'Martes - Pull',
                 orderIndex: 1,
                 exercises: [
-                    { exerciseId: '', orderIndex: 0, suggestedSets: 4, suggestedReps: '6-8', notes: null },
-                    { exerciseId: '', orderIndex: 1, suggestedSets: 4, suggestedReps: '8-10', notes: null },
-                    { exerciseId: '', orderIndex: 2, suggestedSets: 3, suggestedReps: '10-12', notes: null },
-                    { exerciseId: '', orderIndex: 3, suggestedSets: 3, suggestedReps: '12-15', notes: null },
+                    {
+                        exerciseId: '',
+                        orderIndex: 0,
+                        suggestedSets: 4,
+                        suggestedReps: '6-8',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 1,
+                        suggestedSets: 4,
+                        suggestedReps: '8-10',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 2,
+                        suggestedSets: 3,
+                        suggestedReps: '10-12',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 3,
+                        suggestedSets: 3,
+                        suggestedReps: '12-15',
+                        notes: null,
+                    },
                 ],
             },
             {
@@ -198,10 +428,34 @@ const ROUTINES: { name: string; days: RoutineDayInput[] }[] = [
                 dayName: 'Miércoles - Legs',
                 orderIndex: 2,
                 exercises: [
-                    { exerciseId: '', orderIndex: 0, suggestedSets: 4, suggestedReps: '6-8', notes: null },
-                    { exerciseId: '', orderIndex: 1, suggestedSets: 3, suggestedReps: '8-10', notes: null },
-                    { exerciseId: '', orderIndex: 2, suggestedSets: 3, suggestedReps: '10-12', notes: null },
-                    { exerciseId: '', orderIndex: 3, suggestedSets: 3, suggestedReps: '12-15', notes: null },
+                    {
+                        exerciseId: '',
+                        orderIndex: 0,
+                        suggestedSets: 4,
+                        suggestedReps: '6-8',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 1,
+                        suggestedSets: 3,
+                        suggestedReps: '8-10',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 2,
+                        suggestedSets: 3,
+                        suggestedReps: '10-12',
+                        notes: null,
+                    },
+                    {
+                        exerciseId: '',
+                        orderIndex: 3,
+                        suggestedSets: 3,
+                        suggestedReps: '12-15',
+                        notes: null,
+                    },
                 ],
             },
         ],
@@ -210,12 +464,18 @@ const ROUTINES: { name: string; days: RoutineDayInput[] }[] = [
 
 /* ─────────── Ejecución del seed ─────────── */
 
-export async function runSeed(db: DbClient, seedUserId?: string): Promise<void> {
+export async function runSeed(
+    db: DbClient,
+    seedUserId?: string
+): Promise<void> {
     // 1. Insertar ejercicios aprobados (como si fueran creados por un admin o sistema)
     const exerciseMap = new Map<string, string>();
 
     for (const ex of EXERCISES) {
-        const existing = await exerciseRepo.findExerciseByNameLower(db, ex.name);
+        const existing = await exerciseRepo.findExerciseByNameLower(
+            db,
+            ex.name
+        );
 
         if (existing) {
             exerciseMap.set(ex.name, existing.id);
@@ -224,6 +484,7 @@ export async function runSeed(db: DbClient, seedUserId?: string): Promise<void> 
 
         const created = await exerciseRepo.createExercise(db, {
             name: ex.name,
+            category: ex.category,
             createdBy: seedUserId ?? null,
             status: 'approved',
         });
@@ -232,26 +493,31 @@ export async function runSeed(db: DbClient, seedUserId?: string): Promise<void> 
 
     // 2. Insertar rutinas de ejemplo (si se provee un usuario seed)
     if (!seedUserId) {
-        console.log('[seed] Ejercicios insertados. No se insertaron rutinas porque no se proporcionó seedUserId.');
+        console.log(
+            '[seed] Ejercicios insertados. No se insertaron rutinas porque no se proporcionó seedUserId.'
+        );
 
         return;
-    }
-
-    if (!seedUserId) {
-        throw new ValidationError('Se requiere seedUserId para insertar rutinas de ejemplo.');
     }
 
     const profile = await profileRepo.findProfileByUserId(db, seedUserId);
 
     if (!profile) {
-        throw new ValidationError('El usuario seed no tiene perfil. Crea el perfil antes de ejecutar el seed de rutinas.');
+        throw new ValidationError(
+            'El usuario seed no tiene perfil. Crea el perfil antes de ejecutar el seed de rutinas.'
+        );
     }
 
     for (const routineDef of ROUTINES) {
-        const existingRoutines = await routineRepo.findRoutinesByUser(db, seedUserId);
+        const existingRoutines = await routineRepo.findRoutinesByUser(
+            db,
+            seedUserId
+        );
 
         if (existingRoutines.some((r) => r.name === routineDef.name)) {
-            console.log(`[seed] Rutina "${routineDef.name}" ya existe. Saltando.`);
+            console.log(
+                `[seed] Rutina "${routineDef.name}" ya existe. Saltando.`
+            );
             continue;
         }
 
@@ -270,7 +536,10 @@ export async function runSeed(db: DbClient, seedUserId?: string): Promise<void> 
             });
 
             // Asignar ejercicios de ejemplo según el tipo de rutina
-            const exerciseNames = resolveExerciseNamesForDay(routineDef.name, dayDef.dayName);
+            const exerciseNames = resolveExerciseNamesForDay(
+                routineDef.name,
+                dayDef.dayName
+            );
 
             for (let i = 0; i < exerciseNames.length; i++) {
                 const exName = exerciseNames[i];
@@ -295,30 +564,72 @@ export async function runSeed(db: DbClient, seedUserId?: string): Promise<void> 
 
 /* ─────────── Helpers de asignación de ejercicios ─────────── */
 
-function resolveExerciseNamesForDay(routineName: string, dayName: string): string[] {
+function resolveExerciseNamesForDay(
+    routineName: string,
+    dayName: string
+): string[] {
     const name = routineName.toLowerCase();
     const day = dayName.toLowerCase();
 
     if (name.includes('full body')) {
-        if (day.includes('a')) return ['Sentadilla libre', 'Press de banca plano', 'Dominadas', 'Press militar con barra'];
-        if (day.includes('b')) return ['Peso muerto convencional', 'Press de banca inclinado', 'Remo con barra', 'Elevaciones laterales'];
-        return ['Sentadilla frontal', 'Aperturas con mancuernas', 'Jalón al pecho', 'Curl con barra'];
+        if (day.includes('a'))
+            return [
+                'Sentadilla Tradicional',
+                'Press Banca Plano',
+                'Dominadas',
+                'Press Militar con Barra',
+            ];
+        if (day.includes('b'))
+            return [
+                'Peso Muerto',
+                'Press Banca Inclinado',
+                'Remo con Barra',
+                'Elevaciones Laterales',
+            ];
+        return [
+            'Sentadilla Frontal',
+            'Aperturas con Mancuernas',
+            'Jalón al Pecho',
+            'Curl con Barra',
+        ];
     }
 
     if (name.includes('upper')) {
-        if (day.includes('upper')) return ['Press de banca plano', 'Dominadas', 'Press militar con barra', 'Elevaciones laterales', 'Extensión de tríceps en polea'];
-        return ['Sentadilla libre', 'Peso muerto rumano', 'Prensa de piernas', 'Curl femoral acostado'];
+        if (day.includes('upper'))
+            return [
+                'Press Banca Plano',
+                'Dominadas',
+                'Press Militar con Barra',
+                'Elevaciones Laterales',
+                'Extensiones de Tríceps en Polea',
+            ];
+        return [
+            'Sentadilla Tradicional',
+            'Peso Muerto Rumano',
+            'Prensa de Piernas',
+            'Curl Femoral Acostado',
+        ];
     }
 
     if (name.includes('push')) {
-        return ['Press de banca plano', 'Press de banca inclinado', 'Elevaciones laterales', 'Extensión de tríceps en polea'];
+        return [
+            'Press Banca Plano',
+            'Press Banca Inclinado',
+            'Elevaciones Laterales',
+            'Extensiones de Tríceps en Polea',
+        ];
     }
     if (name.includes('pull')) {
-        return ['Dominadas', 'Remo con barra', 'Curl con barra', 'Face pull'];
+        return ['Dominadas', 'Remo con Barra', 'Curl con Barra', 'Face Pull'];
     }
     if (name.includes('leg')) {
-        return ['Sentadilla libre', 'Peso muerto convencional', 'Prensa de piernas', 'Hip thrust'];
+        return [
+            'Sentadilla Tradicional',
+            'Peso Muerto',
+            'Prensa de Piernas',
+            'Peso Muerto Rumano',
+        ];
     }
 
-    return ['Sentadilla libre', 'Press de banca plano', 'Dominadas'];
+    return ['Sentadilla Tradicional', 'Press Banca Plano', 'Dominadas'];
 }
