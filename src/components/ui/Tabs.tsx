@@ -5,7 +5,10 @@ export interface Tab {
     label: string;
 }
 
-export interface TabsProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface TabsProps extends Omit<
+    React.HTMLAttributes<HTMLDivElement>,
+    'onChange'
+> {
     tabs: Tab[];
     activeTab: string;
     onChange: (tabId: string) => void;
