@@ -34,6 +34,7 @@ create table if not exists public.profiles (
 create table if not exists public.exercises (
     id uuid primary key default gen_random_uuid(),
     name text not null,
+    category text,
     image_url text,
     created_by uuid references public.profiles(id) on delete set null,
     status text not null default 'pending' check (status in ('pending', 'approved')),
