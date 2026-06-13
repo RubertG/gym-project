@@ -263,6 +263,34 @@ create trigger trigger_close_previous_active_routine
     when (new.is_active = true)
     execute function public.close_previous_active_routine();
 
+-- 4.5 Soft-delete en cascada para routines
+create or replace function public.cascade_soft_delete_routine()
+returns trigger as $$
+begin
+    -- Soft-delete en cascada de routine_days
+    update public.routine_days
+    set deleted_at = now()
+    where routine_id = old.id
+      and deleted_at is null;
+
+    -- Soft-delete en cascada de routine_exercises (a través de routine_days)
+    update public.routine_exercises
+    set deleted_at = now()
+    where routine_day_id in (
+        select id from public.routine_days where routine_id = old.id
+    )
+      and deleted_at is null;
+
+    return new;
+end;
+$$ language plpgsql;
+
+create trigger trigger_cascade_soft_delete_routine
+    before update of deleted_at on public.routines
+    for each row
+    when (new.deleted_at is not null and old.deleted_at is null)
+    execute function public.cascade_soft_delete_routine();
+
 -- 4.4 Auto-actualizar updated_at en routines, profiles, routine_days y routine_exercises
 create trigger trigger_set_updated_at_routines
     before update on public.routines
