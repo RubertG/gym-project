@@ -4,6 +4,7 @@
  */
 
 import { getServerClient } from '@/lib/db/client';
+import type { DbClient } from '@/lib/db/types';
 import * as routineRepo from '@/lib/repositories/routineRepository';
 import * as exerciseRepo from '@/lib/repositories/exerciseRepository';
 import { ValidationError, NotFoundError, AuthError } from '@/lib/utils/errors';
@@ -18,12 +19,15 @@ function ensureOwnership(routine: Routine, userId: string): void {
     }
 }
 
-async function ensureNoSessions(db: ReturnType<typeof getServerClient>, routineId: string): Promise<void> {
+async function ensureNoSessions(
+    db: DbClient,
+    routineId: string
+): Promise<void> {
     const count = await routineRepo.countSessionsByRoutineId(db, routineId);
 
     if (count > 0) {
         throw new ValidationError(
-            'Esta rutina ya tiene sesiones registradas. Solo puedes duplicarla.',
+            'Esta rutina ya tiene sesiones registradas. Solo puedes duplicarla.'
         );
     }
 }
@@ -42,9 +46,7 @@ export async function getPublicRoutines(): Promise<Routine[]> {
     return routineRepo.findPublicRoutines(db);
 }
 
-export async function getRoutineById(
-    id: string,
-): Promise<{
+export async function getRoutineById(id: string): Promise<{
     routine: Routine;
     days: (RoutineDay & { exercises: RoutineExercise[] })[];
 } | null> {
@@ -57,10 +59,13 @@ export async function getRoutineById(
     const days = await routineRepo.findDaysByRoutineId(db, id);
     const daysWithExercises = await Promise.all(
         days.map(async (day) => {
-            const exercises = await routineRepo.findExercisesByDayId(db, day.id);
+            const exercises = await routineRepo.findExercisesByDayId(
+                db,
+                day.id
+            );
 
             return { ...day, exercises };
-        }),
+        })
     );
 
     return { routine, days: daysWithExercises };
@@ -71,7 +76,7 @@ export async function getRoutineById(
 export async function createRoutine(
     userId: string,
     name: string,
-    days: RoutineDayInput[],
+    days: RoutineDayInput[]
 ): Promise<Routine> {
     const db = getServerClient();
 
@@ -80,10 +85,15 @@ export async function createRoutine(
     }
 
     if (days.length === 0) {
-        throw new ValidationError('La rutina debe tener al menos un día configurado');
+        throw new ValidationError(
+            'La rutina debe tener al menos un día configurado'
+        );
     }
 
-    const routine = await routineRepo.createRoutine(db, { userId, name: name.trim() });
+    const routine = await routineRepo.createRoutine(db, {
+        userId,
+        name: name.trim(),
+    });
 
     for (const dayInput of days) {
         const day = await routineRepo.createRoutineDay(db, {
@@ -94,10 +104,15 @@ export async function createRoutine(
         });
 
         for (const exInput of dayInput.exercises) {
-            const exercise = await exerciseRepo.findExerciseById(db, exInput.exerciseId);
+            const exercise = await exerciseRepo.findExerciseById(
+                db,
+                exInput.exerciseId
+            );
 
             if (!exercise || exercise.status !== 'approved') {
-                throw new ValidationError(`El ejercicio ${exInput.exerciseId} no está aprobado o no existe`);
+                throw new ValidationError(
+                    `El ejercicio ${exInput.exerciseId} no está aprobado o no existe`
+                );
             }
 
             await routineRepo.createRoutineExercise(db, {
@@ -119,7 +134,7 @@ export async function createRoutine(
 export async function updateRoutine(
     id: string,
     userId: string,
-    data: Partial<Pick<Routine, 'name' | 'isPublic'>>,
+    data: Partial<Pick<Routine, 'name' | 'isPublic'>>
 ): Promise<Routine> {
     const db = getServerClient();
 
@@ -130,7 +145,9 @@ export async function updateRoutine(
     await ensureNoSessions(db, id);
 
     if (data.name !== undefined && data.name.trim().length === 0) {
-        throw new ValidationError('El nombre de la rutina no puede estar vacío');
+        throw new ValidationError(
+            'El nombre de la rutina no puede estar vacío'
+        );
     }
 
     return routineRepo.updateRoutine(db, id, {
@@ -139,7 +156,10 @@ export async function updateRoutine(
     });
 }
 
-export async function activateRoutine(id: string, userId: string): Promise<Routine> {
+export async function activateRoutine(
+    id: string,
+    userId: string
+): Promise<Routine> {
     const db = getServerClient();
 
     const routine = await routineRepo.findRoutineById(db, id);
@@ -150,7 +170,10 @@ export async function activateRoutine(id: string, userId: string): Promise<Routi
     return routineRepo.updateRoutine(db, id, { isActive: true });
 }
 
-export async function publishRoutine(id: string, userId: string): Promise<Routine> {
+export async function publishRoutine(
+    id: string,
+    userId: string
+): Promise<Routine> {
     const db = getServerClient();
 
     const routine = await routineRepo.findRoutineById(db, id);
@@ -163,7 +186,10 @@ export async function publishRoutine(id: string, userId: string): Promise<Routin
 
 /* ─────────── duplicado ─────────── */
 
-export async function duplicateRoutine(id: string, userId: string): Promise<Routine> {
+export async function duplicateRoutine(
+    id: string,
+    userId: string
+): Promise<Routine> {
     const db = getServerClient();
 
     const source = await getRoutineById(id);
@@ -201,7 +227,10 @@ export async function duplicateRoutine(id: string, userId: string): Promise<Rout
 
 /* ─────────── soft delete ─────────── */
 
-export async function softDeleteRoutine(id: string, userId: string): Promise<void> {
+export async function softDeleteRoutine(
+    id: string,
+    userId: string
+): Promise<void> {
     const db = getServerClient();
 
     const routine = await routineRepo.findRoutineById(db, id);
@@ -215,7 +244,10 @@ export async function softDeleteRoutine(id: string, userId: string): Promise<voi
 
 /* ─────────── likes ─────────── */
 
-export async function likeRoutine(userId: string, routineId: string): Promise<void> {
+export async function likeRoutine(
+    userId: string,
+    routineId: string
+): Promise<void> {
     const db = getServerClient();
 
     const routine = await routineRepo.findRoutineById(db, routineId);
@@ -232,7 +264,10 @@ export async function likeRoutine(userId: string, routineId: string): Promise<vo
     await routineRepo.createLike(db, userId, routineId);
 }
 
-export async function unlikeRoutine(userId: string, routineId: string): Promise<void> {
+export async function unlikeRoutine(
+    userId: string,
+    routineId: string
+): Promise<void> {
     const db = getServerClient();
 
     const existing = await routineRepo.findLike(db, userId, routineId);
