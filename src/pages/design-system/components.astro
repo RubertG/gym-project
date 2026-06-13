@@ -1,9 +1,20 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import Input from '@/components/ui/Input.tsx';
-import GlowEffect from '@/components/ui/GlowEffect.tsx';
-import Card from '@/components/ui/Card.tsx';
 import { Button } from '@/components';
+import { Input } from '@/components';
+import { GlowEffect } from '@/components';
+import { Card } from '@/components';
+import { Label } from '@/components';
+import { Spinner } from '@/components';
+import { Badge } from '@/components';
+import { Checkbox } from '@/components';
+import { Switch } from '@/components';
+import { Avatar } from '@/components';
+import { Textarea } from '@/components';
+import { Select } from '@/components';
+import { Tabs } from '@/components';
+import { Toast } from '@/components';
+import { Modal } from '@/components';
 ---
 
 <Layout title="IRON TRACK - Componentes">
@@ -32,315 +43,701 @@ import { Button } from '@/components';
                 COMPONENTES
             </h1>
             <p class="font-body text-word-200 mt-2 text-lg md:text-xl">
-                Componentes React Reutilizables — IRON TRACK
+                Componentes React Reutilizables — Voltage Industrial Design
+                System
             </p>
         </header>
 
-        <!-- Button Component Section -->
-        <section class="animate-fade-in-up mb-12 md:mb-16">
+        <!-- === FORM ELEMENTS === -->
+        <section class="mb-8 md:mb-12">
             <h2
-                class="font-display text-word-100 mb-3 text-xl font-bold tracking-widest uppercase md:mb-4 md:text-2xl"
+                class="font-display text-word-100 mb-6 text-2xl font-bold tracking-widest uppercase"
             >
-                Botón
+                Elementos de Formulario
             </h2>
-            <Card className="space-y-8 p-4 md:p-6 lg:p-8">
-                <!-- Variants -->
-                <div class="space-y-4">
-                    <h3
-                        class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
-                    >
-                        Variantes
-                    </h3>
-                    <div class="flex flex-wrap gap-4">
-                        <Button variant="primary" client:load>Primario</Button>
-                        <Button variant="secondary" client:load
-                            >Secundario</Button
-                        >
-                        <Button variant="ghost" client:load>Ghost</Button>
-                        <Button variant="danger" client:load>Peligro</Button>
-                    </div>
-                </div>
 
-                <!-- Variants (Light Surface) -->
-                <div class="bg-secondary-50 space-y-4 rounded-lg p-4">
-                    <h3
-                        class="text-secondary-600 font-mono text-xs tracking-widest uppercase md:text-sm"
-                    >
-                        Variantes — Superficie Clara
-                    </h3>
-                    <div class="flex flex-wrap gap-4">
-                        <Button variant="primary" surface="light" client:load
-                            >Primario</Button
+            <!-- Button -->
+            <section class="animate-fade-in-up mb-12 md:mb-16">
+                <h3
+                    class="font-display text-word-100 mb-3 text-xl font-bold tracking-widest uppercase md:mb-4"
+                >
+                    Boton
+                </h3>
+                <Card className="space-y-8 p-4 md:p-6 lg:p-8">
+                    <div class="space-y-4">
+                        <h4
+                            class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
                         >
-                        <Button variant="secondary" surface="light" client:load
-                            >Secundario</Button
-                        >
-                        <Button variant="ghost" surface="light" client:load
-                            >Ghost</Button
-                        >
-                        <Button variant="danger" surface="light" client:load
-                            >Peligro</Button
-                        >
+                            Variantes
+                        </h4>
+                        <div class="flex flex-wrap gap-4">
+                            <Button variant="primary" client:load
+                                >Primario</Button
+                            >
+                            <Button variant="secondary" client:load
+                                >Secundario</Button
+                            >
+                            <Button variant="ghost" client:load>Ghost</Button>
+                            <Button variant="danger" client:load>Peligro</Button
+                            >
+                        </div>
                     </div>
-                </div>
-
-                <!-- Sizes -->
-                <div class="space-y-4">
-                    <h3
-                        class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
-                    >
-                        Tamaños
-                    </h3>
-                    <div class="flex flex-wrap items-center gap-4">
-                        <Button variant="primary" size="sm" client:load
-                            >Pequeño</Button
+                    <div class="space-y-4">
+                        <h4
+                            class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
                         >
-                        <Button variant="primary" size="md" client:load
-                            >Mediano</Button
-                        >
-                        <Button variant="primary" size="lg" client:load
-                            >Grande</Button
-                        >
+                            Tamanos
+                        </h4>
+                        <div class="flex flex-wrap items-center gap-4">
+                            <Button variant="primary" size="sm" client:load
+                                >Pequeno</Button
+                            >
+                            <Button variant="primary" size="md" client:load
+                                >Mediano</Button
+                            >
+                            <Button variant="primary" size="lg" client:load
+                                >Grande</Button
+                            >
+                        </div>
                     </div>
-                </div>
-
-                <!-- Sizes (Light Surface) -->
-                <div class="bg-secondary-50 space-y-4 rounded-lg p-4">
-                    <h3
-                        class="text-secondary-600 font-mono text-xs tracking-widest uppercase md:text-sm"
-                    >
-                        Tamaños — Superficie Clara
-                    </h3>
-                    <div class="flex flex-wrap items-center gap-4">
-                        <Button
-                            variant="primary"
-                            size="sm"
-                            surface="light"
-                            client:load>Pequeño</Button
+                    <div class="space-y-4">
+                        <h4
+                            class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
                         >
-                        <Button
-                            variant="primary"
-                            size="md"
-                            surface="light"
-                            client:load>Mediano</Button
-                        >
-                        <Button
-                            variant="primary"
-                            size="lg"
-                            surface="light"
-                            client:load>Grande</Button
-                        >
+                            Estados
+                        </h4>
+                        <div class="flex flex-wrap gap-4">
+                            <Button variant="primary" client:load
+                                >Predeterminado</Button
+                            >
+                            <Button variant="primary" disabled client:load
+                                >Desactivado</Button
+                            >
+                            <Button variant="primary" glow client:load
+                                >Con Glow</Button
+                            >
+                        </div>
                     </div>
-                </div>
+                </Card>
+            </section>
 
-                <!-- States -->
-                <div class="space-y-4">
-                    <h3
-                        class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
-                    >
-                        Estados
-                    </h3>
-                    <div class="flex flex-wrap gap-4">
-                        <Button variant="primary" client:load
-                            >Predeterminado</Button
+            <!-- Input -->
+            <section class="animate-fade-in-up mb-12 md:mb-16">
+                <h3
+                    class="font-display text-word-100 mb-3 text-xl font-bold tracking-widest uppercase md:mb-4"
+                >
+                    Campo de Texto
+                </h3>
+                <Card className="space-y-8 p-4 md:p-6 lg:p-8">
+                    <div class="max-w-md space-y-4">
+                        <h4
+                            class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
                         >
-                        <Button variant="primary" disabled client:load>
-                            Desactivado
-                        </Button>
-                        <Button variant="primary" glow client:load>
-                            Con Glow
-                        </Button>
-                    </div>
-                </div>
-
-                <!-- States (Light Surface) -->
-                <div class="bg-secondary-50 space-y-4 rounded-lg p-4">
-                    <h3
-                        class="text-secondary-600 font-mono text-xs tracking-widest uppercase md:text-sm"
-                    >
-                        Estados — Superficie Clara
-                    </h3>
-                    <div class="flex flex-wrap gap-4">
-                        <Button variant="primary" surface="light" client:load
-                            >Predeterminado</Button
-                        >
-                        <Button
-                            variant="primary"
-                            surface="light"
-                            disabled
+                            Predeterminado
+                        </h4>
+                        <Input
+                            type="text"
+                            label="Nombre del Entrenamiento"
+                            placeholder="Ingresa el nombre..."
                             client:load
-                        >
-                            Desactivado
-                        </Button>
-                        <Button
-                            variant="primary"
-                            surface="light"
-                            glow
-                            client:load
-                        >
-                            Con Glow
-                        </Button>
+                        />
                     </div>
-                </div>
-            </Card>
+                    <div class="max-w-md space-y-4">
+                        <h4
+                            class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
+                        >
+                            Con Error
+                        </h4>
+                        <Input
+                            type="email"
+                            label="Correo Electronico"
+                            placeholder="tu@correo.com"
+                            error="Por favor, ingresa un correo valido"
+                            value="correo-invalido"
+                            isRequired
+                            client:load
+                        />
+                    </div>
+                    <div class="max-w-md space-y-4">
+                        <h4
+                            class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
+                        >
+                            Variante Ghost
+                        </h4>
+                        <Input
+                            type="text"
+                            placeholder="Buscar ejercicios..."
+                            variant="ghost"
+                            client:load
+                        />
+                    </div>
+                </Card>
+            </section>
+
+            <!-- Label -->
+            <section class="animate-fade-in-up mb-12 md:mb-16">
+                <h3
+                    class="font-display text-word-100 mb-3 text-xl font-bold tracking-widest uppercase md:mb-4"
+                >
+                    Etiqueta
+                </h3>
+                <Card className="space-y-8 p-4 md:p-6 lg:p-8">
+                    <div class="space-y-4">
+                        <h4
+                            class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
+                        >
+                            Normal
+                        </h4>
+                        <Label client:load>Correo Electronico</Label>
+                    </div>
+                    <div class="space-y-4">
+                        <h4
+                            class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
+                        >
+                            Requerido
+                        </h4>
+                        <Label required client:load>Nombre Completo</Label>
+                    </div>
+                </Card>
+            </section>
+
+            <!-- Textarea -->
+            <section class="animate-fade-in-up mb-12 md:mb-16">
+                <h3
+                    class="font-display text-word-100 mb-3 text-xl font-bold tracking-widest uppercase md:mb-4"
+                >
+                    Area de Texto
+                </h3>
+                <Card className="space-y-8 p-4 md:p-6 lg:p-8">
+                    <div class="max-w-md space-y-4">
+                        <h4
+                            class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
+                        >
+                            Predeterminado
+                        </h4>
+                        <Textarea
+                            label="Notas"
+                            placeholder="Escribe tus notas aqui..."
+                            client:load
+                        />
+                    </div>
+                    <div class="max-w-md space-y-4">
+                        <h4
+                            class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
+                        >
+                            Con Error
+                        </h4>
+                        <Textarea
+                            label="Descripcion"
+                            placeholder="Descripcion..."
+                            error="La descripcion es obligatoria"
+                            client:load
+                        />
+                    </div>
+                    <div class="max-w-md space-y-4">
+                        <h4
+                            class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
+                        >
+                            Redimensionable
+                        </h4>
+                        <Textarea
+                            label="Comentarios"
+                            placeholder="Redimensionable..."
+                            resize
+                            client:load
+                        />
+                    </div>
+                </Card>
+            </section>
+
+            <!-- Select -->
+            <section class="animate-fade-in-up mb-12 md:mb-16">
+                <h3
+                    class="font-display text-word-100 mb-3 text-xl font-bold tracking-widest uppercase md:mb-4"
+                >
+                    Selector
+                </h3>
+                <Card className="space-y-8 p-4 md:p-6 lg:p-8">
+                    <div class="max-w-md space-y-4">
+                        <h4
+                            class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
+                        >
+                            Predeterminado
+                        </h4>
+                        <Select
+                            label="Categoria"
+                            placeholder="Selecciona una categoria"
+                            options={[
+                                { value: 'fuerza', label: 'Fuerza' },
+                                { value: 'hipertrofia', label: 'Hipertrofia' },
+                                { value: 'resistencia', label: 'Resistencia' },
+                            ]}
+                            client:load
+                        />
+                    </div>
+                    <div class="max-w-md space-y-4">
+                        <h4
+                            class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
+                        >
+                            Con Error
+                        </h4>
+                        <Select
+                            label="Nivel"
+                            placeholder="Selecciona un nivel"
+                            options={[
+                                {
+                                    value: 'principiante',
+                                    label: 'Principiante',
+                                },
+                                { value: 'intermedio', label: 'Intermedio' },
+                            ]}
+                            error="Debes seleccionar un nivel"
+                            client:load
+                        />
+                    </div>
+                </Card>
+            </section>
+
+            <!-- Checkbox -->
+            <section class="animate-fade-in-up mb-12 md:mb-16">
+                <h3
+                    class="font-display text-word-100 mb-3 text-xl font-bold tracking-widest uppercase md:mb-4"
+                >
+                    Casilla de Verificacion
+                </h3>
+                <Card className="space-y-8 p-4 md:p-6 lg:p-8">
+                    <div class="space-y-4">
+                        <h4
+                            class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
+                        >
+                            Estados
+                        </h4>
+                        <div class="flex flex-col gap-4">
+                            <Checkbox
+                                label="Activar notificaciones"
+                                client:load
+                            />
+                            <Checkbox
+                                label="Terminos y condiciones"
+                                checked
+                                client:load
+                            />
+                            <Checkbox
+                                label="Opcion desactivada"
+                                disabled
+                                client:load
+                            />
+                        </div>
+                    </div>
+                </Card>
+            </section>
+
+            <!-- Switch -->
+            <section class="animate-fade-in-up mb-12 md:mb-16">
+                <h3
+                    class="font-display text-word-100 mb-3 text-xl font-bold tracking-widest uppercase md:mb-4"
+                >
+                    Interruptor
+                </h3>
+                <Card className="space-y-8 p-4 md:p-6 lg:p-8">
+                    <div class="space-y-4">
+                        <h4
+                            class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
+                        >
+                            Tamanos
+                        </h4>
+                        <div class="flex items-center gap-8">
+                            <Switch client:load />
+                            <Switch size="sm" client:load />
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <h4
+                            class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
+                        >
+                            Estados
+                        </h4>
+                        <div class="flex items-center gap-8">
+                            <Switch checked client:load />
+                            <Switch disabled client:load />
+                        </div>
+                    </div>
+                </Card>
+            </section>
         </section>
 
-        <!-- Input Component Section -->
-        <section class="animate-fade-in-up mb-12 md:mb-16">
+        <!-- === FEEDBACK === -->
+        <section class="mb-8 md:mb-12">
             <h2
-                class="font-display text-word-100 mb-3 text-xl font-bold tracking-widest uppercase md:mb-4 md:text-2xl"
+                class="font-display text-word-100 mb-6 text-2xl font-bold tracking-widest uppercase"
             >
-                Campo de Texto
+                Retroalimentacion
             </h2>
-            <Card className="space-y-8 p-4 md:p-6 lg:p-8">
-                <!-- Default -->
-                <div class="max-w-md space-y-4">
-                    <h3
-                        class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
-                    >
-                        Predeterminado
-                    </h3>
-                    <Input
-                        type="text"
-                        label="Nombre del Entrenamiento"
-                        placeholder="Ingresa el nombre de tu entrenamiento..."
-                        client:load
-                    />
-                </div>
 
-                <!-- Default (Light Surface) -->
-                <div class="bg-secondary-50 max-w-md space-y-4 rounded-lg p-4">
-                    <h3
-                        class="text-secondary-600 font-mono text-xs tracking-widest uppercase md:text-sm"
-                    >
-                        Predeterminado — Superficie Clara
-                    </h3>
-                    <Input
-                        type="text"
-                        label="Nombre del Entrenamiento"
-                        placeholder="Ingresa el nombre de tu entrenamiento..."
-                        surface="light"
-                        client:load
-                    />
-                </div>
+            <!-- Spinner -->
+            <section class="animate-fade-in-up mb-12 md:mb-16">
+                <h3
+                    class="font-display text-word-100 mb-3 text-xl font-bold tracking-widest uppercase md:mb-4"
+                >
+                    Indicador de Carga
+                </h3>
+                <Card className="space-y-8 p-4 md:p-6 lg:p-8">
+                    <div class="space-y-4">
+                        <h4
+                            class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
+                        >
+                            Tamanos
+                        </h4>
+                        <div class="flex items-center gap-8">
+                            <Spinner size="sm" client:load />
+                            <Spinner size="md" client:load />
+                            <Spinner size="lg" client:load />
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <h4
+                            class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
+                        >
+                            Variantes
+                        </h4>
+                        <div class="flex items-center gap-8">
+                            <Spinner variant="primary" client:load />
+                            <Spinner variant="secondary" client:load />
+                        </div>
+                    </div>
+                </Card>
+            </section>
 
-                <!-- With Error -->
-                <div class="max-w-md space-y-4">
-                    <h3
-                        class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
-                    >
-                        Con Error
-                    </h3>
-                    <Input
-                        type="email"
-                        label="Correo Electrónico"
-                        placeholder="tu@correo.com"
-                        error="Por favor, ingresa un correo electrónico válido"
-                        value="correo-invalido"
-                        isRequired
-                        client:load
-                    />
-                </div>
+            <!-- Badge -->
+            <section class="animate-fade-in-up mb-12 md:mb-16">
+                <h3
+                    class="font-display text-word-100 mb-3 text-xl font-bold tracking-widest uppercase md:mb-4"
+                >
+                    Insignia
+                </h3>
+                <Card className="space-y-8 p-4 md:p-6 lg:p-8">
+                    <div class="space-y-4">
+                        <h4
+                            class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
+                        >
+                            Variantes
+                        </h4>
+                        <div class="flex flex-wrap gap-4">
+                            <Badge client:load>Default</Badge>
+                            <Badge variant="primary" client:load>Primario</Badge
+                            >
+                            <Badge variant="success" client:load>Exito</Badge>
+                            <Badge variant="warning" client:load
+                                >Advertencia</Badge
+                            >
+                            <Badge variant="danger" client:load>Peligro</Badge>
+                        </div>
+                    </div>
+                </Card>
+            </section>
 
-                <!-- With Error (Light Surface) -->
-                <div class="bg-secondary-50 max-w-md space-y-4 rounded-lg p-4">
-                    <h3
-                        class="text-secondary-600 font-mono text-xs tracking-widest uppercase md:text-sm"
-                    >
-                        Con Error — Superficie Clara
-                    </h3>
-                    <Input
-                        type="email"
-                        label="Correo Electrónico"
-                        placeholder="tu@correo.com"
-                        error="Por favor, ingresa un correo electrónico válido"
-                        value="correo-invalido"
-                        isRequired
-                        surface="light"
-                        client:load
-                    />
-                </div>
-
-                <!-- Ghost Variant -->
-                <div class="max-w-md space-y-4">
-                    <h3
-                        class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
-                    >
-                        Variante Ghost
-                    </h3>
-                    <Input
-                        type="text"
-                        placeholder="Buscar ejercicios..."
-                        variant="ghost"
-                        client:load
-                    />
-                </div>
-
-                <!-- Ghost Variant (Light Surface) -->
-                <div class="bg-secondary-50 max-w-md space-y-4 rounded-lg p-4">
-                    <h3
-                        class="text-secondary-600 font-mono text-xs tracking-widest uppercase md:text-sm"
-                    >
-                        Variante Ghost — Superficie Clara
-                    </h3>
-                    <Input
-                        type="text"
-                        placeholder="Buscar ejercicios..."
-                        variant="ghost"
-                        surface="light"
-                        client:load
-                    />
-                </div>
-            </Card>
+            <!-- Toast -->
+            <section class="animate-fade-in-up mb-12 md:mb-16">
+                <h3
+                    class="font-display text-word-100 mb-3 text-xl font-bold tracking-widest uppercase md:mb-4"
+                >
+                    Notificacion Toast
+                </h3>
+                <Card
+                    className="relative space-y-8 overflow-hidden p-4 md:p-6 lg:p-8"
+                >
+                    <div class="space-y-4">
+                        <h4
+                            class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
+                        >
+                            Tipos
+                        </h4>
+                        <div class="flex flex-col gap-4">
+                            <Toast
+                                message="Operacion completada exitosamente"
+                                type="success"
+                                duration={0}
+                                onClose={() => {}}
+                                client:load
+                            />
+                            <Toast
+                                message="Ocurrio un error al procesar"
+                                type="error"
+                                duration={0}
+                                onClose={() => {}}
+                                client:load
+                            />
+                            <Toast
+                                message="Advertencia: verifica tus datos"
+                                type="warning"
+                                duration={0}
+                                onClose={() => {}}
+                                client:load
+                            />
+                            <Toast
+                                message="Nueva actualizacion disponible"
+                                type="info"
+                                duration={0}
+                                onClose={() => {}}
+                                client:load
+                            />
+                        </div>
+                    </div>
+                </Card>
+            </section>
         </section>
 
-        <!-- Glow Effect Section -->
-        <section class="animate-fade-in-up mb-12 md:mb-16">
+        <!-- === NAVIGATION === -->
+        <section class="mb-8 md:mb-12">
             <h2
-                class="font-display text-word-100 mb-3 text-xl font-bold tracking-widest uppercase md:mb-4 md:text-2xl"
+                class="font-display text-word-100 mb-6 text-2xl font-bold tracking-widest uppercase"
             >
-                Efecto Glow
+                Navegacion
             </h2>
-            <Card className="space-y-8 p-4 md:p-6 lg:p-8">
-                <div class="flex flex-wrap gap-8">
-                    <div class="space-y-2 text-center">
-                        <GlowEffect
-                            color="primary"
-                            intensity="sm"
-                            className="bg-primary-400 p-4 font-mono font-bold text-black md:p-6"
+
+            <!-- Tabs -->
+            <section class="animate-fade-in-up mb-12 md:mb-16">
+                <h3
+                    class="font-display text-word-100 mb-3 text-xl font-bold tracking-widest uppercase md:mb-4"
+                >
+                    Pestañas
+                </h3>
+                <Card className="space-y-8 p-4 md:p-6 lg:p-8">
+                    <div class="space-y-4">
+                        <h4
+                            class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
                         >
-                            SM
-                        </GlowEffect>
-                        <span class="text-word-400 font-mono text-xs"
-                            >Pequeño</span
+                            Predeterminado
+                        </h4>
+                        <Tabs
+                            tabs={[
+                                { id: 'rutinas', label: 'Rutinas' },
+                                { id: 'ejercicios', label: 'Ejercicios' },
+                                { id: 'historial', label: 'Historial' },
+                            ]}
+                            activeTab="rutinas"
+                            onChange={() => {}}
+                            client:load
                         >
+                            <p class="text-word-200">
+                                Contenido de la pestaña seleccionada
+                            </p>
+                        </Tabs>
                     </div>
-                    <div class="space-y-2 text-center">
-                        <GlowEffect
-                            color="primary"
-                            intensity="md"
-                            className="bg-primary-400 p-4 font-mono font-bold text-black md:p-6"
+                </Card>
+            </section>
+        </section>
+
+        <!-- === DATA DISPLAY === -->
+        <section class="mb-8 md:mb-12">
+            <h2
+                class="font-display text-word-100 mb-6 text-2xl font-bold tracking-widest uppercase"
+            >
+                Visualizacion de Datos
+            </h2>
+
+            <!-- Card -->
+            <section class="animate-fade-in-up mb-12 md:mb-16">
+                <h3
+                    class="font-display text-word-100 mb-3 text-xl font-bold tracking-widest uppercase md:mb-4"
+                >
+                    Tarjeta
+                </h3>
+                <Card className="space-y-8 p-4 md:p-6 lg:p-8">
+                    <div class="space-y-4">
+                        <h4
+                            class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
                         >
-                            MD
-                        </GlowEffect>
-                        <span class="text-word-400 font-mono text-xs"
-                            >Mediano</span
-                        >
+                            Glass Card
+                        </h4>
+                        <Card className="p-6">
+                            <p class="text-word-200">
+                                Contenido dentro de una tarjeta glass-morphism
+                                con backdrop-blur
+                            </p>
+                        </Card>
                     </div>
-                    <div class="space-y-2 text-center">
-                        <GlowEffect
-                            color="primary"
-                            intensity="lg"
-                            className="bg-primary-400 p-4 font-mono font-bold text-black md:p-6"
+                </Card>
+            </section>
+
+            <!-- Avatar -->
+            <section class="animate-fade-in-up mb-12 md:mb-16">
+                <h3
+                    class="font-display text-word-100 mb-3 text-xl font-bold tracking-widest uppercase md:mb-4"
+                >
+                    Avatar
+                </h3>
+                <Card className="space-y-8 p-4 md:p-6 lg:p-8">
+                    <div class="space-y-4">
+                        <h4
+                            class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
                         >
-                            LG
-                        </GlowEffect>
-                        <span class="text-word-400 font-mono text-xs"
-                            >Grande</span
-                        >
+                            Tamanos
+                        </h4>
+                        <div class="flex items-center gap-4">
+                            <Avatar
+                                size="sm"
+                                fallback="Juan Perez"
+                                client:load
+                            />
+                            <Avatar
+                                size="md"
+                                fallback="Juan Perez"
+                                client:load
+                            />
+                            <Avatar
+                                size="lg"
+                                fallback="Juan Perez"
+                                client:load
+                            />
+                            <Avatar
+                                size="xl"
+                                fallback="Juan Perez"
+                                client:load
+                            />
+                        </div>
                     </div>
-                </div>
-            </Card>
+                    <div class="space-y-4">
+                        <h4
+                            class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
+                        >
+                            Fallbacks
+                        </h4>
+                        <div class="flex items-center gap-4">
+                            <Avatar fallback="Ana Garcia" client:load />
+                            <Avatar fallback="" client:load />
+                        </div>
+                    </div>
+                </Card>
+            </section>
+
+            <!-- Glow Effect -->
+            <section class="animate-fade-in-up mb-12 md:mb-16">
+                <h3
+                    class="font-display text-word-100 mb-3 text-xl font-bold tracking-widest uppercase md:mb-4"
+                >
+                    Efecto Glow
+                </h3>
+                <Card className="space-y-8 p-4 md:p-6 lg:p-8">
+                    <div class="flex flex-wrap gap-8">
+                        <div class="space-y-2 text-center">
+                            <GlowEffect
+                                color="primary"
+                                intensity="sm"
+                                className="bg-primary-400 p-4 font-mono font-bold text-black md:p-6"
+                            >
+                                SM
+                            </GlowEffect>
+                            <span class="text-word-400 font-mono text-xs"
+                                >Pequeno</span
+                            >
+                        </div>
+                        <div class="space-y-2 text-center">
+                            <GlowEffect
+                                color="primary"
+                                intensity="md"
+                                className="bg-primary-400 p-4 font-mono font-bold text-black md:p-6"
+                            >
+                                MD
+                            </GlowEffect>
+                            <span class="text-word-400 font-mono text-xs"
+                                >Mediano</span
+                            >
+                        </div>
+                        <div class="space-y-2 text-center">
+                            <GlowEffect
+                                color="primary"
+                                intensity="lg"
+                                className="bg-primary-400 p-4 font-mono font-bold text-black md:p-6"
+                            >
+                                LG
+                            </GlowEffect>
+                            <span class="text-word-400 font-mono text-xs"
+                                >Grande</span
+                            >
+                        </div>
+                    </div>
+                </Card>
+            </section>
+        </section>
+
+        <!-- === OVERLAYS === -->
+        <section class="mb-8 md:mb-12">
+            <h2
+                class="font-display text-word-100 mb-6 text-2xl font-bold tracking-widest uppercase"
+            >
+                Superposiciones
+            </h2>
+
+            <!-- Modal -->
+            <section class="animate-fade-in-up mb-12 md:mb-16">
+                <h3
+                    class="font-display text-word-100 mb-3 text-xl font-bold tracking-widest uppercase md:mb-4"
+                >
+                    Modal
+                </h3>
+                <Card className="space-y-8 p-4 md:p-6 lg:p-8">
+                    <div class="space-y-4">
+                        <h4
+                            class="text-word-400 font-mono text-xs tracking-widest uppercase md:text-sm"
+                        >
+                            Vista Previa (contenido sin backdrop)
+                        </h4>
+                        <p class="text-word-400 text-sm">
+                            En uso real, el modal se renderiza con backdrop
+                            fixed y se cierra con Escape, click en backdrop o
+                            boton X.
+                        </p>
+                    </div>
+                    <div class="space-y-4" style="transform: scale(1);">
+                        <div class="relative">
+                            <Modal
+                                isOpen={true}
+                                onClose={() => {}}
+                                title="Modal Pequeno"
+                                size="sm"
+                                client:load
+                            >
+                                <p class="text-word-200">
+                                    Contenido de un modal pequeno.
+                                </p>
+                            </Modal>
+                        </div>
+                    </div>
+                    <div class="space-y-4" style="transform: scale(1);">
+                        <div class="relative">
+                            <Modal
+                                isOpen={true}
+                                onClose={() => {}}
+                                title="Modal Mediano"
+                                size="md"
+                                client:load
+                            >
+                                <p class="text-word-200">
+                                    Contenido de un modal mediano con mas
+                                    espacio.
+                                </p>
+                            </Modal>
+                        </div>
+                    </div>
+                    <div class="space-y-4" style="transform: scale(1);">
+                        <div class="relative">
+                            <Modal
+                                isOpen={true}
+                                onClose={() => {}}
+                                title="Modal Grande"
+                                size="lg"
+                                client:load
+                            >
+                                <p class="text-word-200">
+                                    Contenido de un modal grande para
+                                    formularios extensos.
+                                </p>
+                            </Modal>
+                        </div>
+                    </div>
+                </Card>
+            </section>
         </section>
 
         <!-- Footer -->
