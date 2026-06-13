@@ -55,12 +55,27 @@ export const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
         },
         ref
     ) => {
+        const [isExiting, setIsExiting] = React.useState(false);
+
+        const handleClose = React.useCallback(() => {
+            setIsExiting(true);
+        }, []);
+
+        const handleAnimationComplete = React.useCallback(
+            (definition: string) => {
+                if (definition === 'exit') {
+                    onClose();
+                }
+            },
+            [onClose]
+        );
+
         useEffect(() => {
-            if (duration <= 0) return;
-            const timer = setTimeout(onClose, duration);
+            if (duration <= 0 || isExiting) return;
+            const timer = setTimeout(handleClose, duration);
 
             return () => clearTimeout(timer);
-        }, [duration, onClose]);
+        }, [duration, handleClose, isExiting]);
 
         const config = typeConfig[type];
         const Icon = config.icon;
@@ -110,8 +125,8 @@ export const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
                 role="alert"
                 variants={variants}
                 initial="hidden"
-                animate="visible"
-                exit="exit"
+                animate={isExiting ? 'exit' : 'visible'}
+                onAnimationComplete={handleAnimationComplete}
                 layout
                 transition={{
                     layout: { duration: 0.3, ease: 'easeInOut' },
@@ -127,7 +142,7 @@ export const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
                     />
                     <p className="text-word-200 flex-1 text-sm">{message}</p>
                     <button
-                        onClick={onClose}
+                        onClick={handleClose}
                         className="text-word-400 hover:text-word-200 focus-visible:ring-primary-400 transition-colors focus:outline-none focus-visible:ring-2 active:scale-[0.97]"
                         aria-label="Cerrar notificacion"
                     >
