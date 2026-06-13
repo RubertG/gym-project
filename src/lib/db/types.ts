@@ -1,11 +1,13 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 /*
- * Alias de compatibilidad.
- * Antes era una interfaz manual para abstraer la ausencia de @supabase/supabase-js.
- * Ahora que el paquete esta instalado, se usa SupabaseClient directamente.
+ * Alias de compatibilidad con la firma antigua.
+ * Extiende SupabaseClient pero redefine `from` para aceptar un solo
+ * argumento generico, manteniendo compatibilidad con los repositories.
  */
-export type DbClient = SupabaseClient;
+export interface DbClient extends Omit<SupabaseClient, 'from'> {
+    from<T = unknown>(table: string): DbQueryBuilder<T>;
+}
 
 /*
  * Tipos genericos de respuesta de base de datos.

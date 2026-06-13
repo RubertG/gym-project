@@ -7,7 +7,7 @@
 import { getServerClient } from '@/lib/db/client';
 import { defineMiddleware } from 'astro:middleware';
 import type { Profile } from '@/lib/models';
-import { profileRepository } from '@/lib/repositories/profileRepository';
+import { findProfileByUserId } from '@/lib/repositories/profileRepository';
 
 /* ─────────── Locals tipados ─────────── */
 
@@ -54,7 +54,7 @@ const authMiddleware = defineMiddleware(async (context, next) => {
 
         if (session?.user) {
             context.locals.user = { id: session.user.id };
-            const profile = await profileRepository.findProfileByUserId(db, session.user.id);
+            const profile = await findProfileByUserId(db, session.user.id);
             context.locals.profile = profile;
         }
     } catch {
