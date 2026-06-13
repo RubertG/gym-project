@@ -164,6 +164,10 @@ create index if not exists idx_workout_sessions_user_id on public.workout_sessio
 create index if not exists idx_workout_sessions_date on public.workout_sessions(session_date) where deleted_at is null;
 create index if not exists idx_workout_sets_session_id on public.workout_sets(workout_session_id) where deleted_at is null;
 create index if not exists idx_workout_sets_exercise_id on public.workout_sets(exercise_id) where deleted_at is null;
+create index if not exists idx_user_active_routine_log_current on public.user_active_routine_log(user_id) where deactivated_at is null;
+create index if not exists idx_routine_likes_routine_id on public.routine_likes(routine_id);
+create index if not exists idx_routine_likes_user_id on public.routine_likes(user_id);
+create index if not exists idx_workout_sessions_user_date on public.workout_sessions(user_id, session_date);
 
 -- ============================================================
 -- 3. FUNCTIONS (HELPERS)
