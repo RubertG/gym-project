@@ -15,10 +15,10 @@ export interface ToastContainerProps {
 }
 
 const positionMap: Record<ToastPosition, string> = {
-    'top-right': 'toast-container top-right',
-    'bottom-right': 'toast-container bottom-right',
-    'top-left': 'toast-container top-left',
-    'bottom-left': 'toast-container bottom-left',
+    'top-right': 'toast-container top-right flex-col',
+    'bottom-right': 'toast-container bottom-right flex-col-reverse',
+    'top-left': 'toast-container top-left flex-col',
+    'bottom-left': 'toast-container bottom-left flex-col-reverse',
 };
 
 export function ToastContainer({ toasts, onRemove }: ToastContainerProps) {

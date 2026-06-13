@@ -32,40 +32,73 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
         ref
     ) => {
         const [isOpen, setIsOpen] = useState(false);
+        const [isClosing, setIsClosing] = useState(false);
         const containerRef = useRef<HTMLDivElement>(null);
         const dropdownRef = useRef<HTMLDivElement>(null);
+        const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
+            null
+        );
 
         const selectedOption = options.find((opt) => opt.value === value);
         const displayText = selectedOption ? selectedOption.label : placeholder;
 
+        const handleClose = useCallback(() => {
+            if (closeTimeoutRef.current) {
+                clearTimeout(closeTimeoutRef.current);
+            }
+            setIsClosing(true);
+            closeTimeoutRef.current = setTimeout(() => {
+                setIsOpen(false);
+                setIsClosing(false);
+            }, 150);
+        }, []);
+
+        const handleOpen = useCallback(() => {
+            if (closeTimeoutRef.current) {
+                clearTimeout(closeTimeoutRef.current);
+            }
+            setIsClosing(false);
+            setIsOpen(true);
+        }, []);
+
         const handleToggle = useCallback(() => {
             if (!disabled) {
-                setIsOpen((prev) => !prev);
+                if (isOpen) {
+                    handleClose();
+                } else {
+                    handleOpen();
+                }
             }
-        }, [disabled]);
+        }, [disabled, isOpen, handleClose, handleOpen]);
 
         const handleSelect = useCallback(
             (optionValue: string) => {
                 onChange?.(optionValue);
-                setIsOpen(false);
+                handleClose();
             },
-            [onChange]
+            [onChange, handleClose]
         );
 
-        const handleClickOutside = useCallback((event: MouseEvent) => {
-            if (
-                containerRef.current &&
-                !containerRef.current.contains(event.target as Node)
-            ) {
-                setIsOpen(false);
-            }
-        }, []);
+        const handleClickOutside = useCallback(
+            (event: MouseEvent) => {
+                if (
+                    containerRef.current &&
+                    !containerRef.current.contains(event.target as Node)
+                ) {
+                    handleClose();
+                }
+            },
+            [handleClose]
+        );
 
-        const handleEscape = useCallback((event: KeyboardEvent) => {
-            if (event.key === 'Escape') {
-                setIsOpen(false);
-            }
-        }, []);
+        const handleEscape = useCallback(
+            (event: KeyboardEvent) => {
+                if (event.key === 'Escape') {
+                    handleClose();
+                }
+            },
+            [handleClose]
+        );
 
         useEffect(() => {
             if (isOpen) {
@@ -77,6 +110,14 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
                 document.removeEventListener('keydown', handleEscape);
             };
         }, [isOpen, handleClickOutside, handleEscape]);
+
+        useEffect(() => {
+            return () => {
+                if (closeTimeoutRef.current) {
+                    clearTimeout(closeTimeoutRef.current);
+                }
+            };
+        }, []);
 
         const generatedId = React.useId();
         const selectId = generatedId;
@@ -132,11 +173,11 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
                     </button>
 
                     {/* Dropdown */}
-                    {isOpen && (
+                    {(isOpen || isClosing) && (
                         <div
                             ref={dropdownRef}
                             role="listbox"
-                            className="animate-fade-in-down border-primary-400/20 bg-background-800/95 absolute z-50 mt-1 max-h-60 w-full overflow-y-auto border shadow-lg backdrop-blur-md"
+                            className={`border-primary-400/20 bg-background-800/95 absolute z-50 mt-1 max-h-60 w-full overflow-y-auto border shadow-lg backdrop-blur-md transition-all duration-150 ${isClosing ? 'pointer-events-none -translate-y-2 opacity-0' : 'animate-fade-in-down'}`}
                         >
                             {options.map((option) => {
                                 const isSelected = option.value === value;

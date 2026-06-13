@@ -41,8 +41,9 @@ export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
                 <input
                     ref={ref}
                     type="checkbox"
-                    checked={checked}
-                    defaultChecked={defaultChecked}
+                    {...(isControlled
+                        ? { checked: checked ?? false }
+                        : { defaultChecked: defaultChecked ?? false })}
                     onChange={onChange}
                     disabled={disabled}
                     className="sr-only"

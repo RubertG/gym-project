@@ -25,7 +25,8 @@ export const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
             transform: 'translateX(0px)',
             width: '0px',
         });
-        const [contentKey, setContentKey] = useState(activeTab);
+        const [isAnimating, setIsAnimating] = useState(false);
+        const prevTabRef = useRef(activeTab);
 
         const updateIndicator = useCallback(() => {
             const activeIndex = tabs.findIndex((tab) => tab.id === activeTab);
@@ -60,7 +61,15 @@ export const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
         }, [updateIndicator]);
 
         useEffect(() => {
-            setContentKey(activeTab);
+            if (prevTabRef.current !== activeTab) {
+                setIsAnimating(true);
+                const timer = setTimeout(() => {
+                    setIsAnimating(false);
+                    prevTabRef.current = activeTab;
+                }, 200);
+
+                return () => clearTimeout(timer);
+            }
         }, [activeTab]);
 
         return (
@@ -97,8 +106,7 @@ export const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
                     <span className="tab-indicator" style={indicatorStyle} />
                 </div>
                 <div
-                    key={contentKey}
-                    className="animate-fade-in-up mt-4"
+                    className={`mt-4 transition-all duration-200 ${isAnimating ? 'translate-y-2 opacity-0' : 'translate-y-0 opacity-100'}`}
                     role="tabpanel"
                 >
                     {children}

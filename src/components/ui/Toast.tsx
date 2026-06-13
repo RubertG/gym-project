@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState, useRef } from 'react';
 import { CheckCircle, XCircle, AlertTriangle, Info, X } from 'lucide-react';
 
 export type ToastType = 'success' | 'error' | 'warning' | 'info';
@@ -61,25 +61,45 @@ export const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
         },
         ref
     ) => {
+        const [isExiting, setIsExiting] = useState(false);
+        const exitTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
+            null
+        );
+
         const handleClose = useCallback(() => {
-            onClose();
+            if (exitTimeoutRef.current) {
+                clearTimeout(exitTimeoutRef.current);
+            }
+            setIsExiting(true);
+            exitTimeoutRef.current = setTimeout(() => {
+                onClose();
+            }, 200);
         }, [onClose]);
 
         useEffect(() => {
             if (duration <= 0) return;
             const timer = setTimeout(handleClose, duration);
 
-            return () => clearTimeout(timer);
+            return () => {
+                clearTimeout(timer);
+
+                if (exitTimeoutRef.current) {
+                    clearTimeout(exitTimeoutRef.current);
+                }
+            };
         }, [duration, handleClose]);
 
         const config = typeConfig[type];
         const Icon = config.icon;
         const animationClass = positionAnimationMap[position];
+        const exitAnimationClass = isExiting
+            ? 'opacity-0 scale-95'
+            : 'opacity-100 scale-100';
 
         return (
             <div
                 ref={ref}
-                className={`${animationClass} ${className}`.trim()}
+                className={`${animationClass} ${exitAnimationClass} transition-all duration-200 ${className}`.trim()}
                 role="alert"
                 {...props}
             >

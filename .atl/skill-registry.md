@@ -22,6 +22,7 @@ Last updated: 2026-06-13
 | Skill | Trigger / description | Scope | Path |
 | --- | --- | --- | --- |
 | `ahk-v2-dev` | — | user | `C:\Users\ruber\.agents\skills\ahk-v2-dev\SKILL.md` |
+| `ai-sdk-5` | Vercel AI SDK 5 patterns. Trigger: When building AI chat features - breaking changes from v4. | user | `C:\Users\ruber\.config\opencode\skills\ai-sdk-5\SKILL.md` |
 | `branch-pr` | Create Gentle AI pull requests with issue-first checks. Trigger: creating, opening, or preparing PRs for review. | user | `C:\Users\ruber\.config\opencode\skills\branch-pr\SKILL.md` |
 | `chained-pr` | Trigger: PRs over 400 lines, stacked PRs, review slices. Split oversized changes into chained PRs that protect review focus. | user | `C:\Users\ruber\.config\opencode\skills\chained-pr\SKILL.md` |
 | `cognitive-doc-design` | Design docs that reduce cognitive load. Trigger: writing guides, READMEs, RFCs, onboarding, architecture, or review-facing docs. | user | `C:\Users\ruber\.config\opencode\skills\cognitive-doc-design\SKILL.md` |
@@ -35,13 +36,18 @@ Last updated: 2026-06-13
 | `issue-creation` | Create Gentle AI issues with issue-first checks. Trigger: creating GitHub issues, bug reports, or feature requests. | user | `C:\Users\ruber\.config\opencode\skills\issue-creation\SKILL.md` |
 | `judgment-day` | Trigger: judgment day, dual review, adversarial review, juzgar. Run blind dual review, fix confirmed issues, then re-judge. | user | `C:\Users\ruber\.config\opencode\skills\judgment-day\SKILL.md` |
 | `plan-executor` | — | user | `C:\Users\ruber\.agents\skills\plan-executor\SKILL.md` |
+| `playwright` | Playwright E2E testing patterns. Trigger: When writing E2E tests - Page Objects, selectors, MCP workflow. | user | `C:\Users\ruber\.config\opencode\skills\playwright\SKILL.md` |
 | `quality-reviewer-ahk` | — | user | `C:\Users\ruber\.agents\skills\quality-reviewer-ahk\SKILL.md` |
+| `react-19` | React 19 patterns with React Compiler. Trigger: When writing React components - no useMemo/useCallback needed. | user | `C:\Users\ruber\.config\opencode\skills\react-19\SKILL.md` |
 | `skill-creator` | Create new skills, modify and improve existing skills, and measure skill performance. Use when users want to create a skill from scratch, edit, or optimize an existing skill, run evals to test a skill, benchmark skill performance with variance analysis, or optimize a skill's description for better triggering accuracy. | user | `C:\Users\ruber\.agents\skills\skill-creator\SKILL.md` |
 | `skill-improver` | Trigger: improve skills, audit skills, refactor skills, skill quality. Audit and upgrade existing LLM-first skills. | user | `C:\Users\ruber\.config\opencode\skills\skill-improver\SKILL.md` |
 | `supabase-postgres-best-practices` | Postgres performance optimization and best practices from Supabase. Use this skill when writing, reviewing, or optimizing Postgres queries, schema designs, or database configurations. | user | `C:\Users\ruber\.agents\skills\supabase-postgres-best-practices\SKILL.md` |
+| `tailwind-4` | Tailwind CSS 4 patterns and best practices. Trigger: When styling with Tailwind - cn(), theme variables, no var() in className. | user | `C:\Users\ruber\.config\opencode\skills\tailwind-4\SKILL.md` |
+| `typescript` | TypeScript strict patterns and best practices. Trigger: When writing TypeScript code - types, interfaces, generics. | user | `C:\Users\ruber\.config\opencode\skills\typescript\SKILL.md` |
 | `vercel-react-best-practices` | React and Next.js performance optimization guidelines from Vercel Engineering. This skill should be used when writing, reviewing, or refactoring React/Next.js code to ensure optimal performance patterns. Triggers on tasks involving React components, Next.js pages, data fetching, bundle optimization, or performance improvements. | user | `C:\Users\ruber\.agents\skills\vercel-react-best-practices\SKILL.md` |
 | `work-unit-commits` | Plan commits as reviewable work units. Trigger: implementation, commit splitting, chained PRs, or keeping tests and docs with code. | user | `C:\Users\ruber\.config\opencode\skills\work-unit-commits\SKILL.md` |
 | `writing-plans` | Use when you have a spec or requirements for a multi-step task, before touching code | user | `C:\Users\ruber\.agents\skills\writing-plans\SKILL.md` |
+| `zustand-5` | Zustand 5 state management patterns. Trigger: When managing React state with Zustand. | user | `C:\Users\ruber\.config\opencode\skills\zustand-5\SKILL.md` |
 
 ## Loading protocol
 

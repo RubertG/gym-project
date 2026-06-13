@@ -25,3 +25,5 @@ pnpm-debug.log*
 
 # planning folder (internal docs)
 planning/
+# Local AI runtime state
+.atl/
