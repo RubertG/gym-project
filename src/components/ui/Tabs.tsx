@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export interface Tab {
     id: string;
@@ -25,8 +26,6 @@ export const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
             transform: 'translateX(0px)',
             width: '0px',
         });
-        const [isAnimating, setIsAnimating] = useState(false);
-        const prevTabRef = useRef(activeTab);
 
         const updateIndicator = useCallback(() => {
             const activeIndex = tabs.findIndex((tab) => tab.id === activeTab);
@@ -59,18 +58,6 @@ export const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
 
             return () => window.removeEventListener('resize', handleResize);
         }, [updateIndicator]);
-
-        useEffect(() => {
-            if (prevTabRef.current !== activeTab) {
-                setIsAnimating(true);
-                const timer = setTimeout(() => {
-                    setIsAnimating(false);
-                    prevTabRef.current = activeTab;
-                }, 200);
-
-                return () => clearTimeout(timer);
-            }
-        }, [activeTab]);
 
         return (
             <div ref={ref} className={`w-full ${className}`.trim()} {...props}>
@@ -105,12 +92,19 @@ export const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
                     })}
                     <span className="tab-indicator" style={indicatorStyle} />
                 </div>
-                <div
-                    className={`mt-4 transition-all duration-200 ${isAnimating ? 'translate-y-2 opacity-0' : 'translate-y-0 opacity-100'}`}
-                    role="tabpanel"
-                >
-                    {children}
-                </div>
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={activeTab}
+                        className="mt-4"
+                        role="tabpanel"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.2, ease: 'easeOut' }}
+                    >
+                        {children}
+                    </motion.div>
+                </AnimatePresence>
             </div>
         );
     }
