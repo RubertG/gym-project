@@ -12,6 +12,7 @@ export interface Profile {
 export interface Exercise {
     id: string;
     name: string;
+    category?: string;
     imageUrl: string | null;
     createdBy: string | null;
     status: 'pending' | 'approved';
@@ -37,6 +38,9 @@ export interface RoutineDay {
     dayOfWeek: number; // 0=Lunes, 6=Domingo
     dayName: string;
     orderIndex: number;
+    createdAt: string;
+    updatedAt: string;
+    deletedAt: string | null;
 }
 
 export interface RoutineExercise {
@@ -47,6 +51,9 @@ export interface RoutineExercise {
     suggestedSets: number | null;
     suggestedReps: string | null;
     notes: string | null;
+    createdAt: string;
+    updatedAt: string;
+    deletedAt: string | null;
 }
 
 export interface WorkoutSession {
@@ -71,6 +78,7 @@ export interface WorkoutSet {
     weightKg: number;
     note: string | null;
     createdAt: string;
+    deletedAt: string | null;
 }
 
 export interface UserActiveRoutineLog {
@@ -79,6 +87,8 @@ export interface UserActiveRoutineLog {
     routineId: string;
     activatedAt: string;
     deactivatedAt: string | null;
+    createdAt: string;
+    deletedAt: string | null;
 }
 
 export interface RoutineLike {
