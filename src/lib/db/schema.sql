@@ -259,7 +259,7 @@ create trigger trigger_close_previous_active_routine
     when (new.is_active = true)
     execute function public.close_previous_active_routine();
 
--- 4.4 Auto-actualizar updated_at en routines y profiles
+-- 4.4 Auto-actualizar updated_at en routines, profiles, routine_days y routine_exercises
 create trigger trigger_set_updated_at_routines
     before update on public.routines
     for each row
@@ -267,6 +267,16 @@ create trigger trigger_set_updated_at_routines
 
 create trigger trigger_set_updated_at_profiles
     before update on public.profiles
+    for each row
+    execute function public.set_updated_at();
+
+create trigger trigger_set_updated_at_routine_days
+    before update on public.routine_days
+    for each row
+    execute function public.set_updated_at();
+
+create trigger trigger_set_updated_at_routine_exercises
+    before update on public.routine_exercises
     for each row
     execute function public.set_updated_at();
 
