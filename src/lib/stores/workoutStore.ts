@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { WorkoutSession, WorkoutSet } from '../models';
+import type { WorkoutSession, WorkoutSet } from '@/lib/models';
 
 interface WorkoutExerciseState {
     exerciseId: string;

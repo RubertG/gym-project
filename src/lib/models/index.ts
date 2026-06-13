@@ -80,3 +80,13 @@ export interface UserActiveRoutineLog {
     activatedAt: string;
     deactivatedAt: string | null;
 }
+
+export interface RoutineLike {
+    id: string;
+    routineId: string;
+    userId: string;
+    createdAt: string;
+    deletedAt: string | null;
+}
+
+export * from './dto';

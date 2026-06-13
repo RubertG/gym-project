@@ -3,6 +3,8 @@
 > **Estado:** ✅ Completada  
 > **Última actualización:** 2026-05-23
 
+> **Nota:** Los documentos públicos del proyecto (arquitectura, convenciones, design system, stack técnico, requerimientos y skills) han sido movidos a la carpeta `docs/` en la raíz del repositorio. Esta carpeta `planning/` conserva el seguimiento interno de la Fase 1.
+
 ## Tareas y Estado
 
 | Tarea | Descripción                                              | Estado        | Responsable                    |
