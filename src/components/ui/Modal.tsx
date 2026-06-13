@@ -41,16 +41,25 @@ export const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
         useEffect(() => {
             if (isOpen) {
                 document.addEventListener('keydown', handleEscape);
-                document.body.style.overflow = 'hidden';
             }
+
             return () => {
                 document.removeEventListener('keydown', handleEscape);
-                document.body.style.overflow = '';
             };
         }, [isOpen, handleEscape]);
 
+        useEffect(() => {
+            if (isOpen) {
+                document.body.style.overflow = 'hidden';
+            }
+        }, [isOpen]);
+
+        const handleExitComplete = useCallback(() => {
+            document.body.style.overflow = '';
+        }, []);
+
         return (
-            <AnimatePresence>
+            <AnimatePresence onExitComplete={handleExitComplete}>
                 {isOpen && (
                     <div
                         ref={ref}

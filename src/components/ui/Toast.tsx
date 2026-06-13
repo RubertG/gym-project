@@ -66,18 +66,41 @@ export const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
         const Icon = config.icon;
 
         // Animaciones segun posicion
+        const isRight = position.includes('right');
+        const isLeft = position.includes('left');
+        const isTop = position.includes('top');
+
         const variants = {
-            hidden: position.includes('right')
+            hidden: isRight
                 ? { opacity: 0, x: 100, scale: 0.9 }
-                : position.includes('left')
+                : isLeft
                   ? { opacity: 0, x: -100, scale: 0.9 }
                   : {
                         opacity: 0,
-                        y: position.includes('top') ? -50 : 50,
+                        y: isTop ? -50 : 50,
                         scale: 0.9,
                     },
             visible: { opacity: 1, x: 0, y: 0, scale: 1 },
-            exit: { opacity: 0, scale: 0.9, transition: { duration: 0.2 } },
+            exit: isRight
+                ? {
+                      opacity: 0,
+                      x: 100,
+                      scale: 0.9,
+                      transition: { duration: 0.25 },
+                  }
+                : isLeft
+                  ? {
+                        opacity: 0,
+                        x: -100,
+                        scale: 0.9,
+                        transition: { duration: 0.25 },
+                    }
+                  : {
+                        opacity: 0,
+                        y: isTop ? -50 : 50,
+                        scale: 0.9,
+                        transition: { duration: 0.25 },
+                    },
         };
 
         return (
@@ -89,7 +112,11 @@ export const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                transition={{ duration: 0.3, ease: 'easeOut' }}
+                layout
+                transition={{
+                    layout: { duration: 0.3, ease: 'easeInOut' },
+                    default: { duration: 0.3, ease: 'easeOut' },
+                }}
                 {...props}
             >
                 <div
