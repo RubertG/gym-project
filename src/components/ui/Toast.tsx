@@ -1,4 +1,5 @@
-import React, { useEffect, useCallback, useState, useRef } from 'react';
+import React, { useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { CheckCircle, XCircle, AlertTriangle, Info, X } from 'lucide-react';
 
 export type ToastType = 'success' | 'error' | 'warning' | 'info';
@@ -41,13 +42,6 @@ const typeConfig = {
     },
 };
 
-const positionAnimationMap: Record<ToastPosition, string> = {
-    'top-right': 'animate-slide-in-right',
-    'bottom-right': 'animate-slide-in-right',
-    'top-left': 'animate-slide-in-left',
-    'bottom-left': 'animate-slide-in-left',
-};
-
 export const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
     (
         {
@@ -61,46 +55,41 @@ export const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
         },
         ref
     ) => {
-        const [isExiting, setIsExiting] = useState(false);
-        const exitTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
-            null
-        );
-
-        const handleClose = useCallback(() => {
-            if (exitTimeoutRef.current) {
-                clearTimeout(exitTimeoutRef.current);
-            }
-            setIsExiting(true);
-            exitTimeoutRef.current = setTimeout(() => {
-                onClose();
-            }, 200);
-        }, [onClose]);
-
         useEffect(() => {
             if (duration <= 0) return;
-            const timer = setTimeout(handleClose, duration);
+            const timer = setTimeout(onClose, duration);
 
-            return () => {
-                clearTimeout(timer);
-
-                if (exitTimeoutRef.current) {
-                    clearTimeout(exitTimeoutRef.current);
-                }
-            };
-        }, [duration, handleClose]);
+            return () => clearTimeout(timer);
+        }, [duration, onClose]);
 
         const config = typeConfig[type];
         const Icon = config.icon;
-        const animationClass = positionAnimationMap[position];
-        const exitAnimationClass = isExiting
-            ? 'opacity-0 scale-95'
-            : 'opacity-100 scale-100';
+
+        // Animaciones segun posicion
+        const variants = {
+            hidden: position.includes('right')
+                ? { opacity: 0, x: 100, scale: 0.9 }
+                : position.includes('left')
+                  ? { opacity: 0, x: -100, scale: 0.9 }
+                  : {
+                        opacity: 0,
+                        y: position.includes('top') ? -50 : 50,
+                        scale: 0.9,
+                    },
+            visible: { opacity: 1, x: 0, y: 0, scale: 1 },
+            exit: { opacity: 0, scale: 0.9, transition: { duration: 0.2 } },
+        };
 
         return (
-            <div
+            <motion.div
                 ref={ref}
-                className={`${animationClass} ${exitAnimationClass} transition-all duration-200 ${className}`.trim()}
+                className={className}
                 role="alert"
+                variants={variants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                transition={{ duration: 0.3, ease: 'easeOut' }}
                 {...props}
             >
                 <div
@@ -111,14 +100,14 @@ export const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
                     />
                     <p className="text-word-200 flex-1 text-sm">{message}</p>
                     <button
-                        onClick={handleClose}
+                        onClick={onClose}
                         className="text-word-400 hover:text-word-200 focus-visible:ring-primary-400 transition-colors focus:outline-none focus-visible:ring-2 active:scale-[0.97]"
                         aria-label="Cerrar notificacion"
                     >
                         <X className="h-4 w-4" />
                     </button>
                 </div>
-            </div>
+            </motion.div>
         );
     }
 );

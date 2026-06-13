@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from 'react';
+import React from 'react';
+import { AnimatePresence } from 'framer-motion';
 import { Toast, type ToastType, type ToastPosition } from './Toast';
 
 export interface ToastItem {
@@ -48,17 +49,19 @@ export function ToastContainer({ toasts, onRemove }: ToastContainerProps) {
 
                 return (
                     <div key={position} className={positionMap[position]}>
-                        {positionToasts.map((toast) => (
-                            <Toast
-                                key={toast.id}
-                                id={toast.id}
-                                message={toast.message}
-                                type={toast.type}
-                                position={position}
-                                duration={toast.duration}
-                                onClose={() => onRemove(toast.id)}
-                            />
-                        ))}
+                        <AnimatePresence mode="popLayout">
+                            {positionToasts.map((toast) => (
+                                <Toast
+                                    key={toast.id}
+                                    id={toast.id}
+                                    message={toast.message}
+                                    type={toast.type}
+                                    position={position}
+                                    duration={toast.duration}
+                                    onClose={() => onRemove(toast.id)}
+                                />
+                            ))}
+                        </AnimatePresence>
                     </div>
                 );
             })}
@@ -67,9 +70,9 @@ export function ToastContainer({ toasts, onRemove }: ToastContainerProps) {
 }
 
 export function useToast() {
-    const [toasts, setToasts] = useState<ToastItem[]>([]);
+    const [toasts, setToasts] = React.useState<ToastItem[]>([]);
 
-    const addToast = useCallback(
+    const addToast = React.useCallback(
         (
             message: string,
             type: ToastType = 'info',
@@ -91,7 +94,7 @@ export function useToast() {
         []
     );
 
-    const removeToast = useCallback((id: string) => {
+    const removeToast = React.useCallback((id: string) => {
         setToasts((prev) => prev.filter((t) => t.id !== id));
     }, []);
 
