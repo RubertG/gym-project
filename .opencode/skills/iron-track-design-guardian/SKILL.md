@@ -1,12 +1,12 @@
 ---
 name: iron-track-design-guardian
 description: >-
-  Enforce the 'Voltage Industrial' design system on every frontend output.
-  Use this skill whenever creating, modifying, or reviewing React components,
-  Astro pages, CSS, Tailwind classes, or any UI element. Ensures dark-only
-  mode, exact color tokens (#CCFF00 primary), zero border-radius, glass cards,
-  and strict typography. Do not allow any light mode sections, shadows, or
-  rounded corners.
+    Enforce the 'Voltage Industrial' design system on every frontend output.
+    Use this skill whenever creating, modifying, or reviewing React components,
+    Astro pages, CSS, Tailwind classes, or any UI element. Ensures dark-only
+    mode, exact color tokens (#CCFF00 primary), zero border-radius, glass cards,
+    and strict typography. Do not allow any light mode sections, shadows, or
+    rounded corners.
 ---
 
 # Voltage Industrial Design System — Enforcement Rules
@@ -14,8 +14,8 @@ description: >-
 ## 1. Theme Lock — Dark Mode Only
 
 - **ALWAYS dark mode.** Never generate light mode sections, alternate palettes, or `dark:` variant switches.
-- Background base: `#000000` y `#131313`.
-- Surface: `#111111` con glass overlay cuando aplique.
+- Background base: `#000000` (`background-950`) y `#131313` (`background-500`).
+- Surface: `#080808` (`background-800`) con glass overlay cuando aplique.
 - Text primary: `#F0F0F0`.
 - Text secondary: `#A0A0A0`.
 
