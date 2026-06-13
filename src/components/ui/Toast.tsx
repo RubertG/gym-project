@@ -1,12 +1,20 @@
 import React, { useEffect, useCallback } from 'react';
 import { CheckCircle, XCircle, AlertTriangle, Info, X } from 'lucide-react';
 
-export interface ToastProps extends React.HTMLAttributes<HTMLDivElement> {
+export type ToastType = 'success' | 'error' | 'warning' | 'info';
+export type ToastPosition =
+    | 'top-right'
+    | 'bottom-right'
+    | 'top-left'
+    | 'bottom-left';
+
+export interface ToastProps {
+    id: string;
     message: string;
-    type?: 'success' | 'error' | 'warning' | 'info';
+    type?: ToastType;
     duration?: number;
     onClose: () => void;
-    position?: 'top-right' | 'bottom-right' | 'top-left' | 'bottom-left';
+    position?: ToastPosition;
 }
 
 const typeConfig = {
@@ -32,11 +40,11 @@ const typeConfig = {
     },
 };
 
-const positionMap = {
-    'top-right': 'top-4 right-4',
-    'bottom-right': 'bottom-4 right-4',
-    'top-left': 'top-4 left-4',
-    'bottom-left': 'bottom-4 left-4',
+const positionAnimationMap: Record<ToastPosition, string> = {
+    'top-right': 'animate-slide-in-right',
+    'bottom-right': 'animate-slide-in-right',
+    'top-left': 'animate-slide-in-left',
+    'bottom-left': 'animate-slide-in-left',
 };
 
 export const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
@@ -65,12 +73,12 @@ export const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
 
         const config = typeConfig[type];
         const Icon = config.icon;
-        const posClass = positionMap[position];
+        const animationClass = positionAnimationMap[position];
 
         return (
             <div
                 ref={ref}
-                className={`fixed z-50 ${posClass} animate-fade-in-up ${className}`.trim()}
+                className={`${animationClass} ${className}`.trim()}
                 role="alert"
                 {...props}
             >
