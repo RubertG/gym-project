@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 export interface Tab {
     id: string;
@@ -20,18 +20,64 @@ export const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
         { tabs, activeTab, onChange, children, className = '', ...props },
         ref
     ) => {
+        const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+        const [indicatorStyle, setIndicatorStyle] = useState({
+            transform: 'translateX(0px)',
+            width: '0px',
+        });
+        const [contentKey, setContentKey] = useState(activeTab);
+
+        const updateIndicator = useCallback(() => {
+            const activeIndex = tabs.findIndex((tab) => tab.id === activeTab);
+            const activeButton = tabRefs.current[activeIndex];
+
+            if (activeButton && activeButton.parentElement) {
+                const parentRect =
+                    activeButton.parentElement.getBoundingClientRect();
+                const buttonRect = activeButton.getBoundingClientRect();
+                const left = buttonRect.left - parentRect.left;
+                const width = buttonRect.width;
+
+                setIndicatorStyle({
+                    transform: `translateX(${left}px)`,
+                    width: `${width}px`,
+                });
+            }
+        }, [activeTab, tabs]);
+
+        useEffect(() => {
+            updateIndicator();
+        }, [updateIndicator]);
+
+        useEffect(() => {
+            const handleResize = () => {
+                updateIndicator();
+            };
+
+            window.addEventListener('resize', handleResize);
+
+            return () => window.removeEventListener('resize', handleResize);
+        }, [updateIndicator]);
+
+        useEffect(() => {
+            setContentKey(activeTab);
+        }, [activeTab]);
+
         return (
             <div ref={ref} className={`w-full ${className}`.trim()} {...props}>
                 <div
-                    className="border-secondary-800 flex border-b-2"
+                    className="border-secondary-800 relative flex border-b-2"
                     role="tablist"
                 >
-                    {tabs.map((tab) => {
+                    {tabs.map((tab, index) => {
                         const isActive = tab.id === activeTab;
 
                         return (
                             <button
                                 key={tab.id}
+                                ref={(el) => {
+                                    tabRefs.current[index] = el;
+                                }}
                                 role="tab"
                                 aria-selected={isActive}
                                 onClick={() => onChange(tab.id)}
@@ -45,14 +91,16 @@ export const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
                                 ].join(' ')}
                             >
                                 {tab.label}
-                                {isActive && (
-                                    <span className="bg-primary-400 absolute bottom-[-2px] left-0 h-[2px] w-full" />
-                                )}
                             </button>
                         );
                     })}
+                    <span className="tab-indicator" style={indicatorStyle} />
                 </div>
-                <div className="mt-4" role="tabpanel">
+                <div
+                    key={contentKey}
+                    className="animate-fade-in-up mt-4"
+                    role="tabpanel"
+                >
                     {children}
                 </div>
             </div>
