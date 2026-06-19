@@ -148,6 +148,41 @@ export async function createRoutineDay(
     return data;
 }
 
+export async function updateRoutineDay(
+    db: DbClient,
+    id: string,
+    payload: Partial<Pick<RoutineDay, 'dayOfWeek' | 'dayName' | 'orderIndex'>>
+): Promise<RoutineDay> {
+    const mapped: Record<string, unknown> = {};
+
+    if (payload.dayOfWeek !== undefined) mapped.day_of_week = payload.dayOfWeek;
+    if (payload.dayName !== undefined) mapped.day_name = payload.dayName;
+    if (payload.orderIndex !== undefined)
+        mapped.order_index = payload.orderIndex;
+
+    const { data, error } = await db
+        .from<RoutineDay>('routine_days')
+        .update(mapped)
+        .eq('id', id)
+        .select()
+        .single();
+
+    if (error || !data) throw new NotFoundError('RoutineDay');
+    return data;
+}
+
+export async function deleteDaysByRoutineId(
+    db: DbClient,
+    routineId: string
+): Promise<void> {
+    const { error } = await db
+        .from('routine_days')
+        .delete()
+        .eq('routine_id', routineId);
+
+    if (error) throw new AppError(error.message, 500);
+}
+
 /* ─────────── routine_exercises ─────────── */
 
 export async function findExercisesByDayId(
@@ -193,7 +228,64 @@ export async function createRoutineExercise(
     return data;
 }
 
+export async function updateRoutineExercise(
+    db: DbClient,
+    id: string,
+    payload: Partial<
+        Pick<
+            RoutineExercise,
+            'orderIndex' | 'suggestedSets' | 'suggestedReps' | 'notes'
+        >
+    >
+): Promise<RoutineExercise> {
+    const mapped: Record<string, unknown> = {};
+
+    if (payload.orderIndex !== undefined)
+        mapped.order_index = payload.orderIndex;
+    if (payload.suggestedSets !== undefined)
+        mapped.suggested_sets = payload.suggestedSets;
+    if (payload.suggestedReps !== undefined)
+        mapped.suggested_reps = payload.suggestedReps;
+    if (payload.notes !== undefined) mapped.notes = payload.notes;
+
+    const { data, error } = await db
+        .from<RoutineExercise>('routine_exercises')
+        .update(mapped)
+        .eq('id', id)
+        .select()
+        .single();
+
+    if (error || !data) throw new NotFoundError('RoutineExercise');
+    return data;
+}
+
+export async function deleteExercisesByDayId(
+    db: DbClient,
+    routineDayId: string
+): Promise<void> {
+    const { error } = await db
+        .from('routine_exercises')
+        .delete()
+        .eq('routine_day_id', routineDayId);
+
+    if (error) throw new AppError(error.message, 500);
+}
+
 /* ─────────── routine_likes ─────────── */
+
+export async function findLikesByRoutineId(
+    db: DbClient,
+    routineId: string
+): Promise<RoutineLike[]> {
+    const { data, error } = await db
+        .from<RoutineLike>('routine_likes')
+        .select('*')
+        .eq('routine_id', routineId)
+        .order('created_at', { ascending: false });
+
+    if (error) throw new AppError(error.message, 500);
+    return data ?? [];
+}
 
 export async function findLike(
     db: DbClient,
