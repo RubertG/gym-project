@@ -1,7 +1,10 @@
 /*
  * Seed script para IRON TRACK.
- * Inserta 30+ ejercicios categorizados y 2-3 rutinas de ejemplo
+ * Inserta 30+ ejercicios categorizados y 3 rutinas de ejemplo
  * usando los repositories existentes.
+ *
+ * Los datos de rutinas coinciden exactamente con seed.sql.
+ * El exerciseId se resuelve en tiempo de ejecución buscando por nombre.
  */
 
 import type { DbClient } from '@/lib/db/types';
@@ -9,7 +12,26 @@ import * as exerciseRepo from '@/lib/repositories/exerciseRepository';
 import * as routineRepo from '@/lib/repositories/routineRepository';
 import * as profileRepo from '@/lib/repositories/profileRepository';
 import { ValidationError } from '@/lib/utils/errors';
-import type { RoutineDayInput } from '@/lib/models';
+
+/* ─────────── Tipos locales para seed ─────────── */
+
+/**
+ * Ejercicio de rutina sin exerciseId — se resuelve en tiempo de ejecución
+ * buscando el nombre en el mapa de ejercicios creados/existentes.
+ */
+interface SeedExerciseInput {
+    orderIndex: number;
+    suggestedSets: number;
+    suggestedReps: string;
+    notes: string | null;
+}
+
+interface SeedDayInput {
+    dayOfWeek: number;
+    dayName: string;
+    orderIndex: number;
+    exercises: SeedExerciseInput[];
+}
 
 /* ─────────── Datos de seed ─────────── */
 
@@ -80,381 +102,486 @@ for (const [category, names] of Object.entries(EXERCISES_BY_CATEGORY)) {
     }
 }
 
-const ROUTINES: { name: string; days: RoutineDayInput[] }[] = [
+/**
+ * Definición de rutinas de ejemplo.
+ * Coincide exactamente con los datos de seed.sql.
+ * El exerciseId no se incluye — se resuelve en tiempo de ejecución por nombre.
+ */
+const ROUTINES: { name: string; days: SeedDayInput[] }[] = [
+    // ─────────── Rutina 1: Full Body 3 días (principiantes) ───────────
     {
         name: 'Full Body 3 días',
         days: [
             {
                 dayOfWeek: 0,
-                dayName: 'Lunes - Full Body A',
+                dayName: 'Día A: Empuje',
                 orderIndex: 0,
                 exercises: [
                     {
-                        exerciseId: '',
                         orderIndex: 0,
                         suggestedSets: 4,
-                        suggestedReps: '6-8',
-                        notes: 'Pesado',
+                        suggestedReps: '8-12',
+                        notes: 'Controlar descenso',
                     },
                     {
-                        exerciseId: '',
                         orderIndex: 1,
-                        suggestedSets: 3,
-                        suggestedReps: '8-10',
+                        suggestedSets: 4,
+                        suggestedReps: '8-12',
                         notes: null,
                     },
                     {
-                        exerciseId: '',
                         orderIndex: 2,
                         suggestedSets: 3,
                         suggestedReps: '10-12',
                         notes: null,
                     },
                     {
-                        exerciseId: '',
                         orderIndex: 3,
                         suggestedSets: 3,
-                        suggestedReps: '10-12',
-                        notes: null,
+                        suggestedReps: '60s',
+                        notes: 'Plancha isométrica',
                     },
                 ],
             },
             {
                 dayOfWeek: 2,
-                dayName: 'Miércoles - Full Body B',
+                dayName: 'Día B: Tirón',
                 orderIndex: 1,
                 exercises: [
                     {
-                        exerciseId: '',
                         orderIndex: 0,
                         suggestedSets: 4,
-                        suggestedReps: '6-8',
-                        notes: 'Pesado',
-                    },
-                    {
-                        exerciseId: '',
-                        orderIndex: 1,
-                        suggestedSets: 3,
-                        suggestedReps: '8-10',
+                        suggestedReps: '8-12',
                         notes: null,
                     },
                     {
-                        exerciseId: '',
+                        orderIndex: 1,
+                        suggestedSets: 4,
+                        suggestedReps: '8-12',
+                        notes: 'Cada brazo',
+                    },
+                    {
                         orderIndex: 2,
                         suggestedSets: 3,
                         suggestedReps: '10-12',
                         notes: null,
                     },
                     {
-                        exerciseId: '',
                         orderIndex: 3,
                         suggestedSets: 3,
-                        suggestedReps: '10-12',
+                        suggestedReps: '15-20',
                         notes: null,
                     },
                 ],
             },
             {
                 dayOfWeek: 4,
-                dayName: 'Viernes - Full Body C',
+                dayName: 'Día C: Piernas',
                 orderIndex: 2,
                 exercises: [
                     {
-                        exerciseId: '',
                         orderIndex: 0,
                         suggestedSets: 4,
-                        suggestedReps: '6-8',
-                        notes: 'Pesado',
+                        suggestedReps: '8-12',
+                        notes: 'Profundidad completa',
                     },
                     {
-                        exerciseId: '',
                         orderIndex: 1,
-                        suggestedSets: 3,
-                        suggestedReps: '8-10',
-                        notes: null,
+                        suggestedSets: 4,
+                        suggestedReps: '5-8',
+                        notes: 'Peso pesado',
                     },
                     {
-                        exerciseId: '',
                         orderIndex: 2,
                         suggestedSets: 3,
-                        suggestedReps: '10-12',
+                        suggestedReps: '10-15',
                         notes: null,
                     },
                     {
-                        exerciseId: '',
                         orderIndex: 3,
                         suggestedSets: 3,
-                        suggestedReps: '10-12',
+                        suggestedReps: '10-15',
                         notes: null,
                     },
                 ],
             },
         ],
     },
+    // ─────────── Rutina 2: Upper/Lower Split (intermedio) ───────────
     {
-        name: 'Upper / Lower',
+        name: 'Upper/Lower Split',
         days: [
+            // Upper 1 — Lunes
             {
                 dayOfWeek: 0,
-                dayName: 'Lunes - Upper',
+                dayName: 'Upper',
                 orderIndex: 0,
                 exercises: [
                     {
-                        exerciseId: '',
                         orderIndex: 0,
                         suggestedSets: 4,
                         suggestedReps: '6-8',
-                        notes: null,
+                        notes: 'Pesado',
                     },
                     {
-                        exerciseId: '',
                         orderIndex: 1,
                         suggestedSets: 4,
-                        suggestedReps: '6-8',
+                        suggestedReps: '8-12',
                         notes: null,
                     },
                     {
-                        exerciseId: '',
                         orderIndex: 2,
-                        suggestedSets: 3,
-                        suggestedReps: '10-12',
-                        notes: null,
-                    },
-                    {
-                        exerciseId: '',
-                        orderIndex: 3,
-                        suggestedSets: 3,
-                        suggestedReps: '10-12',
-                        notes: null,
-                    },
-                    {
-                        exerciseId: '',
-                        orderIndex: 4,
-                        suggestedSets: 3,
-                        suggestedReps: '12-15',
-                        notes: null,
-                    },
-                ],
-            },
-            {
-                dayOfWeek: 1,
-                dayName: 'Martes - Lower',
-                orderIndex: 1,
-                exercises: [
-                    {
-                        exerciseId: '',
-                        orderIndex: 0,
-                        suggestedSets: 4,
-                        suggestedReps: '6-8',
-                        notes: null,
-                    },
-                    {
-                        exerciseId: '',
-                        orderIndex: 1,
                         suggestedSets: 3,
                         suggestedReps: '8-10',
                         notes: null,
                     },
                     {
-                        exerciseId: '',
-                        orderIndex: 2,
-                        suggestedSets: 3,
-                        suggestedReps: '10-12',
-                        notes: null,
-                    },
-                    {
-                        exerciseId: '',
-                        orderIndex: 3,
-                        suggestedSets: 3,
-                        suggestedReps: '12-15',
-                        notes: null,
-                    },
-                ],
-            },
-            {
-                dayOfWeek: 3,
-                dayName: 'Jueves - Upper',
-                orderIndex: 2,
-                exercises: [
-                    {
-                        exerciseId: '',
-                        orderIndex: 0,
-                        suggestedSets: 4,
-                        suggestedReps: '6-8',
-                        notes: null,
-                    },
-                    {
-                        exerciseId: '',
-                        orderIndex: 1,
-                        suggestedSets: 4,
-                        suggestedReps: '6-8',
-                        notes: null,
-                    },
-                    {
-                        exerciseId: '',
-                        orderIndex: 2,
-                        suggestedSets: 3,
-                        suggestedReps: '10-12',
-                        notes: null,
-                    },
-                    {
-                        exerciseId: '',
                         orderIndex: 3,
                         suggestedSets: 3,
                         suggestedReps: '10-12',
                         notes: null,
                     },
                     {
-                        exerciseId: '',
                         orderIndex: 4,
                         suggestedSets: 3,
                         suggestedReps: '12-15',
-                        notes: null,
+                        notes: 'Quemar',
                     },
                 ],
             },
+            // Lower 1 — Martes
+            {
+                dayOfWeek: 1,
+                dayName: 'Lower',
+                orderIndex: 1,
+                exercises: [
+                    {
+                        orderIndex: 0,
+                        suggestedSets: 4,
+                        suggestedReps: '6-8',
+                        notes: 'Pesado',
+                    },
+                    {
+                        orderIndex: 1,
+                        suggestedSets: 4,
+                        suggestedReps: '5-8',
+                        notes: null,
+                    },
+                    {
+                        orderIndex: 2,
+                        suggestedSets: 3,
+                        suggestedReps: '10-12',
+                        notes: 'Cada pierna',
+                    },
+                    {
+                        orderIndex: 3,
+                        suggestedSets: 4,
+                        suggestedReps: '12-20',
+                        notes: 'Gemelos',
+                    },
+                ],
+            },
+            // Upper 2 — Jueves
+            {
+                dayOfWeek: 3,
+                dayName: 'Upper',
+                orderIndex: 2,
+                exercises: [
+                    {
+                        orderIndex: 0,
+                        suggestedSets: 4,
+                        suggestedReps: '8-12',
+                        notes: null,
+                    },
+                    {
+                        orderIndex: 1,
+                        suggestedSets: 4,
+                        suggestedReps: '8-12',
+                        notes: null,
+                    },
+                    {
+                        orderIndex: 2,
+                        suggestedSets: 3,
+                        suggestedReps: '8-10',
+                        notes: null,
+                    },
+                    {
+                        orderIndex: 3,
+                        suggestedSets: 3,
+                        suggestedReps: '10-12',
+                        notes: null,
+                    },
+                    {
+                        orderIndex: 4,
+                        suggestedSets: 3,
+                        suggestedReps: '12-15',
+                        notes: 'Pájaro',
+                    },
+                ],
+            },
+            // Lower 2 — Viernes
             {
                 dayOfWeek: 4,
-                dayName: 'Viernes - Lower',
+                dayName: 'Lower',
                 orderIndex: 3,
                 exercises: [
                     {
-                        exerciseId: '',
                         orderIndex: 0,
                         suggestedSets: 4,
-                        suggestedReps: '6-8',
+                        suggestedReps: '8-12',
                         notes: null,
                     },
                     {
-                        exerciseId: '',
                         orderIndex: 1,
-                        suggestedSets: 3,
+                        suggestedSets: 4,
                         suggestedReps: '8-10',
                         notes: null,
                     },
                     {
-                        exerciseId: '',
                         orderIndex: 2,
                         suggestedSets: 3,
                         suggestedReps: '10-12',
-                        notes: null,
+                        notes: 'Cada pierna',
                     },
                     {
-                        exerciseId: '',
                         orderIndex: 3,
-                        suggestedSets: 3,
-                        suggestedReps: '12-15',
-                        notes: null,
+                        suggestedSets: 4,
+                        suggestedReps: '12-20',
+                        notes: 'Gemelos',
                     },
                 ],
             },
         ],
     },
+    // ─────────── Rutina 3: Push/Pull/Legs (avanzado, 6 días) ───────────
     {
-        name: 'Push Pull Legs',
+        name: 'Push/Pull/Legs',
         days: [
+            // Push 1 — Lunes
             {
                 dayOfWeek: 0,
-                dayName: 'Lunes - Push',
+                dayName: 'Push',
                 orderIndex: 0,
                 exercises: [
                     {
-                        exerciseId: '',
                         orderIndex: 0,
                         suggestedSets: 4,
                         suggestedReps: '6-8',
-                        notes: null,
+                        notes: 'Pesado',
                     },
                     {
-                        exerciseId: '',
                         orderIndex: 1,
                         suggestedSets: 4,
                         suggestedReps: '8-10',
                         notes: null,
                     },
                     {
-                        exerciseId: '',
                         orderIndex: 2,
+                        suggestedSets: 3,
+                        suggestedReps: '8-12',
+                        notes: 'Fondos',
+                    },
+                    {
+                        orderIndex: 3,
                         suggestedSets: 3,
                         suggestedReps: '10-12',
                         notes: null,
                     },
                     {
-                        exerciseId: '',
-                        orderIndex: 3,
+                        orderIndex: 4,
                         suggestedSets: 3,
                         suggestedReps: '12-15',
-                        notes: null,
+                        notes: 'Lateral',
                     },
                 ],
             },
+            // Pull 1 — Martes
             {
                 dayOfWeek: 1,
-                dayName: 'Martes - Pull',
+                dayName: 'Pull',
                 orderIndex: 1,
                 exercises: [
                     {
-                        exerciseId: '',
                         orderIndex: 0,
                         suggestedSets: 4,
-                        suggestedReps: '6-8',
+                        suggestedReps: '8-12',
                         notes: null,
                     },
                     {
-                        exerciseId: '',
                         orderIndex: 1,
                         suggestedSets: 4,
-                        suggestedReps: '8-10',
-                        notes: null,
+                        suggestedReps: '6-8',
+                        notes: 'Barra',
                     },
                     {
-                        exerciseId: '',
                         orderIndex: 2,
                         suggestedSets: 3,
                         suggestedReps: '10-12',
-                        notes: null,
+                        notes: 'Bíceps',
                     },
                     {
-                        exerciseId: '',
                         orderIndex: 3,
                         suggestedSets: 3,
+                        suggestedReps: '10-12',
+                        notes: 'Martillo',
+                    },
+                    {
+                        orderIndex: 4,
+                        suggestedSets: 3,
                         suggestedReps: '12-15',
-                        notes: null,
+                        notes: 'Pájaro',
                     },
                 ],
             },
+            // Legs 1 — Miércoles
             {
                 dayOfWeek: 2,
-                dayName: 'Miércoles - Legs',
+                dayName: 'Legs',
                 orderIndex: 2,
                 exercises: [
                     {
-                        exerciseId: '',
                         orderIndex: 0,
                         suggestedSets: 4,
                         suggestedReps: '6-8',
+                        notes: 'Pesado',
+                    },
+                    {
+                        orderIndex: 1,
+                        suggestedSets: 4,
+                        suggestedReps: '5-8',
                         notes: null,
                     },
                     {
-                        exerciseId: '',
-                        orderIndex: 1,
+                        orderIndex: 2,
                         suggestedSets: 3,
+                        suggestedReps: '10-15',
+                        notes: null,
+                    },
+                    {
+                        orderIndex: 3,
+                        suggestedSets: 3,
+                        suggestedReps: '10-15',
+                        notes: null,
+                    },
+                    {
+                        orderIndex: 4,
+                        suggestedSets: 4,
+                        suggestedReps: '12-20',
+                        notes: 'Gemelos',
+                    },
+                ],
+            },
+            // Push 2 — Viernes
+            {
+                dayOfWeek: 4,
+                dayName: 'Push',
+                orderIndex: 3,
+                exercises: [
+                    {
+                        orderIndex: 0,
+                        suggestedSets: 4,
+                        suggestedReps: '6-8',
+                        notes: 'Pesado',
+                    },
+                    {
+                        orderIndex: 1,
+                        suggestedSets: 4,
                         suggestedReps: '8-10',
                         notes: null,
                     },
                     {
-                        exerciseId: '',
                         orderIndex: 2,
+                        suggestedSets: 3,
+                        suggestedReps: '8-12',
+                        notes: 'Fondos',
+                    },
+                    {
+                        orderIndex: 3,
                         suggestedSets: 3,
                         suggestedReps: '10-12',
                         notes: null,
                     },
                     {
-                        exerciseId: '',
-                        orderIndex: 3,
+                        orderIndex: 4,
                         suggestedSets: 3,
                         suggestedReps: '12-15',
+                        notes: 'Lateral',
+                    },
+                ],
+            },
+            // Pull 2 — Sábado
+            {
+                dayOfWeek: 5,
+                dayName: 'Pull',
+                orderIndex: 4,
+                exercises: [
+                    {
+                        orderIndex: 0,
+                        suggestedSets: 4,
+                        suggestedReps: '8-12',
                         notes: null,
+                    },
+                    {
+                        orderIndex: 1,
+                        suggestedSets: 4,
+                        suggestedReps: '6-8',
+                        notes: 'Barra',
+                    },
+                    {
+                        orderIndex: 2,
+                        suggestedSets: 3,
+                        suggestedReps: '10-12',
+                        notes: 'Bíceps',
+                    },
+                    {
+                        orderIndex: 3,
+                        suggestedSets: 3,
+                        suggestedReps: '10-12',
+                        notes: 'Martillo',
+                    },
+                    {
+                        orderIndex: 4,
+                        suggestedSets: 3,
+                        suggestedReps: '12-15',
+                        notes: 'Pájaro',
+                    },
+                ],
+            },
+            // Legs 2 — Domingo
+            {
+                dayOfWeek: 6,
+                dayName: 'Legs',
+                orderIndex: 5,
+                exercises: [
+                    {
+                        orderIndex: 0,
+                        suggestedSets: 4,
+                        suggestedReps: '6-8',
+                        notes: 'Pesado',
+                    },
+                    {
+                        orderIndex: 1,
+                        suggestedSets: 4,
+                        suggestedReps: '5-8',
+                        notes: null,
+                    },
+                    {
+                        orderIndex: 2,
+                        suggestedSets: 3,
+                        suggestedReps: '10-15',
+                        notes: null,
+                    },
+                    {
+                        orderIndex: 3,
+                        suggestedSets: 3,
+                        suggestedReps: '10-15',
+                        notes: null,
+                    },
+                    {
+                        orderIndex: 4,
+                        suggestedSets: 4,
+                        suggestedReps: '12-20',
+                        notes: 'Gemelos',
                     },
                 ],
             },
@@ -535,10 +662,11 @@ export async function runSeed(
                 orderIndex: dayDef.orderIndex,
             });
 
-            // Asignar ejercicios de ejemplo según el tipo de rutina
+            // Resolver nombres de ejercicios según rutina y día
             const exerciseNames = resolveExerciseNamesForDay(
                 routineDef.name,
-                dayDef.dayName
+                dayDef.dayName,
+                dayDef.orderIndex
             );
 
             for (let i = 0; i < exerciseNames.length; i++) {
@@ -547,13 +675,15 @@ export async function runSeed(
 
                 if (!exId) continue;
 
+                const exerciseData = dayDef.exercises[i];
+
                 await routineRepo.createRoutineExercise(db, {
                     routineDayId: day.id,
                     exerciseId: exId,
                     orderIndex: i,
-                    suggestedSets: 3,
-                    suggestedReps: '8-12',
-                    notes: null,
+                    suggestedSets: exerciseData.suggestedSets,
+                    suggestedReps: exerciseData.suggestedReps,
+                    notes: exerciseData.notes,
                 });
             }
         }
@@ -564,71 +694,117 @@ export async function runSeed(
 
 /* ─────────── Helpers de asignación de ejercicios ─────────── */
 
+/**
+ * Resuelve los nombres de ejercicios que corresponden a cada día de rutina.
+ * Los nombres devueltos coinciden exactamente con los ejercicios insertados
+ * en seed.sql para cada día.
+ */
 function resolveExerciseNamesForDay(
     routineName: string,
-    dayName: string
+    dayName: string,
+    orderIndex: number
 ): string[] {
     const name = routineName.toLowerCase();
-    const day = dayName.toLowerCase();
 
+    // ─── Full Body 3 días ───
     if (name.includes('full body')) {
-        if (day.includes('a'))
-            return [
-                'Sentadilla Tradicional',
-                'Press Banca Plano',
-                'Dominadas',
-                'Press Militar con Barra',
-            ];
-        if (day.includes('b'))
-            return [
-                'Peso Muerto',
-                'Press Banca Inclinado',
-                'Remo con Barra',
-                'Elevaciones Laterales',
-            ];
-        return [
-            'Sentadilla Frontal',
-            'Aperturas con Mancuernas',
-            'Jalón al Pecho',
-            'Curl con Barra',
-        ];
-    }
-
-    if (name.includes('upper')) {
-        if (day.includes('upper'))
+        // orderIndex 0 = Día A: Empuje
+        if (orderIndex === 0) {
             return [
                 'Press Banca Plano',
-                'Dominadas',
                 'Press Militar con Barra',
-                'Elevaciones Laterales',
-                'Extensiones de Tríceps en Polea',
+                'Press Francés',
+                'Plancha Frontal',
             ];
+        }
+        // orderIndex 1 = Día B: Tirón
+        if (orderIndex === 1) {
+            return [
+                'Jalón al Pecho',
+                'Remo con Mancuerna',
+                'Curl con Mancuernas',
+                'Crunch Abdominal',
+            ];
+        }
+        // orderIndex 2 = Día C: Piernas
         return [
             'Sentadilla Tradicional',
-            'Peso Muerto Rumano',
-            'Prensa de Piernas',
+            'Peso Muerto',
+            'Extensión de Cuádriceps',
             'Curl Femoral Acostado',
         ];
     }
 
-    if (name.includes('push')) {
+    // ─── Upper/Lower Split ───
+    if (name.includes('upper/lower') || name.includes('upper')) {
+        // Upper días: orderIndex 0 y 2
+        if (dayName.toLowerCase() === 'upper') {
+            // Upper 1 (orderIndex 0) vs Upper 2 (orderIndex 2)
+            if (orderIndex === 0) {
+                return [
+                    'Press Banca Plano',
+                    'Jalón al Pecho',
+                    'Press Militar con Barra',
+                    'Press Francés',
+                    'Elevaciones Laterales',
+                ];
+            }
+            return [
+                'Press Banca Inclinado',
+                'Remo con Barra',
+                'Press Militar con Mancuernas',
+                'Extensiones de Tríceps en Polea',
+                'Pájaro con Mancuernas',
+            ];
+        }
+        // Lower días: orderIndex 1 y 3
+        if (orderIndex === 1) {
+            return [
+                'Sentadilla Tradicional',
+                'Peso Muerto',
+                'Zancadas con Mancuernas',
+                'Elevación de Talones',
+            ];
+        }
         return [
-            'Press Banca Plano',
-            'Press Banca Inclinado',
-            'Elevaciones Laterales',
-            'Extensiones de Tríceps en Polea',
-        ];
-    }
-    if (name.includes('pull')) {
-        return ['Dominadas', 'Remo con Barra', 'Curl con Barra', 'Face Pull'];
-    }
-    if (name.includes('leg')) {
-        return [
-            'Sentadilla Tradicional',
-            'Peso Muerto',
             'Prensa de Piernas',
             'Peso Muerto Rumano',
+            'Zancadas con Mancuernas',
+            'Elevación de Talones',
         ];
+    }
+
+    // ─── Push/Pull/Legs ───
+    if (name.includes('push/pull/legs') || name.includes('push pull legs')) {
+        const day = dayName.toLowerCase();
+
+        if (day === 'push') {
+            return [
+                'Press Banca Plano',
+                'Press Militar con Barra',
+                'Fondos en Paralelas',
+                'Press Francés',
+                'Elevaciones Laterales',
+            ];
+        }
+        if (day === 'pull') {
+            return [
+                'Jalón al Pecho',
+                'Remo con Barra',
+                'Curl con Mancuernas',
+                'Curl Martillo',
+                'Pájaro con Mancuernas',
+            ];
+        }
+        if (day === 'legs') {
+            return [
+                'Sentadilla Tradicional',
+                'Peso Muerto',
+                'Extensión de Cuádriceps',
+                'Curl Femoral Acostado',
+                'Elevación de Talones',
+            ];
+        }
     }
 
     return ['Sentadilla Tradicional', 'Press Banca Plano', 'Dominadas'];

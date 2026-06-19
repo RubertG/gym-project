@@ -1,18 +1,17 @@
 export interface Profile {
     id: string;
-    userId: string;
     username: string | null;
     avatarUrl: string | null;
     role: 'user' | 'admin';
     createdAt: string;
-    updatedAt: string | null;
+    updatedAt: string;
     deletedAt: string | null;
 }
 
 export interface Exercise {
     id: string;
     name: string;
-    category?: string;
+    category: string | null;
     imageUrl: string | null;
     createdBy: string | null;
     status: 'pending' | 'approved';
@@ -46,7 +45,7 @@ export interface RoutineDay {
 export interface RoutineExercise {
     id: string;
     routineDayId: string;
-    exerciseId: string;
+    exerciseId: string | null;
     orderIndex: number;
     suggestedSets: number | null;
     suggestedReps: string | null;
@@ -72,7 +71,7 @@ export interface WorkoutSession {
 export interface WorkoutSet {
     id: string;
     workoutSessionId: string;
-    exerciseId: string;
+    exerciseId: string | null;
     setNumber: number;
     reps: number;
     weightKg: number;

@@ -104,6 +104,10 @@ export async function createRoutine(
         });
 
         for (const exInput of dayInput.exercises) {
+            if (!exInput.exerciseId) {
+                throw new ValidationError('El ejercicio no puede estar vacío');
+            }
+
             const exercise = await exerciseRepo.findExerciseById(
                 db,
                 exInput.exerciseId

@@ -14,7 +14,7 @@ export async function findProfileByUserId(
     const { data, error } = await db
         .from<Profile>('profiles')
         .select('*')
-        .eq('user_id', userId)
+        .eq('id', userId)
         .maybeSingle();
 
     if (error) throw new AppError(error.message, 500);
@@ -42,7 +42,7 @@ export async function createProfile(
 ): Promise<Profile> {
     const { data, error } = await db
         .from<Profile>('profiles')
-        .insert({ user_id: userId, username: username ?? null })
+        .insert({ id: userId, username: username ?? null })
         .select()
         .single();
 
@@ -64,7 +64,7 @@ export async function updateProfile(
     const { data, error } = await db
         .from<Profile>('profiles')
         .update(mapped)
-        .eq('user_id', userId)
+        .eq('id', userId)
         .select()
         .single();
 
@@ -79,7 +79,7 @@ export async function softDeleteProfile(
     const { error } = await db
         .from<Profile>('profiles')
         .update({ deleted_at: new Date().toISOString() })
-        .eq('user_id', userId);
+        .eq('id', userId);
 
     if (error) throw new AppError(error.message, 500);
 }

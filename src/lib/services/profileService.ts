@@ -17,7 +17,7 @@ export async function getProfile(userId: string): Promise<Profile | null> {
 
 export async function createProfile(
     userId: string,
-    username?: string,
+    username?: string
 ): Promise<Profile> {
     const db = getServerClient();
 
@@ -25,21 +25,30 @@ export async function createProfile(
         const normalized = username.trim().toLowerCase();
 
         if (normalized.length < 3) {
-            throw new ValidationError('El nombre de usuario debe tener al menos 3 caracteres');
+            throw new ValidationError(
+                'El nombre de usuario debe tener al menos 3 caracteres'
+            );
         }
-        const existing = await profileRepo.findProfileByUsername(db, normalized);
+        const existing = await profileRepo.findProfileByUsername(
+            db,
+            normalized
+        );
 
         if (existing) {
             throw new ValidationError('El nombre de usuario ya está en uso');
         }
     }
 
-    return profileRepo.createProfile(db, userId, username?.trim().toLowerCase());
+    return profileRepo.createProfile(
+        db,
+        userId,
+        username?.trim().toLowerCase()
+    );
 }
 
 export async function updateProfile(
     userId: string,
-    data: Partial<Pick<Profile, 'username' | 'avatarUrl'>>,
+    data: Partial<Pick<Profile, 'username' | 'avatarUrl'>>
 ): Promise<Profile> {
     const db = getServerClient();
 
@@ -53,11 +62,16 @@ export async function updateProfile(
         const normalized = data.username.trim().toLowerCase();
 
         if (normalized.length < 3) {
-            throw new ValidationError('El nombre de usuario debe tener al menos 3 caracteres');
+            throw new ValidationError(
+                'El nombre de usuario debe tener al menos 3 caracteres'
+            );
         }
-        const existing = await profileRepo.findProfileByUsername(db, normalized);
+        const existing = await profileRepo.findProfileByUsername(
+            db,
+            normalized
+        );
 
-        if (existing && existing.userId !== userId) {
+        if (existing && existing.id !== userId) {
             throw new ValidationError('El nombre de usuario ya está en uso');
         }
         data.username = normalized;
