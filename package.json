@@ -15,7 +15,9 @@
         "format": "prettier --write .",
         "seed": "tsx src/lib/db/seed.ts",
         "typecheck": "tsc --noEmit",
-        "test": "vitest run"
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "test:coverage": "vitest run --coverage"
     },
     "lint-staged": {
         "*.{ts,tsx,astro,js,jsx,mjs,cjs,css,json,md}": [
