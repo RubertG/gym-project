@@ -5,6 +5,8 @@
  * Siempre usa locals.user.id (nunca confiamos en IDs del cliente).
  */
 
+export const prerender = false;
+
 import type { APIContext } from 'astro';
 import { z } from 'zod';
 import * as profileService from '@/lib/services/profileService';

@@ -4,6 +4,8 @@
  * Es idempotente: si no hay sesion, igualmente retorna 200.
  */
 
+export const prerender = false;
+
 import type { APIContext } from 'astro';
 import * as authService from '@/lib/services/authService';
 

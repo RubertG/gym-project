@@ -11,6 +11,9 @@ import { envBrowser } from '@/lib/config/env-browser';
 // Singleton lazy para el cliente anonimo
 let _anonClient: SupabaseClient | null = null;
 
+// Singleton lazy para el cliente del navegador (con sesion)
+let _browserClient: SupabaseClient | null = null;
+
 /**
  * Obtiene el cliente anonimo de Supabase (sin persistencia de sesion).
  * Lazy singleton: se crea una sola vez y se reutiliza.
@@ -90,21 +93,23 @@ function createCookieStorageAdapter() {
 
 /**
  * Obtiene el cliente de Supabase con persistencia de sesion via cookies.
- * Cada llamada crea un nuevo cliente (no es singleton) para garantizar
- * que las cookies se lean en cada request del servidor.
+ * Lazy singleton: se crea una sola vez y se reutiliza.
  */
 export function getBrowserClient(): SupabaseClient {
-    const storageAdapter = createCookieStorageAdapter();
+    if (!_browserClient) {
+        const storageAdapter = createCookieStorageAdapter();
 
-    return createClient(
-        envBrowser.PUBLIC_SUPABASE_URL,
-        envBrowser.PUBLIC_SUPABASE_PUBLISHABLE_KEY,
-        {
-            auth: {
-                persistSession: true,
-                autoRefreshToken: true,
-                storage: storageAdapter,
-            },
-        }
-    );
+        _browserClient = createClient(
+            envBrowser.PUBLIC_SUPABASE_URL,
+            envBrowser.PUBLIC_SUPABASE_PUBLISHABLE_KEY,
+            {
+                auth: {
+                    persistSession: true,
+                    autoRefreshToken: true,
+                    storage: storageAdapter,
+                },
+            }
+        );
+    }
+    return _browserClient;
 }

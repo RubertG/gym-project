@@ -4,6 +4,8 @@
  * Requiere sesion activa (locals.user seteado por middleware).
  */
 
+export const prerender = false;
+
 import type { APIContext } from 'astro';
 import * as profileService from '@/lib/services/profileService';
 

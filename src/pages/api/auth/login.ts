@@ -4,6 +4,8 @@
  * Valida body con Zod, delega a authService.signIn, establece cookies de sesion.
  */
 
+export const prerender = false;
+
 import type { APIContext } from 'astro';
 import { z } from 'zod';
 import * as authService from '@/lib/services/authService';
