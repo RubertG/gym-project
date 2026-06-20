@@ -8,7 +8,6 @@ const mockSignUp = vi.fn()
 const mockSignInWithPassword = vi.fn()
 const mockSignOut = vi.fn()
 const mockResetPasswordForEmail = vi.fn()
-const mockGetSession = vi.fn()
 
 vi.mock('@/lib/db/browser-client', () => ({
     getAnonClient: vi.fn(() => ({
@@ -17,7 +16,6 @@ vi.mock('@/lib/db/browser-client', () => ({
             signInWithPassword: mockSignInWithPassword,
             signOut: mockSignOut,
             resetPasswordForEmail: mockResetPasswordForEmail,
-            getSession: mockGetSession,
         },
     })),
 }))
@@ -28,8 +26,7 @@ vi.mock('@/lib/services/profileService', () => ({
 }))
 
 // Import dinámico después de los mocks
-const { signUp, signIn, signOut, getCurrentSession } =
-    await import('./authService')
+const { signUp, signIn, signOut } = await import('./authService')
 const { createProfile } = await import('@/lib/services/profileService')
 
 describe('authService', () => {
@@ -75,7 +72,10 @@ describe('authService', () => {
                 email: 'test@example.com',
                 password: 'password123',
             })
-            expect(createProfile).toHaveBeenCalledWith('user-123', 'testuser')
+            expect(createProfile).toHaveBeenCalledWith({
+                userId: 'user-123',
+                username: 'testuser',
+            })
         })
 
         it('should throw ValidationError on duplicate email', async () => {
@@ -117,7 +117,10 @@ describe('authService', () => {
 
             expect(result.user).toEqual(mockUser)
             expect(result.profile).toBeNull()
-            expect(createProfile).toHaveBeenCalledWith('user-456', undefined)
+            expect(createProfile).toHaveBeenCalledWith({
+                userId: 'user-456',
+                username: undefined,
+            })
         })
     })
 
@@ -181,48 +184,6 @@ describe('authService', () => {
 
             await expect(signOut()).resolves.toBeUndefined()
             expect(mockSignOut).toHaveBeenCalled()
-        })
-    })
-
-    describe('getCurrentSession', () => {
-        it('should return session and user when session exists', async () => {
-            const mockUser: User = {
-                id: 'user-123',
-                email: 'test@example.com',
-                role: 'authenticated',
-                aud: 'authenticated',
-                created_at: new Date().toISOString(),
-            } as User
-
-            const mockSession: Session = {
-                access_token: 'token',
-                refresh_token: 'refresh',
-                expires_in: 3600,
-                token_type: 'bearer',
-                user: mockUser,
-            } as Session
-
-            mockGetSession.mockResolvedValue({
-                data: { session: mockSession, user: mockUser },
-                error: null,
-            })
-
-            const result = await getCurrentSession()
-
-            expect(result.session).toEqual(mockSession)
-            expect(result.user).toEqual(mockUser)
-        })
-
-        it('should return nulls when no session exists', async () => {
-            mockGetSession.mockResolvedValue({
-                data: { session: null, user: null },
-                error: null,
-            })
-
-            const result = await getCurrentSession()
-
-            expect(result.session).toBeNull()
-            expect(result.user).toBeNull()
         })
     })
 })

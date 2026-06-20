@@ -9,12 +9,12 @@ import { renderHook, waitFor, act } from '@testing-library/react'
 
 // ─── Mocks ───────────────────────────────────────────────────────────
 
-const mockGetSession = vi.fn()
+const mockGetUser = vi.fn()
 
 vi.mock('@/lib/db/browser-client', () => ({
     getBrowserClient: () => ({
         auth: {
-            getSession: mockGetSession,
+            getUser: mockGetUser,
         },
     }),
 }))
@@ -32,16 +32,20 @@ describe('useAuth', () => {
         const mockUser = { id: 'user-123', email: 'test@example.com' }
         const mockProfile = { id: 'user-123', username: 'testuser' }
 
-        mockGetSession.mockResolvedValue({
+        mockGetUser.mockResolvedValue({
             data: {
-                session: { user: mockUser },
+                user: mockUser,
             },
+            error: null,
         })
 
-        globalThis.fetch = vi.fn().mockResolvedValue({
-            ok: true,
-            json: () => Promise.resolve({ profile: mockProfile }),
-        }) as ReturnType<typeof fetch>
+        vi.stubGlobal(
+            'fetch',
+            vi.fn().mockResolvedValue({
+                ok: true,
+                json: () => Promise.resolve({ profile: mockProfile }),
+            })
+        )
 
         const { result } = renderHook(() => useAuth())
 
@@ -59,13 +63,14 @@ describe('useAuth', () => {
         expect(result.current.user).toEqual(mockUser)
         expect(result.current.profile).toEqual(mockProfile)
 
-        // Verificar que getSession fue llamado
-        expect(mockGetSession).toHaveBeenCalled()
+        // Verificar que getUser fue llamado
+        expect(mockGetUser).toHaveBeenCalled()
     })
 
     it('sets loading false when no session exists', async () => {
-        mockGetSession.mockResolvedValue({
-            data: { session: null },
+        mockGetUser.mockResolvedValue({
+            data: { user: null },
+            error: null,
         })
 
         const { result } = renderHook(() => useAuth())
@@ -82,18 +87,23 @@ describe('useAuth', () => {
     })
 
     it('signOut calls POST /api/auth/logout and clears state', async () => {
-        mockGetSession.mockResolvedValue({ data: { session: null } })
+        mockGetUser.mockResolvedValue({ data: { user: null }, error: null })
 
-        globalThis.fetch = vi.fn().mockResolvedValue({
-            ok: true,
-            json: () => Promise.resolve({}),
-        }) as ReturnType<typeof fetch>
+        vi.stubGlobal(
+            'fetch',
+            vi.fn().mockResolvedValue({
+                ok: true,
+                json: () => Promise.resolve({}),
+            })
+        )
 
         // Mock window.location
         const originalLocation = window.location
 
-        delete (window as Record<string, unknown>).location
-        window.location = { ...originalLocation, href: '' } as Location
+        Object.defineProperty(window, 'location', {
+            writable: true,
+            value: { ...originalLocation, href: '' },
+        })
 
         const { result } = renderHook(() => useAuth())
 
@@ -111,6 +121,9 @@ describe('useAuth', () => {
         expect(result.current.user).toBeNull()
         expect(result.current.profile).toBeNull()
 
-        window.location = originalLocation
+        Object.defineProperty(window, 'location', {
+            writable: true,
+            value: originalLocation,
+        })
     })
 })

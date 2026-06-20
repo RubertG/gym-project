@@ -53,14 +53,15 @@ const authMiddleware = defineMiddleware(async (context, next) => {
         // Usar cliente que lee cookies del request para verificar sesión
         const supabase = createSupabaseServerClient(context)
         const {
-            data: { session },
-        } = await supabase.auth.getSession()
+            data: { user },
+            error,
+        } = await supabase.auth.getUser()
 
-        if (session?.user) {
-            context.locals.user = { id: session.user.id }
+        if (user && !error) {
+            context.locals.user = { id: user.id }
             // Usar service_role client para operaciones de base de datos
             const db = getServerClient()
-            const profile = await findProfileByUserId(db, session.user.id)
+            const profile = await findProfileByUserId(db, user.id)
             context.locals.profile = profile
         }
     } catch {

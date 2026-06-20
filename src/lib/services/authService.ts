@@ -36,14 +36,6 @@ export interface SignInResult {
 }
 
 /**
- * Resultado de obtener la sesión actual.
- */
-export interface SessionResult {
-    session: Session | null;
-    user: User | null;
-}
-
-/**
  * Registra un nuevo usuario en Supabase Auth y crea su perfil (best-effort).
  * Si el email ya existe, lanza ValidationError.
  * Si la creación de perfil falla, el usuario igualmente se retorna (no rollback).
@@ -69,7 +61,7 @@ export async function signUp(params: SignUpParams): Promise<SignUpResult> {
     let profile: Profile | null
 
     try {
-        profile = await createProfile(data.user.id, username)
+        profile = await createProfile({ userId: data.user.id, username })
     } catch {
         // Si falla la creación del perfil, no se hace rollback del usuario.
         // El perfil podrá crearse o recuperarse en un flujo posterior.
@@ -135,24 +127,6 @@ export async function resetPassword(email: string): Promise<void> {
     if (error) {
         // No revelar si el email existe o no — siempre responder con éxito
         throw new AppError('Error al enviar el email de recuperación', 500)
-    }
-}
-
-/**
- * Obtiene la sesión actual del usuario (si existe).
- * Útil para SSR: el cliente anon puede leer cookies en contexto de servidor.
- */
-export async function getCurrentSession(): Promise<SessionResult> {
-    const client = getAnonClient()
-    const { data, error } = await client.auth.getSession()
-
-    if (error) {
-        return { session: null, user: null }
-    }
-
-    return {
-        session: data.session,
-        user: data.user,
     }
 }
 

@@ -46,11 +46,12 @@ export function useAuth(): UseAuthReturn {
             try {
                 const supabase = getBrowserClient()
                 const {
-                    data: { session },
-                } = await supabase.auth.getSession()
+                    data: { user },
+                    error,
+                } = await supabase.auth.getUser()
 
-                if (!cancelled && session?.user) {
-                    setUser(session.user)
+                if (!cancelled && user && !error) {
+                    setUser(user)
 
                     // Obtener perfil via API
                     const res = await fetch('/api/auth/me')
