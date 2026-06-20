@@ -1,27 +1,15 @@
 import { createClient } from '@supabase/supabase-js';
 import type { DbClient } from './types';
-import { AppError } from '@/lib/utils/errors';
-
-declare const process: { env: Record<string, string | undefined> };
+import { env } from '@/lib/config/env';
 
 let _serverClient: DbClient | null = null;
 
 /**
- * Crea un cliente de Supabase a partir de variables de entorno.
- * Usa import.meta.env (Astro SSR) o process.env (scripts Node.js).
+ * Crea un cliente de Supabase para el servidor usando las variables
+ * de entorno ya validadas por el modulo env.
  */
 export function createServerClient(): DbClient {
-    const url = import.meta.env.SUPABASE_URL || process.env.SUPABASE_URL;
-    const key = import.meta.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-    if (!url || !key) {
-        throw new AppError(
-            'Faltan las variables de entorno de Supabase (SUPABASE_URL o SUPABASE_SERVICE_ROLE_KEY)',
-            500,
-        );
-    }
-
-    return createClient(url, key, {
+    return createClient(env.SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY, {
         auth: {
             autoRefreshToken: false,
             persistSession: false,
