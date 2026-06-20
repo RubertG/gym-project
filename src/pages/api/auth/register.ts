@@ -138,7 +138,6 @@ export async function POST(context: APIContext): Promise<Response> {
                 201
             )
         } catch {
-            // Si falla la actualización, intentar crear el perfil
             const { createProfile } =
                 await import('@/lib/services/profileService')
             const profile = await createProfile(
