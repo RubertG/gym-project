@@ -8,6 +8,11 @@ import { getBrowserClient } from '@/lib/db/browser-client';
 import type { User } from '@supabase/supabase-js';
 import type { Profile } from '@/lib/models';
 
+interface ValidationError {
+    field: string;
+    message: string;
+}
+
 interface UseAuthReturn {
     user: User | null;
     profile: Profile | null;
@@ -15,12 +20,16 @@ interface UseAuthReturn {
     signIn: (
         email: string,
         password: string
-    ) => Promise<{ ok: true } | { ok: false; error: string }>;
+    ) => Promise<
+        { ok: true } | { ok: false; error: string; details?: ValidationError[] }
+    >;
     signUp: (
         email: string,
         password: string,
         username?: string
-    ) => Promise<{ ok: true } | { ok: false; error: string }>;
+    ) => Promise<
+        { ok: true } | { ok: false; error: string; details?: ValidationError[] }
+    >;
     signOut: () => Promise<void>;
 }
 
@@ -80,7 +89,11 @@ export function useAuth(): UseAuthReturn {
         const data = await res.json();
 
         if (!res.ok) {
-            return { ok: false as const, error: data.error ?? 'Login failed' };
+            return {
+                ok: false as const,
+                error: data.error ?? 'Login failed',
+                details: data.details,
+            };
         }
 
         setUser(data.user ?? null);
@@ -109,6 +122,7 @@ export function useAuth(): UseAuthReturn {
                 return {
                     ok: false as const,
                     error: data.error ?? 'Registration failed',
+                    details: data.details,
                 };
             }
 

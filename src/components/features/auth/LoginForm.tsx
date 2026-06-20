@@ -43,13 +43,45 @@ export const LoginForm: React.FC = () => {
         const result = await signIn(email, password);
 
         if (!result.ok) {
-            setErrors({ form: result.error });
+            // Si hay detalles de validación del servidor, mapearlos a los campos
+            if (result.details && result.details.length > 0) {
+                const fieldErrors: Record<string, string> = {};
+                result.details.forEach((detail) => {
+                    // Traducir mensajes de error del servidor
+                    const translatedMessage = translateErrorMessage(
+                        detail.field,
+                        detail.message
+                    );
+                    fieldErrors[detail.field] = translatedMessage;
+                });
+                setErrors(fieldErrors);
+            } else {
+                // Error genérico (credenciales inválidas, etc.)
+                setErrors({
+                    form: translateErrorMessage('form', result.error),
+                });
+            }
             setSubmitting(false);
 
             return;
         }
 
+        // eslint-disable-next-line react-hooks/immutability
         window.location.href = '/dashboard';
+    };
+
+    // Función para traducir mensajes de error del servidor
+    const translateErrorMessage = (field: string, message: string): string => {
+        const translations: Record<string, string> = {
+            'Invalid email or password': 'Email o contraseña inválidos',
+            'Invalid email': 'Email inválido',
+            'Password must be at least 8 characters':
+                'La contraseña debe tener al menos 8 caracteres',
+            'Email is required': 'El email es requerido',
+            'Password is required': 'La contraseña es requerida',
+        };
+
+        return translations[message] || message;
     };
 
     return (

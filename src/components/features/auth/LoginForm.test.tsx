@@ -100,7 +100,46 @@ describe('LoginForm', () => {
         fireEvent.click(submitButton);
 
         await vi.waitFor(() => {
-            expect(screen.getByText('Invalid email or password')).toBeTruthy();
+            expect(
+                screen.getByText('Email o contraseña inválidos')
+            ).toBeTruthy();
+        });
+    });
+
+    it('shows field-specific validation errors from server', async () => {
+        mockSignIn.mockResolvedValue({
+            ok: false,
+            error: 'Validation failed',
+            details: [
+                {
+                    field: 'password',
+                    message: 'Password must be at least 8 characters',
+                },
+            ],
+        });
+
+        const { container } = render(<LoginForm />);
+
+        const emailInput = container.querySelector('input[name="email"]')!;
+        const passwordInput = container.querySelector(
+            'input[name="password"]'
+        )!;
+
+        fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+        fireEvent.change(passwordInput, { target: { value: 'short' } });
+
+        const submitButton = screen.getByRole('button', {
+            name: /iniciar sesión/i,
+        });
+
+        fireEvent.click(submitButton);
+
+        await vi.waitFor(() => {
+            expect(
+                screen.getByText(
+                    'La contraseña debe tener al menos 8 caracteres'
+                )
+            ).toBeTruthy();
         });
     });
 });

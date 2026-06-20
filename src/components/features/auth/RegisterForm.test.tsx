@@ -116,4 +116,47 @@ describe('RegisterForm', () => {
             undefined
         );
     });
+
+    it('shows field-specific validation errors from server', async () => {
+        mockSignUp.mockResolvedValue({
+            ok: false,
+            error: 'Validation failed',
+            details: [
+                {
+                    field: 'password',
+                    message: 'Password must contain at least one letter',
+                },
+            ],
+        });
+
+        const { container } = render(<RegisterForm />);
+
+        const emailInput = container.querySelector('input[name="email"]')!;
+        const passwordInput = container.querySelector(
+            'input[name="password"]'
+        )!;
+        const confirmPasswordInput = container.querySelector(
+            'input[name="confirmPassword"]'
+        )!;
+
+        fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+        fireEvent.change(passwordInput, { target: { value: '12345678' } });
+        fireEvent.change(confirmPasswordInput, {
+            target: { value: '12345678' },
+        });
+
+        const submitButton = screen.getByRole('button', {
+            name: /crear cuenta/i,
+        });
+
+        fireEvent.click(submitButton);
+
+        await vi.waitFor(() => {
+            expect(
+                screen.getByText(
+                    'La contraseña debe contener al menos una letra'
+                )
+            ).toBeTruthy();
+        });
+    });
 });

@@ -52,13 +52,53 @@ export const RegisterForm: React.FC = () => {
         const result = await signUp(email, password, username || undefined);
 
         if (!result.ok) {
-            setErrors({ form: result.error });
+            // Si hay detalles de validación del servidor, mapearlos a los campos
+            if (result.details && result.details.length > 0) {
+                const fieldErrors: Record<string, string> = {};
+                result.details.forEach((detail) => {
+                    // Traducir mensajes de error del servidor
+                    const translatedMessage = translateErrorMessage(
+                        detail.field,
+                        detail.message
+                    );
+                    fieldErrors[detail.field] = translatedMessage;
+                });
+                setErrors(fieldErrors);
+            } else {
+                // Error genérico
+                setErrors({
+                    form: translateErrorMessage('form', result.error),
+                });
+            }
             setSubmitting(false);
 
             return;
         }
 
+        // eslint-disable-next-line react-hooks/immutability
         window.location.href = '/dashboard';
+    };
+
+    // Función para traducir mensajes de error del servidor
+    const translateErrorMessage = (field: string, message: string): string => {
+        const translations: Record<string, string> = {
+            'Password must contain at least one letter':
+                'La contraseña debe contener al menos una letra',
+            'Password must contain at least one number':
+                'La contraseña debe contener al menos un número',
+            'Password must be at least 8 characters':
+                'La contraseña debe tener al menos 8 caracteres',
+            'Username must be at least 3 characters':
+                'El nombre de usuario debe tener al menos 3 caracteres',
+            'Username must be at most 30 characters':
+                'El nombre de usuario debe tener como máximo 30 caracteres',
+            'Username must contain only letters, numbers and underscores':
+                'El nombre de usuario solo puede contener letras, números y guiones bajos',
+            'Invalid email': 'Email inválido',
+            'Email already registered': 'Este email ya está registrado',
+        };
+
+        return translations[message] || message;
     };
 
     return (
