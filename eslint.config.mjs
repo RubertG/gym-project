@@ -151,6 +151,7 @@ export default [
         ignores: [
             'dist/**',
             '.astro/**',
+            '.vercel/**',
             'node_modules/**',
             '.config/opencode/**',
         ],
