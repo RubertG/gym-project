@@ -1,5 +1,5 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
-import { env } from '@/lib/config/env';
+import { envBrowser } from '@/lib/config/env-browser';
 
 /**
  * Cliente de Supabase para el navegador.
@@ -17,12 +17,16 @@ let _anonClient: SupabaseClient | null = null;
  */
 export function getAnonClient(): SupabaseClient {
     if (!_anonClient) {
-        _anonClient = createClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY, {
-            auth: {
-                persistSession: false,
-                autoRefreshToken: false,
-            },
-        });
+        _anonClient = createClient(
+            envBrowser.SUPABASE_URL,
+            envBrowser.SUPABASE_ANON_KEY,
+            {
+                auth: {
+                    persistSession: false,
+                    autoRefreshToken: false,
+                },
+            }
+        );
     }
     return _anonClient;
 }
@@ -32,7 +36,7 @@ export function getAnonClient(): SupabaseClient {
  * Formato esperado: https://<project-ref>.supabase.co
  */
 function getProjectRef(): string {
-    const url = new URL(env.SUPABASE_URL);
+    const url = new URL(envBrowser.SUPABASE_URL);
     const host = url.hostname; // e.g. "abcdefghijk.supabase.co"
 
     return host.split('.')[0];
@@ -92,7 +96,7 @@ function createCookieStorageAdapter() {
 export function getBrowserClient(): SupabaseClient {
     const storageAdapter = createCookieStorageAdapter();
 
-    return createClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY, {
+    return createClient(envBrowser.SUPABASE_URL, envBrowser.SUPABASE_ANON_KEY, {
         auth: {
             persistSession: true,
             autoRefreshToken: true,

@@ -11,12 +11,11 @@ vi.mock('@supabase/supabase-js', () => ({
     createClient: mockCreateClient,
 }));
 
-// Mock del modulo env
-vi.mock('@/lib/config/env', () => ({
-    env: {
+// Mock del modulo env-browser
+vi.mock('@/lib/config/env-browser', () => ({
+    envBrowser: {
         SUPABASE_URL: 'https://test-project.supabase.co',
         SUPABASE_ANON_KEY: 'test-anon-key',
-        SUPABASE_SERVICE_ROLE_KEY: 'test-service-key',
     },
 }));
 

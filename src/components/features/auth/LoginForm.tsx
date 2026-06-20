@@ -94,7 +94,6 @@ export const LoginForm: React.FC = () => {
                 type="submit"
                 variant="primary"
                 surface="dark"
-                size="lg"
                 loading={submitting}
                 disabled={submitting}
                 className="w-full rounded-none"
