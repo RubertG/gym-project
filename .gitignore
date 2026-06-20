@@ -27,3 +27,5 @@ pnpm-debug.log*
 planning/
 # Local AI runtime state
 .atl/
+
+/.engram
