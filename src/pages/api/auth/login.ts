@@ -8,10 +8,9 @@ export const prerender = false
 
 import type { APIContext } from 'astro'
 import { z } from 'zod'
-import * as authService from '@/lib/services/authService'
 import * as profileService from '@/lib/services/profileService'
 import { AppError } from '@/lib/utils/errors'
-import { env } from '@/lib/config/env'
+import { createSupabaseServerClient } from '@/lib/db/server-client'
 
 // Esquema de validacion para login
 const loginSchema = z.object({
@@ -26,47 +25,6 @@ function jsonResponse(data: unknown, status: number): Response {
     return new Response(JSON.stringify(data), {
         status,
         headers: { 'Content-Type': 'application/json' },
-    })
-}
-
-/**
- * Extrae el project ref de la URL de Supabase.
- * Formato esperado: https://<project-ref>.supabase.co
- */
-function getProjectRef(): string {
-    const url = new URL(env.PUBLIC_SUPABASE_URL)
-
-    return url.hostname.split('.')[0]
-}
-
-/**
- * Establece las cookies de sesion de Supabase en la respuesta.
- * El formato sigue el estandar de Supabase Auth para cookies.
- */
-function setSessionCookies(
-    context: APIContext,
-    session: authService.SignInResult['session']
-): void {
-    const projectRef = getProjectRef()
-    const cookieName = `sb-${projectRef}-auth-token`
-    const sessionJson = JSON.stringify(session)
-
-    // Cookie principal de sesion
-    context.cookies.set(cookieName, sessionJson, {
-        path: '/',
-        sameSite: 'lax',
-        secure: true,
-        httpOnly: true,
-        maxAge: session.expires_in,
-    })
-
-    // Cookie de codigo de verificacion (compatibilidad con flujos PKCE)
-    context.cookies.set(`${cookieName}-code`, '', {
-        path: '/',
-        sameSite: 'lax',
-        secure: true,
-        httpOnly: true,
-        maxAge: 60,
     })
 }
 
@@ -86,19 +44,28 @@ export async function POST(context: APIContext): Promise<Response> {
     }
 
     try {
-        const signInResult = await authService.signIn(result.data)
+        // Usar cliente que maneja cookies del request
+        const supabase = createSupabaseServerClient(context)
 
-        // Establecer cookies de sesion
-        setSessionCookies(context, signInResult.session)
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: result.data.email,
+            password: result.data.password,
+        })
+
+        if (error || !data.session) {
+            return jsonResponse({ error: 'Invalid email or password' }, 401)
+        }
 
         // Obtener perfil del usuario
-        const profile = await profileService.getProfile(signInResult.user.id)
+        const { getServerClient } = await import('@/lib/db/client')
+        const db = getServerClient()
+        const profile = await profileService.getProfile(data.user.id, db)
 
         return jsonResponse(
             {
                 user: {
-                    id: signInResult.user.id,
-                    email: signInResult.user.email,
+                    id: data.user.id,
+                    email: data.user.email,
                 },
                 profile,
             },

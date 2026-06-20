@@ -4,10 +4,11 @@
  * y protege rutas privadas.
  */
 
-import { getServerClient } from '@/lib/db/client'
+import { createSupabaseServerClient } from '@/lib/db/server-client'
 import { defineMiddleware } from 'astro:middleware'
 import type { Profile } from '@/lib/models'
 import { findProfileByUserId } from '@/lib/repositories/profileRepository'
+import { getServerClient } from '@/lib/db/client'
 
 /* ─────────── Locals tipados ─────────── */
 
@@ -49,13 +50,16 @@ const authMiddleware = defineMiddleware(async (context, next) => {
     const isPublic = isPublicRoute(url.pathname)
 
     try {
-        const db = getServerClient()
+        // Usar cliente que lee cookies del request para verificar sesión
+        const supabase = createSupabaseServerClient(context)
         const {
             data: { session },
-        } = await db.auth.getSession()
+        } = await supabase.auth.getSession()
 
         if (session?.user) {
             context.locals.user = { id: session.user.id }
+            // Usar service_role client para operaciones de base de datos
+            const db = getServerClient()
             const profile = await findProfileByUserId(db, session.user.id)
             context.locals.profile = profile
         }

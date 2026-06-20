@@ -3,9 +3,14 @@ import { createMockContext } from '../__helpers__/mockContext'
 import type { User, Session } from '@supabase/supabase-js'
 import type { Profile } from '@/lib/models'
 
-// Mock de authService
-vi.mock('@/lib/services/authService', () => ({
-    signIn: vi.fn(),
+// Mock de createSupabaseServerClient
+const mockSignInWithPassword = vi.fn()
+vi.mock('@/lib/db/server-client', () => ({
+    createSupabaseServerClient: () => ({
+        auth: {
+            signInWithPassword: mockSignInWithPassword,
+        },
+    }),
 }))
 
 // Mock de profileService
@@ -13,7 +18,7 @@ vi.mock('@/lib/services/profileService', () => ({
     getProfile: vi.fn(),
 }))
 
-// Mock de env para getProjectRef
+// Mock de env
 vi.mock('@/lib/config/env', () => ({
     env: {
         PUBLIC_SUPABASE_URL: 'https://testproject.supabase.co',
@@ -22,8 +27,20 @@ vi.mock('@/lib/config/env', () => ({
     },
 }))
 
+// Mock de env-browser
+vi.mock('@/lib/config/env-browser', () => ({
+    envBrowser: {
+        PUBLIC_SUPABASE_URL: 'https://testproject.supabase.co',
+        PUBLIC_SUPABASE_PUBLISHABLE_KEY: 'test-anon-key',
+    },
+}))
+
+// Mock de getServerClient
+vi.mock('@/lib/db/client', () => ({
+    getServerClient: () => ({}),
+}))
+
 const { POST } = await import('./login')
-const authService = await import('@/lib/services/authService')
 const profileService = await import('@/lib/services/profileService')
 
 describe('POST /api/auth/login', () => {
@@ -58,9 +75,9 @@ describe('POST /api/auth/login', () => {
             deletedAt: null,
         }
 
-        vi.mocked(authService.signIn).mockResolvedValue({
-            session: mockSession,
-            user: mockUser,
+        mockSignInWithPassword.mockResolvedValue({
+            data: { session: mockSession, user: mockUser },
+            error: null,
         })
         vi.mocked(profileService.getProfile).mockResolvedValue(mockProfile)
 
@@ -77,23 +94,13 @@ describe('POST /api/auth/login', () => {
             email: 'test@example.com',
         })
         expect(data.profile).toEqual(mockProfile)
-
-        // Verificar que se establecieron las cookies
-        expect(ctx.cookies.set).toHaveBeenCalled()
-        // Cookie principal: sb-testproject-auth-token
-        expect(ctx.cookies.set).toHaveBeenCalledWith(
-            'sb-testproject-auth-token',
-            expect.any(String),
-            expect.objectContaining({ path: '/', httpOnly: true })
-        )
     })
 
     it('deberia retornar 401 cuando las credenciales son invalidas', async () => {
-        const { AuthError } = await import('@/lib/utils/errors')
-
-        vi.mocked(authService.signIn).mockRejectedValue(
-            new AuthError('Invalid email or password')
-        )
+        mockSignInWithPassword.mockResolvedValue({
+            data: { session: null, user: null },
+            error: { message: 'Invalid login credentials' },
+        })
 
         const ctx = createMockContext({
             body: { email: 'bad@example.com', password: 'wrong' },

@@ -8,6 +8,7 @@ export const prerender = false
 
 import type { APIContext } from 'astro'
 import * as profileService from '@/lib/services/profileService'
+import { getServerClient } from '@/lib/db/client'
 
 /**
  * Helper para respuestas JSON.
@@ -26,7 +27,8 @@ export async function GET(context: APIContext): Promise<Response> {
         return jsonResponse({ error: 'Unauthorized' }, 401)
     }
 
-    const profile = await profileService.getProfile(user.id)
+    const db = getServerClient()
+    const profile = await profileService.getProfile(user.id, db)
 
     return jsonResponse(
         {

@@ -33,7 +33,7 @@ describe('profileService', () => {
 
             vi.mocked(profileRepo.createProfile).mockResolvedValue(mockProfile)
 
-            const result = await createProfile('user-1')
+            const result = await createProfile({ userId: 'user-1' })
 
             expect(result).toEqual(mockProfile)
             expect(profileRepo.createProfile).toHaveBeenCalledWith(
@@ -44,18 +44,18 @@ describe('profileService', () => {
         })
 
         it('should throw ValidationError if username is too short', async () => {
-            await expect(createProfile('user-1', 'ab')).rejects.toThrow(
-                ValidationError
-            )
-            await expect(createProfile('user-1', 'ab')).rejects.toThrow(
-                'al menos 3 caracteres'
-            )
+            await expect(
+                createProfile({ userId: 'user-1', username: 'ab' })
+            ).rejects.toThrow(ValidationError)
+            await expect(
+                createProfile({ userId: 'user-1', username: 'ab' })
+            ).rejects.toThrow('al menos 3 caracteres')
         })
 
         it('should throw ValidationError if username is exactly 2 chars', async () => {
-            await expect(createProfile('user-1', 'xy')).rejects.toThrow(
-                ValidationError
-            )
+            await expect(
+                createProfile({ userId: 'user-1', username: 'xy' })
+            ).rejects.toThrow(ValidationError)
         })
 
         it('should throw ValidationError if username already exists', async () => {
@@ -74,12 +74,12 @@ describe('profileService', () => {
                 existingProfile
             )
 
-            await expect(createProfile('user-1', 'taken')).rejects.toThrow(
-                ValidationError
-            )
-            await expect(createProfile('user-1', 'taken')).rejects.toThrow(
-                'ya está en uso'
-            )
+            await expect(
+                createProfile({ userId: 'user-1', username: 'taken' })
+            ).rejects.toThrow(ValidationError)
+            await expect(
+                createProfile({ userId: 'user-1', username: 'taken' })
+            ).rejects.toThrow('ya está en uso')
         })
 
         it('should normalize username to lowercase and trimmed', async () => {
@@ -99,7 +99,7 @@ describe('profileService', () => {
             )
             vi.mocked(profileRepo.createProfile).mockResolvedValue(mockProfile)
 
-            await createProfile('user-1', '  TestUser  ')
+            await createProfile({ userId: 'user-1', username: '  TestUser  ' })
 
             expect(profileRepo.createProfile).toHaveBeenCalledWith(
                 expect.anything(),
@@ -125,7 +125,10 @@ describe('profileService', () => {
             )
             vi.mocked(profileRepo.createProfile).mockResolvedValue(mockProfile)
 
-            const result = await createProfile('user-1', 'validuser')
+            const result = await createProfile({
+                userId: 'user-1',
+                username: 'validuser',
+            })
 
             expect(result.username).toBe('validuser')
         })

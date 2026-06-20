@@ -8,7 +8,9 @@ export const prerender = false
 
 import type { APIContext } from 'astro'
 import { z } from 'zod'
-import * as authService from '@/lib/services/authService'
+import { createSupabaseServerClient } from '@/lib/db/server-client'
+import { getServerClient } from '@/lib/db/client'
+import { createProfile } from '@/lib/services/profileService'
 import { AppError } from '@/lib/utils/errors'
 
 // Esquema de validacion para registro
@@ -80,18 +82,56 @@ export async function POST(context: APIContext): Promise<Response> {
     }
 
     try {
-        const signUpResult = await authService.signUp(result.data)
+        // Usar cliente que maneja cookies del request
+        const supabase = createSupabaseServerClient(context)
+
+        const { data, error } = await supabase.auth.signUp({
+            email: result.data.email,
+            password: result.data.password,
+        })
+
+        if (error || !data.user) {
+            if (error?.message.includes('already registered')) {
+                return jsonResponse({ error: 'Email already registered' }, 409)
+            }
+            return jsonResponse(
+                { error: error?.message || 'Registration failed' },
+                400
+            )
+        }
+
+        // Crear perfil del usuario
+        const db = getServerClient()
+        const username =
+            result.data.username || data.user.email?.split('@')[0] || 'user'
+        const profile = await createProfile(
+            {
+                userId: data.user.id,
+                username,
+            },
+            db
+        )
+        // Hacer login automáticamente después del registro para establecer sesión
+        const { error: loginError } = await supabase.auth.signInWithPassword({
+            email: result.data.email,
+            password: result.data.password,
+        })
+
+        if (loginError) {
+            // El registro fue exitoso pero el login falló, aún así retornar éxito
+            // El usuario puede hacer login manualmente
+        }
 
         return jsonResponse(
             {
                 user: {
-                    id: signUpResult.user.id,
-                    email: signUpResult.user.email,
+                    id: data.user.id,
+                    email: data.user.email,
                 },
-                profile: signUpResult.profile
+                profile: profile
                     ? {
-                          id: signUpResult.profile.id,
-                          username: signUpResult.profile.username,
+                          id: profile.id,
+                          username: profile.username,
                       }
                     : null,
             },

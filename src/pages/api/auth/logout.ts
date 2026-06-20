@@ -7,7 +7,7 @@
 export const prerender = false
 
 import type { APIContext } from 'astro'
-import * as authService from '@/lib/services/authService'
+import { createSupabaseServerClient } from '@/lib/db/server-client'
 
 /**
  * Helper para respuestas JSON.
@@ -21,8 +21,11 @@ function jsonResponse(data: unknown, status: number): Response {
 
 export async function POST(context: APIContext): Promise<Response> {
     try {
+        // Usar cliente que maneja cookies del request
+        const supabase = createSupabaseServerClient(context)
+
         // Intentar cerrar sesion en Supabase (best-effort)
-        await authService.signOut()
+        await supabase.auth.signOut()
     } catch {
         // Si falla el signOut, igualmente limpiamos las cookies localmente.
         // El signOut puede fallar si la sesion ya expiro, pero las cookies
