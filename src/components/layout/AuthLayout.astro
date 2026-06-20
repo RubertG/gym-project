@@ -1,0 +1,43 @@
+---
+/**
+ * AuthLayout — Layout centrado para paginas de autenticacion.
+ * Fondo oscuro, logo de la app, max-width 400px.
+ */
+
+import Layout from '@/layouts/Layout.astro';
+
+interface Props {
+    title?: string;
+}
+
+const { title = 'IRON TRACK' } = Astro.props;
+---
+
+<Layout title={title}>
+    <div
+        class="bg-background-900 flex min-h-screen items-center justify-center px-4 py-12"
+    >
+        <div class="w-full max-w-[400px]">
+            <!-- Logo / Brand -->
+            <div class="mb-10 text-center">
+                <h1
+                    class="font-display text-word-100 text-3xl font-bold tracking-tight"
+                >
+                    <span class="text-primary-300">IRON</span> TRACK
+                </h1>
+                <p
+                    class="text-word-400 mt-2 font-mono text-sm tracking-widest uppercase"
+                >
+                    Gym Performance Tracker
+                </p>
+            </div>
+
+            <!-- Content slot -->
+            <div
+                class="bg-background-800/80 border-primary-400/20 border p-8 backdrop-blur-md"
+            >
+                <slot />
+            </div>
+        </div>
+    </div>
+</Layout>

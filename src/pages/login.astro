@@ -1,0 +1,21 @@
+---
+/**
+ * Pagina de login.
+ * Si el usuario ya esta autenticado, redirige a /dashboard.
+ */
+
+import AuthLayout from '@/components/layout/AuthLayout.astro';
+import { LoginForm } from '@/components/features/auth/LoginForm';
+
+// Redirigir usuarios autenticados al dashboard
+if (Astro.locals.user) {
+    return Astro.redirect('/dashboard');
+}
+---
+
+<AuthLayout title="Sign In — IRON TRACK">
+    <h2 class="font-display text-word-100 mb-6 text-xl font-bold tracking-wide">
+        SIGN IN
+    </h2>
+    <LoginForm client:load />
+</AuthLayout>

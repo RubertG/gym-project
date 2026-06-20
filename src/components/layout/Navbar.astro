@@ -1,0 +1,95 @@
+---
+/**
+ * Navbar — Barra superior del dashboard.
+ * Muestra nombre del usuario/email y boton de logout.
+ */
+
+import { LogoutButton } from './LogoutButton';
+import type { Profile } from '@/lib/models';
+
+interface Props {
+    user: { id: string } | null;
+    profile: Profile | null;
+}
+
+const { user, profile } = Astro.props;
+
+// Mostrar username si existe, sino email (se obtiene del contexto)
+const displayName = profile?.username ?? user?.id ?? 'User';
+---
+
+<nav
+    class="bg-background-800 flex h-16 items-center justify-between border-b-2 border-neutral-800 px-4 lg:px-6"
+>
+    <!-- Mobile: hamburger toggle -->
+    <button
+        id="sidebar-toggle"
+        class="text-word-300 hover:text-primary-300 cursor-pointer rounded-none p-2 transition-colors lg:hidden"
+        aria-label="Toggle sidebar"
+        aria-expanded="false"
+    >
+        <svg
+            class="h-6 w-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+        >
+            <path
+                stroke-linecap="square"
+                stroke-linejoin="miter"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+    </button>
+
+    <!-- App name (mobile) -->
+    <span class="font-display text-lg font-bold tracking-tight lg:hidden">
+        <span class="text-primary-300">IRON</span> TRACK
+    </span>
+
+    <!-- Spacer for desktop -->
+    <div class="hidden lg:block"></div>
+
+    <!-- User info + logout -->
+    <div class="flex items-center gap-4">
+        <span
+            class="text-word-300 hidden font-mono text-sm tracking-wide sm:inline"
+        >
+            {displayName}
+        </span>
+        <LogoutButton client:load />
+    </div>
+</nav>
+
+<script>
+    // Toggle sidebar en mobile
+    const toggle = document.getElementById('sidebar-toggle');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+
+    if (toggle && sidebar && overlay) {
+        toggle.addEventListener('click', () => {
+            const isOpen = sidebar.classList.contains('translate-x-0');
+
+            if (isOpen) {
+                sidebar.classList.remove('translate-x-0');
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+                toggle.setAttribute('aria-expanded', 'false');
+            } else {
+                sidebar.classList.remove('-translate-x-full');
+                sidebar.classList.add('translate-x-0');
+                overlay.classList.remove('hidden');
+                toggle.setAttribute('aria-expanded', 'true');
+            }
+        });
+
+        // Cerrar sidebar al hacer click en el overlay
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('translate-x-0');
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+            toggle.setAttribute('aria-expanded', 'false');
+        });
+    }
+</script>
