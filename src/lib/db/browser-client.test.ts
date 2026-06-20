@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 
 /**
  * Tests para src/lib/db/browser-client.ts
@@ -6,10 +6,10 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
  */
 
 // Mock de @supabase/supabase-js
-const mockCreateClient = vi.fn();
+const mockCreateClient = vi.fn()
 vi.mock('@supabase/supabase-js', () => ({
     createClient: mockCreateClient,
-}));
+}))
 
 // Mock del modulo env-browser
 vi.mock('@/lib/config/env-browser', () => ({
@@ -17,15 +17,15 @@ vi.mock('@/lib/config/env-browser', () => ({
         PUBLIC_SUPABASE_URL: 'https://test-project.supabase.co',
         PUBLIC_SUPABASE_PUBLISHABLE_KEY: 'test-anon-key',
     },
-}));
+}))
 
 // Mock de document.cookie para tests de navegador
 
 describe('browser-client', () => {
     beforeEach(() => {
-        vi.resetModules();
-        mockCreateClient.mockReset();
-        mockCreateClient.mockReturnValue({ mock: 'supabase-client' });
+        vi.resetModules()
+        mockCreateClient.mockReset()
+        mockCreateClient.mockReturnValue({ mock: 'supabase-client' })
 
         // Simular document.cookie
         Object.defineProperty(globalThis, 'document', {
@@ -34,13 +34,13 @@ describe('browser-client', () => {
             },
             writable: true,
             configurable: true,
-        });
-    });
+        })
+    })
 
     it('deberia crear el cliente anonimo con la URL y clave correctas', async () => {
-        const { getAnonClient } = await import('./browser-client');
+        const { getAnonClient } = await import('./browser-client')
 
-        getAnonClient();
+        getAnonClient()
 
         expect(mockCreateClient).toHaveBeenCalledWith(
             'https://test-project.supabase.co',
@@ -51,24 +51,24 @@ describe('browser-client', () => {
                     autoRefreshToken: false,
                 }),
             })
-        );
-    });
+        )
+    })
 
     it('deberia retornar el mismo cliente anonimo (singleton)', async () => {
-        const { getAnonClient } = await import('./browser-client');
+        const { getAnonClient } = await import('./browser-client')
 
-        const client1 = getAnonClient();
-        const client2 = getAnonClient();
+        const client1 = getAnonClient()
+        const client2 = getAnonClient()
 
-        expect(client1).toBe(client2);
+        expect(client1).toBe(client2)
         // createClient solo se llama una vez
-        expect(mockCreateClient).toHaveBeenCalledTimes(1);
-    });
+        expect(mockCreateClient).toHaveBeenCalledTimes(1)
+    })
 
     it('deberia crear el cliente del navegador con storage adapter de cookies', async () => {
-        const { getBrowserClient } = await import('./browser-client');
+        const { getBrowserClient } = await import('./browser-client')
 
-        getBrowserClient();
+        getBrowserClient()
 
         expect(mockCreateClient).toHaveBeenCalledWith(
             'https://test-project.supabase.co',
@@ -84,6 +84,6 @@ describe('browser-client', () => {
                     }),
                 }),
             })
-        );
-    });
-});
+        )
+    })
+})

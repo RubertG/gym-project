@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import type { WorkoutSession, WorkoutSet } from '@/lib/models';
+import { create } from 'zustand'
+import type { WorkoutSession, WorkoutSet } from '@/lib/models'
 
 interface WorkoutExerciseState {
     exerciseId: string;
@@ -34,18 +34,18 @@ export const useWorkoutStore = create<WorkoutState>((set) => ({
 
     addSet: (exerciseId, workoutSet) =>
         set((state) => {
-            const exercises = [...state.activeExercises];
-            const idx = exercises.findIndex((e) => e.exerciseId === exerciseId);
+            const exercises = [...state.activeExercises]
+            const idx = exercises.findIndex((e) => e.exerciseId === exerciseId)
 
             if (idx >= 0) {
                 exercises[idx] = {
                     ...exercises[idx],
                     sets: [...exercises[idx].sets, workoutSet],
-                };
+                }
             } else {
-                exercises.push({ exerciseId, sets: [workoutSet] });
+                exercises.push({ exerciseId, sets: [workoutSet] })
             }
-            return { activeExercises: exercises };
+            return { activeExercises: exercises }
         }),
 
     completeExercise: () =>
@@ -73,4 +73,4 @@ export const useWorkoutStore = create<WorkoutState>((set) => ({
             isResting: false,
             restSeconds: 0,
         }),
-}));
+}))

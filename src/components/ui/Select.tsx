@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import React, { useState, useEffect, useRef, useCallback } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { ChevronDown } from 'lucide-react'
 
 export interface SelectOption {
     value: string;
@@ -32,55 +32,55 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
         },
         ref
     ) => {
-        const [isOpen, setIsOpen] = useState(false);
-        const containerRef = useRef<HTMLDivElement>(null);
+        const [isOpen, setIsOpen] = useState(false)
+        const containerRef = useRef<HTMLDivElement>(null)
 
-        const selectedOption = options.find((opt) => opt.value === value);
-        const displayText = selectedOption ? selectedOption.label : placeholder;
+        const selectedOption = options.find((opt) => opt.value === value)
+        const displayText = selectedOption ? selectedOption.label : placeholder
 
         const handleToggle = useCallback(() => {
             if (!disabled) {
-                setIsOpen((prev) => !prev);
+                setIsOpen((prev) => !prev)
             }
-        }, [disabled]);
+        }, [disabled])
 
         const handleSelect = useCallback(
             (optionValue: string) => {
-                onChange?.(optionValue);
-                setIsOpen(false);
+                onChange?.(optionValue)
+                setIsOpen(false)
             },
             [onChange]
-        );
+        )
 
         const handleClickOutside = useCallback((event: MouseEvent) => {
             if (
                 containerRef.current &&
                 !containerRef.current.contains(event.target as Node)
             ) {
-                setIsOpen(false);
+                setIsOpen(false)
             }
-        }, []);
+        }, [])
 
         const handleEscape = useCallback((event: KeyboardEvent) => {
             if (event.key === 'Escape') {
-                setIsOpen(false);
+                setIsOpen(false)
             }
-        }, []);
+        }, [])
 
         useEffect(() => {
             if (isOpen) {
-                document.addEventListener('mousedown', handleClickOutside);
-                document.addEventListener('keydown', handleEscape);
+                document.addEventListener('mousedown', handleClickOutside)
+                document.addEventListener('keydown', handleEscape)
             }
             return () => {
-                document.removeEventListener('mousedown', handleClickOutside);
-                document.removeEventListener('keydown', handleEscape);
-            };
-        }, [isOpen, handleClickOutside, handleEscape]);
+                document.removeEventListener('mousedown', handleClickOutside)
+                document.removeEventListener('keydown', handleEscape)
+            }
+        }, [isOpen, handleClickOutside, handleEscape])
 
-        const generatedId = React.useId();
-        const selectId = generatedId;
-        const errorId = `${selectId}-error`;
+        const generatedId = React.useId()
+        const selectId = generatedId
+        const errorId = `${selectId}-error`
 
         return (
             <div ref={ref} className={`w-full ${className}`.trim()}>
@@ -146,7 +146,7 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
                                 }}
                             >
                                 {options.map((option) => {
-                                    const isSelected = option.value === value;
+                                    const isSelected = option.value === value
 
                                     return (
                                         <div
@@ -168,7 +168,7 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
                                         >
                                             {option.label}
                                         </div>
-                                    );
+                                    )
                                 })}
                             </motion.div>
                         )}
@@ -185,9 +185,9 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
                     </p>
                 )}
             </div>
-        );
+        )
     }
-);
+)
 
-Select.displayName = 'Select';
-export default Select;
+Select.displayName = 'Select'
+export default Select

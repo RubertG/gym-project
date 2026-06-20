@@ -3,23 +3,23 @@
  * POST /api/auth/logout y redirige a /login.
  */
 
-import React, { useState } from 'react';
-import { LogOut } from 'lucide-react';
+import React, { useState } from 'react'
+import { LogOut } from 'lucide-react'
 
 export const LogoutButton: React.FC = () => {
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false)
 
     const handleLogout = async () => {
-        setLoading(true);
+        setLoading(true)
 
         try {
-            await fetch('/api/auth/logout', { method: 'POST' });
+            await fetch('/api/auth/logout', { method: 'POST' })
         } catch {
             // Even if the request fails, redirect to login
         }
 
-        window.location.href = '/login';
-    };
+        window.location.href = '/login'
+    }
 
     return (
         <button
@@ -31,7 +31,7 @@ export const LogoutButton: React.FC = () => {
             <LogOut className="h-4 w-4" />
             <span className="hidden sm:inline">Logout</span>
         </button>
-    );
-};
+    )
+}
 
-export default LogoutButton;
+export default LogoutButton

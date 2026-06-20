@@ -1,4 +1,4 @@
-import type { RoutineDay, RoutineExercise } from './index';
+import type { RoutineDay, RoutineExercise } from './index'
 
 /*
  * DTOs para payloads de creación/actualización en services.

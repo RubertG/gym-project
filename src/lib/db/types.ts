@@ -1,4 +1,4 @@
-import type { SupabaseClient } from '@supabase/supabase-js';
+import type { SupabaseClient } from '@supabase/supabase-js'
 
 /*
  * Alias de compatibilidad con la firma antigua.
@@ -25,8 +25,13 @@ export interface DbResponse<T> {
     error: DbError | null;
 }
 
-export interface DbQueryBuilder<T = unknown> extends PromiseLike<DbResponse<T[]>> {
-    select<R = T>(columns?: string, opts?: { count?: 'exact' | 'planned' | 'estimated'; head?: boolean }): DbQueryBuilder<R> & { count: number | null };
+export interface DbQueryBuilder<T = unknown> extends PromiseLike<
+    DbResponse<T[]>
+> {
+    select<R = T>(
+        columns?: string,
+        opts?: { count?: 'exact' | 'planned' | 'estimated'; head?: boolean }
+    ): DbQueryBuilder<R> & { count: number | null };
     insert(values: unknown | unknown[]): DbQueryBuilder<T>;
     update(values: unknown): DbQueryBuilder<T>;
     delete(): DbQueryBuilder<T>;
@@ -41,7 +46,10 @@ export interface DbQueryBuilder<T = unknown> extends PromiseLike<DbResponse<T[]>
     is(column: string, value: unknown): DbQueryBuilder<T>;
     in(column: string, values: unknown[]): DbQueryBuilder<T>;
     contains(column: string, value: unknown): DbQueryBuilder<T>;
-    order(column: string, opts?: { ascending?: boolean; nullsFirst?: boolean }): DbQueryBuilder<T>;
+    order(
+        column: string,
+        opts?: { ascending?: boolean; nullsFirst?: boolean }
+    ): DbQueryBuilder<T>;
     limit(count: number): DbQueryBuilder<T>;
     range(from: number, to: number): DbQueryBuilder<T>;
     single(): Promise<DbResponse<T>>;
@@ -49,6 +57,8 @@ export interface DbQueryBuilder<T = unknown> extends PromiseLike<DbResponse<T[]>
 }
 
 export interface DbAuth {
-    getSession(): Promise<DbResponse<{ session: { user: { id: string } } | null }>>;
+    getSession(): Promise<
+        DbResponse<{ session: { user: { id: string } } | null }>
+    >;
     getUser(): Promise<DbResponse<{ user: { id: string } | null }>>;
 }

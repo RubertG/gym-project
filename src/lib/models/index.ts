@@ -98,4 +98,4 @@ export interface RoutineLike {
     deletedAt: string | null;
 }
 
-export * from './dto';
+export * from './dto'

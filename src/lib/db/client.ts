@@ -1,8 +1,8 @@
-import { createClient } from '@supabase/supabase-js';
-import type { DbClient } from './types';
-import { env } from '@/lib/config/env';
+import { createClient } from '@supabase/supabase-js'
+import type { DbClient } from './types'
+import { env } from '@/lib/config/env'
 
-let _serverClient: DbClient | null = null;
+let _serverClient: DbClient | null = null
 
 /**
  * Crea un cliente de Supabase para el servidor usando las variables
@@ -18,7 +18,7 @@ export function createServerClient(): DbClient {
                 persistSession: false,
             },
         }
-    ) as unknown as DbClient;
+    ) as unknown as DbClient
 }
 
 /**
@@ -26,7 +26,7 @@ export function createServerClient(): DbClient {
  * Util para inyeccion de mocks en tests.
  */
 export function setServerClient(client: DbClient): void {
-    _serverClient = client;
+    _serverClient = client
 }
 
 /**
@@ -35,7 +35,7 @@ export function setServerClient(client: DbClient): void {
  */
 export function getServerClient(): DbClient {
     if (!_serverClient) {
-        _serverClient = createServerClient();
+        _serverClient = createServerClient()
     }
-    return _serverClient;
+    return _serverClient
 }

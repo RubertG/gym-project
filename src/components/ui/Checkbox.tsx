@@ -1,5 +1,5 @@
-import React from 'react';
-import { Check } from 'lucide-react';
+import React from 'react'
+import { Check } from 'lucide-react'
 
 export interface CheckboxProps extends Omit<
     React.InputHTMLAttributes<HTMLInputElement>,
@@ -27,11 +27,11 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
         },
         ref
     ) => {
-        const generatedId = React.useId();
-        const checkboxId = id || generatedId;
+        const generatedId = React.useId()
+        const checkboxId = id || generatedId
 
-        const isControlled = checked !== undefined;
-        const isChecked = isControlled ? checked : defaultChecked;
+        const isControlled = checked !== undefined
+        const isChecked = isControlled ? checked : defaultChecked
 
         return (
             <label
@@ -76,9 +76,9 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
                     </span>
                 )}
             </label>
-        );
+        )
     }
-);
+)
 
-Checkbox.displayName = 'Checkbox';
-export default Checkbox;
+Checkbox.displayName = 'Checkbox'
+export default Checkbox

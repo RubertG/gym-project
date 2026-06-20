@@ -1,12 +1,12 @@
-import js from '@eslint/js';
-import tseslint from 'typescript-eslint';
-import astro from 'eslint-plugin-astro';
-import reactHooks from 'eslint-plugin-react-hooks';
+import js from '@eslint/js'
+import tseslint from 'typescript-eslint'
+import astro from 'eslint-plugin-astro'
+import reactHooks from 'eslint-plugin-react-hooks'
 // import tailwindcss from 'eslint-plugin-tailwindcss';
 // NOTE: eslint-plugin-tailwindcss disabled until it supports Tailwind v4 CSS-first config
 // https://github.com/francoismassart/eslint-plugin-tailwindcss/issues/272
-import stylistic from '@stylistic/eslint-plugin';
-import globals from 'globals';
+import stylistic from '@stylistic/eslint-plugin'
+import globals from 'globals'
 
 export default [
     js.configs.recommended,
@@ -123,6 +123,7 @@ export default [
             ],
             'space-before-blocks': ['error', 'always'],
             'block-spacing': ['error', 'always'],
+            '@stylistic/semi': ['error', 'never'],
         },
     },
     {
@@ -147,6 +148,11 @@ export default [
         },
     },
     {
-        ignores: ['dist/**', '.astro/**', 'node_modules/**'],
+        ignores: [
+            'dist/**',
+            '.astro/**',
+            'node_modules/**',
+            '.config/opencode/**',
+        ],
     },
-];
+]

@@ -3,9 +3,9 @@
  * Responsabilidad: abstraer todo el acceso a datos de la tabla exercises.
  */
 
-import type { DbClient } from '@/lib/db/types';
-import type { Exercise } from '@/lib/models';
-import { AppError, NotFoundError } from '@/lib/utils/errors';
+import type { DbClient } from '@/lib/db/types'
+import type { Exercise } from '@/lib/models'
+import { AppError, NotFoundError } from '@/lib/utils/errors'
 
 export async function findAllApprovedExercises(
     db: DbClient
@@ -15,10 +15,10 @@ export async function findAllApprovedExercises(
         .select('*')
         .eq('status', 'approved')
         .is('deleted_at', null)
-        .order('name', { ascending: true });
+        .order('name', { ascending: true })
 
-    if (error) throw new AppError(error.message, 500);
-    return data ?? [];
+    if (error) throw new AppError(error.message, 500)
+    return data ?? []
 }
 
 export async function findExerciseById(
@@ -29,10 +29,10 @@ export async function findExerciseById(
         .from<Exercise>('exercises')
         .select('*')
         .eq('id', id)
-        .maybeSingle();
+        .maybeSingle()
 
-    if (error) throw new AppError(error.message, 500);
-    return data ?? null;
+    if (error) throw new AppError(error.message, 500)
+    return data ?? null
 }
 
 export async function findExerciseByNameLower(
@@ -44,10 +44,10 @@ export async function findExerciseByNameLower(
         .from<Exercise>('exercises')
         .select('*')
         .ilike('name', name)
-        .maybeSingle();
+        .maybeSingle()
 
-    if (error) throw new AppError(error.message, 500);
-    return data ?? null;
+    if (error) throw new AppError(error.message, 500)
+    return data ?? null
 }
 
 export async function searchExercisesByName(
@@ -60,10 +60,10 @@ export async function searchExercisesByName(
         .ilike('name', `%${query}%`)
         .eq('status', 'approved')
         .is('deleted_at', null)
-        .order('name', { ascending: true });
+        .order('name', { ascending: true })
 
-    if (error) throw new AppError(error.message, 500);
-    return data ?? [];
+    if (error) throw new AppError(error.message, 500)
+    return data ?? []
 }
 
 export async function createExercise(
@@ -86,11 +86,11 @@ export async function createExercise(
             status: payload.status,
         })
         .select()
-        .single();
+        .single()
 
     if (error || !data)
-        throw new AppError(error?.message ?? 'Error al crear ejercicio', 500);
-    return data;
+        throw new AppError(error?.message ?? 'Error al crear ejercicio', 500)
+    return data
 }
 
 export async function updateExercise(
@@ -100,22 +100,22 @@ export async function updateExercise(
         Pick<Exercise, 'name' | 'imageUrl' | 'category' | 'status'>
     >
 ): Promise<Exercise> {
-    const mapped: Record<string, unknown> = {};
+    const mapped: Record<string, unknown> = {}
 
-    if (payload.name !== undefined) mapped.name = payload.name;
-    if (payload.imageUrl !== undefined) mapped.image_url = payload.imageUrl;
-    if (payload.category !== undefined) mapped.category = payload.category;
-    if (payload.status !== undefined) mapped.status = payload.status;
+    if (payload.name !== undefined) mapped.name = payload.name
+    if (payload.imageUrl !== undefined) mapped.image_url = payload.imageUrl
+    if (payload.category !== undefined) mapped.category = payload.category
+    if (payload.status !== undefined) mapped.status = payload.status
 
     const { data, error } = await db
         .from<Exercise>('exercises')
         .update(mapped)
         .eq('id', id)
         .select()
-        .single();
+        .single()
 
-    if (error || !data) throw new NotFoundError('Ejercicio');
-    return data;
+    if (error || !data) throw new NotFoundError('Ejercicio')
+    return data
 }
 
 export async function softDeleteExercise(
@@ -125,7 +125,7 @@ export async function softDeleteExercise(
     const { error } = await db
         .from<Exercise>('exercises')
         .update({ deleted_at: new Date().toISOString() })
-        .eq('id', id);
+        .eq('id', id)
 
-    if (error) throw new AppError(error.message, 500);
+    if (error) throw new AppError(error.message, 500)
 }

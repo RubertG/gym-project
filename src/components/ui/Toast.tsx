@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { CheckCircle, XCircle, AlertTriangle, Info, X } from 'lucide-react';
+import React, { useEffect } from 'react'
+import { motion } from 'framer-motion'
+import { CheckCircle, XCircle, AlertTriangle, Info, X } from 'lucide-react'
 
-export type ToastType = 'success' | 'error' | 'warning' | 'info';
+export type ToastType = 'success' | 'error' | 'warning' | 'info'
 export type ToastPosition =
     | 'top-right'
     | 'bottom-right'
     | 'top-left'
-    | 'bottom-left';
+    | 'bottom-left'
 
 export interface ToastProps {
     id: string;
@@ -40,7 +40,7 @@ const typeConfig = {
         borderColor: 'border-primary-400/20',
         iconColor: 'text-primary-400',
     },
-};
+}
 
 export const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
     (
@@ -55,35 +55,35 @@ export const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
         },
         ref
     ) => {
-        const [isExiting, setIsExiting] = React.useState(false);
+        const [isExiting, setIsExiting] = React.useState(false)
 
         const handleClose = React.useCallback(() => {
-            setIsExiting(true);
-        }, []);
+            setIsExiting(true)
+        }, [])
 
         const handleAnimationComplete = React.useCallback(
             (definition: string) => {
                 if (definition === 'exit') {
-                    onClose();
+                    onClose()
                 }
             },
             [onClose]
-        );
+        )
 
         useEffect(() => {
-            if (duration <= 0 || isExiting) return;
-            const timer = setTimeout(handleClose, duration);
+            if (duration <= 0 || isExiting) return
+            const timer = setTimeout(handleClose, duration)
 
-            return () => clearTimeout(timer);
-        }, [duration, handleClose, isExiting]);
+            return () => clearTimeout(timer)
+        }, [duration, handleClose, isExiting])
 
-        const config = typeConfig[type];
-        const Icon = config.icon;
+        const config = typeConfig[type]
+        const Icon = config.icon
 
         // Animaciones segun posicion
-        const isRight = position.includes('right');
-        const isLeft = position.includes('left');
-        const isTop = position.includes('top');
+        const isRight = position.includes('right')
+        const isLeft = position.includes('left')
+        const isTop = position.includes('top')
 
         const variants = {
             hidden: isRight
@@ -116,7 +116,7 @@ export const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
                         scale: 0.9,
                         transition: { duration: 0.25 },
                     },
-        };
+        }
 
         return (
             <motion.div
@@ -150,9 +150,9 @@ export const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
                     </button>
                 </div>
             </motion.div>
-        );
+        )
     }
-);
+)
 
-Toast.displayName = 'Toast';
-export default Toast;
+Toast.displayName = 'Toast'
+export default Toast

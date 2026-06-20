@@ -1,5 +1,5 @@
-import React from 'react';
-import { Loader2 } from 'lucide-react';
+import React from 'react'
+import { Loader2 } from 'lucide-react'
 
 export interface ButtonProps extends Omit<
     React.HTMLAttributes<HTMLElement>,
@@ -34,13 +34,13 @@ const variantStyles = {
         ghost: 'bg-transparent text-word-400 border-2 border-transparent hover:border-secondary-700 hover:text-background-900',
         danger: 'bg-transparent text-red-600 border-2 border-red-600 hover:bg-red-600 hover:text-white',
     },
-};
+}
 
 const sizeStyles = {
     sm: 'px-3 py-1.5 text-xs',
     md: 'px-4 py-2.5 text-sm',
     lg: 'px-6 py-3 text-base',
-};
+}
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     (
@@ -64,7 +64,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         const ringOffset =
             surface === 'light'
                 ? 'focus:ring-offset-white'
-                : 'focus:ring-offset-background-900';
+                : 'focus:ring-offset-background-900'
 
         const baseClasses = [
             'inline-flex items-center justify-center gap-2 font-bold tracking-wide cursor-pointer',
@@ -79,7 +79,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             className,
         ]
             .filter(Boolean)
-            .join(' ');
+            .join(' ')
 
         const content = (
             <>
@@ -99,7 +99,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                     </span>
                 )}
             </>
-        );
+        )
 
         if (href) {
             return (
@@ -111,7 +111,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                 >
                     {content}
                 </a>
-            );
+            )
         }
 
         return (
@@ -125,9 +125,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             >
                 {content}
             </button>
-        );
+        )
     }
-);
+)
 
-Button.displayName = 'Button';
-export default Button;
+Button.displayName = 'Button'
+export default Button

@@ -3,10 +3,10 @@
  * Provee estado de sesion y metodos de auth via API routes.
  */
 
-import { useState, useEffect, useCallback } from 'react';
-import { getBrowserClient } from '@/lib/db/browser-client';
-import type { User } from '@supabase/supabase-js';
-import type { Profile } from '@/lib/models';
+import { useState, useEffect, useCallback } from 'react'
+import { getBrowserClient } from '@/lib/db/browser-client'
+import type { User } from '@supabase/supabase-js'
+import type { Profile } from '@/lib/models'
 
 interface ValidationError {
     field: string;
@@ -34,32 +34,32 @@ interface UseAuthReturn {
 }
 
 export function useAuth(): UseAuthReturn {
-    const [user, setUser] = useState<User | null>(null);
-    const [profile, setProfile] = useState<Profile | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState<User | null>(null)
+    const [profile, setProfile] = useState<Profile | null>(null)
+    const [loading, setLoading] = useState(true)
 
     // Cargar sesion al montar el componente
     useEffect(() => {
-        let cancelled = false;
+        let cancelled = false
 
         async function loadSession() {
             try {
-                const supabase = getBrowserClient();
+                const supabase = getBrowserClient()
                 const {
                     data: { session },
-                } = await supabase.auth.getSession();
+                } = await supabase.auth.getSession()
 
                 if (!cancelled && session?.user) {
-                    setUser(session.user);
+                    setUser(session.user)
 
                     // Obtener perfil via API
-                    const res = await fetch('/api/auth/me');
+                    const res = await fetch('/api/auth/me')
 
                     if (res.ok) {
-                        const data = await res.json();
+                        const data = await res.json()
 
                         if (!cancelled) {
-                            setProfile(data.profile ?? null);
+                            setProfile(data.profile ?? null)
                         }
                     }
                 }
@@ -67,63 +67,63 @@ export function useAuth(): UseAuthReturn {
                 // Sesion no disponible, dejar user/profile como null
             } finally {
                 if (!cancelled) {
-                    setLoading(false);
+                    setLoading(false)
                 }
             }
         }
 
-        loadSession();
+        loadSession()
 
         return () => {
-            cancelled = true;
-        };
-    }, []);
+            cancelled = true
+        }
+    }, [])
 
     const signIn = useCallback(async (email: string, password: string) => {
         const res = await fetch('/api/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password }),
-        });
+        })
 
-        const data = await res.json();
+        const data = await res.json()
 
         if (!res.ok) {
             return {
                 ok: false as const,
                 error: data.error ?? 'Login failed',
                 details: data.details,
-            };
+            }
         }
 
-        setUser(data.user ?? null);
-        setProfile(data.profile ?? null);
+        setUser(data.user ?? null)
+        setProfile(data.profile ?? null)
 
-        return { ok: true as const };
-    }, []);
+        return { ok: true as const }
+    }, [])
 
     const signUp = useCallback(
         async (email: string, password: string, username?: string) => {
-            const body: Record<string, string> = { email, password };
+            const body: Record<string, string> = { email, password }
 
             if (username) {
-                body.username = username;
+                body.username = username
             }
 
             const res = await fetch('/api/auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(body),
-            });
+            })
 
-            const data = await res.json();
+            const data = await res.json()
 
             if (!res.ok) {
                 return {
                     ok: false as const,
                     error: data.error ?? 'Registration failed',
                     details: data.details,
-                };
+                }
             }
 
             // El registro no establece cookies de sesion.
@@ -132,28 +132,28 @@ export function useAuth(): UseAuthReturn {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password }),
-            });
+            })
 
             if (loginRes.ok) {
-                const loginData = await loginRes.json();
+                const loginData = await loginRes.json()
 
-                setUser(loginData.user ?? null);
-                setProfile(loginData.profile ?? null);
+                setUser(loginData.user ?? null)
+                setProfile(loginData.profile ?? null)
             }
 
-            return { ok: true as const };
+            return { ok: true as const }
         },
         []
-    );
+    )
 
     const signOut = useCallback(async () => {
-        await fetch('/api/auth/logout', { method: 'POST' });
-        setUser(null);
-        setProfile(null);
-        window.location.href = '/login';
-    }, []);
+        await fetch('/api/auth/logout', { method: 'POST' })
+        setUser(null)
+        setProfile(null)
+        window.location.href = '/login'
+    }, [])
 
-    return { user, profile, loading, signIn, signUp, signOut };
+    return { user, profile, loading, signIn, signUp, signOut }
 }
 
-export default useAuth;
+export default useAuth

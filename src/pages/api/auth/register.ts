@@ -4,12 +4,12 @@
  * Valida body con Zod, delega a authService.signUp.
  */
 
-export const prerender = false;
+export const prerender = false
 
-import type { APIContext } from 'astro';
-import { z } from 'zod';
-import * as authService from '@/lib/services/authService';
-import { AppError } from '@/lib/utils/errors';
+import type { APIContext } from 'astro'
+import { z } from 'zod'
+import * as authService from '@/lib/services/authService'
+import { AppError } from '@/lib/utils/errors'
 
 // Esquema de validacion para registro
 const registerSchema = z.object({
@@ -28,7 +28,7 @@ const registerSchema = z.object({
             'Username must contain only letters, numbers and underscores'
         )
         .optional(),
-});
+})
 
 /**
  * Helper para respuestas JSON con status code.
@@ -37,7 +37,7 @@ function jsonResponse(data: unknown, status: number): Response {
     return new Response(JSON.stringify(data), {
         status,
         headers: { 'Content-Type': 'application/json' },
-    });
+    })
 }
 
 /**
@@ -49,14 +49,14 @@ function zodIssuesToDetails(
     return error.issues.map((issue) => ({
         field: issue.path.join('.'),
         message: issue.message,
-    }));
+    }))
 }
 
 export async function POST(context: APIContext): Promise<Response> {
-    let body: unknown;
+    let body: unknown
 
     try {
-        body = await context.request.json();
+        body = await context.request.json()
     } catch {
         return jsonResponse(
             {
@@ -64,10 +64,10 @@ export async function POST(context: APIContext): Promise<Response> {
                 details: [{ field: 'body', message: 'Invalid JSON' }],
             },
             400
-        );
+        )
     }
 
-    const result = registerSchema.safeParse(body);
+    const result = registerSchema.safeParse(body)
 
     if (!result.success) {
         return jsonResponse(
@@ -76,11 +76,11 @@ export async function POST(context: APIContext): Promise<Response> {
                 details: zodIssuesToDetails(result.error),
             },
             400
-        );
+        )
     }
 
     try {
-        const signUpResult = await authService.signUp(result.data);
+        const signUpResult = await authService.signUp(result.data)
 
         return jsonResponse(
             {
@@ -96,7 +96,7 @@ export async function POST(context: APIContext): Promise<Response> {
                     : null,
             },
             201
-        );
+        )
     } catch (err) {
         if (err instanceof AppError) {
             // Email duplicado → 409
@@ -104,15 +104,15 @@ export async function POST(context: APIContext): Promise<Response> {
                 err.statusCode === 409 ||
                 err.message.includes('already registered')
             ) {
-                return jsonResponse({ error: 'Email already registered' }, 409);
+                return jsonResponse({ error: 'Email already registered' }, 409)
             }
 
             // Otros errores operacionales (validacion del servicio, etc.)
             if (err.isOperational) {
-                return jsonResponse({ error: err.message }, err.statusCode);
+                return jsonResponse({ error: err.message }, err.statusCode)
             }
         }
 
-        return jsonResponse({ error: 'Internal server error' }, 500);
+        return jsonResponse({ error: 'Internal server error' }, 500)
     }
 }

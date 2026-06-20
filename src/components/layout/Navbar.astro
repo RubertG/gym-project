@@ -4,7 +4,7 @@
  * Muestra nombre del usuario/email y boton de logout.
  */
 
-import { LogoutButton } from './LogoutButton';
+import { LogoutButton } from '@/components/features/auth/LogoutButton';
 import type { Profile } from '@/lib/models';
 
 interface Props {
@@ -63,33 +63,33 @@ const displayName = profile?.username ?? user?.id ?? 'User';
 
 <script>
     // Toggle sidebar en mobile
-    const toggle = document.getElementById('sidebar-toggle');
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('sidebar-overlay');
+    const toggle = document.getElementById('sidebar-toggle')
+const sidebar = document.getElementById('sidebar')
+const overlay = document.getElementById('sidebar-overlay')
 
-    if (toggle && sidebar && overlay) {
+if (toggle && sidebar && overlay) {
         toggle.addEventListener('click', () => {
-            const isOpen = sidebar.classList.contains('translate-x-0');
+            const isOpen = sidebar.classList.contains('translate-x-0')
 
-            if (isOpen) {
-                sidebar.classList.remove('translate-x-0');
-                sidebar.classList.add('-translate-x-full');
-                overlay.classList.add('hidden');
-                toggle.setAttribute('aria-expanded', 'false');
-            } else {
-                sidebar.classList.remove('-translate-x-full');
-                sidebar.classList.add('translate-x-0');
-                overlay.classList.remove('hidden');
-                toggle.setAttribute('aria-expanded', 'true');
-            }
-        });
+        if (isOpen) {
+                sidebar.classList.remove('translate-x-0')
+            sidebar.classList.add('-translate-x-full')
+            overlay.classList.add('hidden')
+            toggle.setAttribute('aria-expanded', 'false')
+        } else {
+                sidebar.classList.remove('-translate-x-full')
+            sidebar.classList.add('translate-x-0')
+            overlay.classList.remove('hidden')
+            toggle.setAttribute('aria-expanded', 'true')
+        }
+        })
 
-        // Cerrar sidebar al hacer click en el overlay
-        overlay.addEventListener('click', () => {
-            sidebar.classList.remove('translate-x-0');
-            sidebar.classList.add('-translate-x-full');
-            overlay.classList.add('hidden');
-            toggle.setAttribute('aria-expanded', 'false');
-        });
+    // Cerrar sidebar al hacer click en el overlay
+    overlay.addEventListener('click', () => {
+            sidebar.classList.remove('translate-x-0')
+        sidebar.classList.add('-translate-x-full')
+        overlay.classList.add('hidden')
+        toggle.setAttribute('aria-expanded', 'false')
+    })
     }
 </script>

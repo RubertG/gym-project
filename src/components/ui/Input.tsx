@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from 'react';
-import { Eye, EyeOff } from 'lucide-react';
+import React, { useState, useCallback } from 'react'
+import { Eye, EyeOff } from 'lucide-react'
 
 export interface InputProps extends Omit<
     React.InputHTMLAttributes<HTMLInputElement>,
@@ -29,13 +29,13 @@ const variantStyles = {
             'bg-secondary-50 text-background-900 border-2 border-secondary-300 outline-none transition-colors duration-150 focus:border-primary-600',
         ghost: 'bg-transparent border-0 border-b-2 border-secondary-300 rounded-none transition-colors duration-150 px-0 py-2 focus:border-primary-600 focus:ring-0',
     },
-};
+}
 
 const sizeStyles = {
     sm: 'text-xs py-1.5 px-3',
     md: 'text-sm py-2.5 px-4',
     lg: 'text-base py-3 px-6',
-};
+}
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     (
@@ -58,29 +58,29 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         },
         ref
     ) => {
-        const [showPassword, setShowPassword] = useState(false);
-        const isPassword = type === 'password';
-        const inputType = isPassword && showPassword ? 'text' : type;
+        const [showPassword, setShowPassword] = useState(false)
+        const isPassword = type === 'password'
+        const inputType = isPassword && showPassword ? 'text' : type
 
         const togglePassword = useCallback(() => {
-            setShowPassword((prev) => !prev);
-        }, []);
+            setShowPassword((prev) => !prev)
+        }, [])
 
-        const generatedId = React.useId();
-        const inputId = id || generatedId;
-        const errorId = `${inputId}-error`;
-        const helperId = `${inputId}-helper`;
+        const generatedId = React.useId()
+        const inputId = id || generatedId
+        const errorId = `${inputId}-error`
+        const helperId = `${inputId}-helper`
 
         const textColor =
             surface === 'light'
                 ? 'text-background-900 placeholder:text-secondary-500'
-                : 'text-word-100 placeholder:text-word-400';
+                : 'text-word-100 placeholder:text-word-400'
 
         const focusBorder = error
             ? 'border-red-500 focus:border-red-500'
             : surface === 'light'
               ? 'focus:border-primary-600'
-              : 'focus:border-primary-400';
+              : 'focus:border-primary-400'
 
         const inputClasses = [
             'w-full',
@@ -95,20 +95,20 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             className,
         ]
             .filter(Boolean)
-            .join(' ');
+            .join(' ')
 
         const labelColor =
-            surface === 'light' ? 'text-secondary-600' : 'text-word-300';
+            surface === 'light' ? 'text-secondary-600' : 'text-word-300'
         const requiredColor =
-            surface === 'light' ? 'text-primary-600' : 'text-primary-400';
+            surface === 'light' ? 'text-primary-600' : 'text-primary-400'
         const iconColor =
-            surface === 'light' ? 'text-secondary-500' : 'text-word-400';
+            surface === 'light' ? 'text-secondary-500' : 'text-word-400'
         const iconHover =
             surface === 'light'
                 ? 'hover:text-secondary-800'
-                : 'hover:text-word-200';
+                : 'hover:text-word-200'
         const helperColor =
-            surface === 'light' ? 'text-secondary-500' : 'text-word-400';
+            surface === 'light' ? 'text-secondary-500' : 'text-word-400'
 
         return (
             <div className="w-full">
@@ -196,9 +196,9 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
                     </p>
                 )}
             </div>
-        );
+        )
     }
-);
+)
 
-Input.displayName = 'Input';
-export default Input;
+Input.displayName = 'Input'
+export default Input

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 export interface TextareaProps extends Omit<
     React.TextareaHTMLAttributes<HTMLTextAreaElement>,
@@ -27,10 +27,10 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         },
         ref
     ) => {
-        const generatedId = React.useId();
-        const textareaId = id || generatedId;
-        const errorId = `${textareaId}-error`;
-        const helperId = `${textareaId}-helper`;
+        const generatedId = React.useId()
+        const textareaId = id || generatedId
+        const errorId = `${textareaId}-error`
+        const helperId = `${textareaId}-helper`
 
         const baseClasses = [
             'w-full bg-background-800 text-word-100 placeholder:text-word-400',
@@ -43,7 +43,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
             className,
         ]
             .filter(Boolean)
-            .join(' ');
+            .join(' ')
 
         return (
             <div className="w-full">
@@ -87,9 +87,9 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
                     </p>
                 )}
             </div>
-        );
+        )
     }
-);
+)
 
-Textarea.displayName = 'Textarea';
-export default Textarea;
+Textarea.displayName = 'Textarea'
+export default Textarea

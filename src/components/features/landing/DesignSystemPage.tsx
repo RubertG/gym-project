@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from 'react'
 import {
     Button,
     Card,
@@ -16,23 +16,23 @@ import {
     Spinner,
     Badge,
     Modal,
-} from '@/components';
+} from '@/components'
 
 export function DesignSystemPage() {
-    const [checkbox1, setCheckbox1] = useState(false);
-    const [checkbox2, setCheckbox2] = useState(true);
-    const [switch1, setSwitch1] = useState(false);
-    const [switch2, setSwitch2] = useState(true);
-    const [selectValue, setSelectValue] = useState('');
-    const [activeTab, setActiveTab] = useState('rutinas');
-    const [modalOpen, setModalOpen] = useState(false);
-    const [modalSize, setModalSize] = useState<'sm' | 'md' | 'lg'>('md');
-    const { toasts, addToast, removeToast } = useToast();
+    const [checkbox1, setCheckbox1] = useState(false)
+    const [checkbox2, setCheckbox2] = useState(true)
+    const [switch1, setSwitch1] = useState(false)
+    const [switch2, setSwitch2] = useState(true)
+    const [selectValue, setSelectValue] = useState('')
+    const [activeTab, setActiveTab] = useState('rutinas')
+    const [modalOpen, setModalOpen] = useState(false)
+    const [modalSize, setModalSize] = useState<'sm' | 'md' | 'lg'>('md')
+    const { toasts, addToast, removeToast } = useToast()
 
     const handleOpenModal = (size: 'sm' | 'md' | 'lg') => {
-        setModalSize(size);
-        setModalOpen(true);
-    };
+        setModalSize(size)
+        setModalOpen(true)
+    }
 
     const tabContent: Record<string, React.ReactNode> = {
         rutinas: (
@@ -79,7 +79,7 @@ export function DesignSystemPage() {
                 </div>
             </div>
         ),
-    };
+    }
 
     return (
         <main className="bg-background-900 min-h-screen p-4 md:p-6 lg:p-8">
@@ -727,7 +727,7 @@ export function DesignSystemPage() {
                 </p>
             </Modal>
         </main>
-    );
+    )
 }
 
-export default DesignSystemPage;
+export default DesignSystemPage

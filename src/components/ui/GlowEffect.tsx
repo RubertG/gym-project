@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 export interface GlowEffectProps extends React.HTMLAttributes<HTMLDivElement> {
     color?: 'primary' | 'secondary';
@@ -17,7 +17,7 @@ const colorStyles = {
         md: 'shadow-[0_0_25px_rgba(200,198,197,0.3)]',
         lg: 'shadow-[0_0_40px_rgba(200,198,197,0.5)]',
     },
-};
+}
 
 export const GlowEffect = React.forwardRef<HTMLDivElement, GlowEffectProps>(
     (
@@ -30,7 +30,7 @@ export const GlowEffect = React.forwardRef<HTMLDivElement, GlowEffectProps>(
         },
         ref
     ) => {
-        const glowClass = colorStyles[color][intensity];
+        const glowClass = colorStyles[color][intensity]
 
         return (
             <div
@@ -40,9 +40,9 @@ export const GlowEffect = React.forwardRef<HTMLDivElement, GlowEffectProps>(
             >
                 {children}
             </div>
-        );
+        )
     }
-);
+)
 
-GlowEffect.displayName = 'GlowEffect';
-export default GlowEffect;
+GlowEffect.displayName = 'GlowEffect'
+export default GlowEffect

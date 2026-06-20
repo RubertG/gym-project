@@ -7,11 +7,11 @@
  * El exerciseId se resuelve en tiempo de ejecución buscando por nombre.
  */
 
-import type { DbClient } from '@/lib/db/types';
-import * as exerciseRepo from '@/lib/repositories/exerciseRepository';
-import * as routineRepo from '@/lib/repositories/routineRepository';
-import * as profileRepo from '@/lib/repositories/profileRepository';
-import { ValidationError } from '@/lib/utils/errors';
+import type { DbClient } from '@/lib/db/types'
+import * as exerciseRepo from '@/lib/repositories/exerciseRepository'
+import * as routineRepo from '@/lib/repositories/routineRepository'
+import * as profileRepo from '@/lib/repositories/profileRepository'
+import { ValidationError } from '@/lib/utils/errors'
 
 /* ─────────── Tipos locales para seed ─────────── */
 
@@ -92,13 +92,13 @@ const EXERCISES_BY_CATEGORY: Record<string, string[]> = {
         'Bicicleta Estática',
         'Elíptica',
     ],
-};
+}
 
-const EXERCISES: { name: string; category: string }[] = [];
+const EXERCISES: { name: string; category: string }[] = []
 
 for (const [category, names] of Object.entries(EXERCISES_BY_CATEGORY)) {
     for (const name of names) {
-        EXERCISES.push({ name, category });
+        EXERCISES.push({ name, category })
     }
 }
 
@@ -587,7 +587,7 @@ const ROUTINES: { name: string; days: SeedDayInput[] }[] = [
             },
         ],
     },
-];
+]
 
 /* ─────────── Ejecución del seed ─────────── */
 
@@ -596,17 +596,17 @@ export async function runSeed(
     seedUserId?: string
 ): Promise<void> {
     // 1. Insertar ejercicios aprobados (como si fueran creados por un admin o sistema)
-    const exerciseMap = new Map<string, string>();
+    const exerciseMap = new Map<string, string>()
 
     for (const ex of EXERCISES) {
         const existing = await exerciseRepo.findExerciseByNameLower(
             db,
             ex.name
-        );
+        )
 
         if (existing) {
-            exerciseMap.set(ex.name, existing.id);
-            continue;
+            exerciseMap.set(ex.name, existing.id)
+            continue
         }
 
         const created = await exerciseRepo.createExercise(db, {
@@ -614,45 +614,45 @@ export async function runSeed(
             category: ex.category,
             createdBy: seedUserId ?? null,
             status: 'approved',
-        });
-        exerciseMap.set(ex.name, created.id);
+        })
+        exerciseMap.set(ex.name, created.id)
     }
 
     // 2. Insertar rutinas de ejemplo (si se provee un usuario seed)
     if (!seedUserId) {
         console.log(
             '[seed] Ejercicios insertados. No se insertaron rutinas porque no se proporcionó seedUserId.'
-        );
+        )
 
-        return;
+        return
     }
 
-    const profile = await profileRepo.findProfileByUserId(db, seedUserId);
+    const profile = await profileRepo.findProfileByUserId(db, seedUserId)
 
     if (!profile) {
         throw new ValidationError(
             'El usuario seed no tiene perfil. Crea el perfil antes de ejecutar el seed de rutinas.'
-        );
+        )
     }
 
     for (const routineDef of ROUTINES) {
         const existingRoutines = await routineRepo.findRoutinesByUser(
             db,
             seedUserId
-        );
+        )
 
         if (existingRoutines.some((r) => r.name === routineDef.name)) {
             console.log(
                 `[seed] Rutina "${routineDef.name}" ya existe. Saltando.`
-            );
-            continue;
+            )
+            continue
         }
 
         const routine = await routineRepo.createRoutine(db, {
             userId: seedUserId,
             name: routineDef.name,
             isPublic: true,
-        });
+        })
 
         for (const dayDef of routineDef.days) {
             const day = await routineRepo.createRoutineDay(db, {
@@ -660,22 +660,22 @@ export async function runSeed(
                 dayOfWeek: dayDef.dayOfWeek,
                 dayName: dayDef.dayName,
                 orderIndex: dayDef.orderIndex,
-            });
+            })
 
             // Resolver nombres de ejercicios según rutina y día
             const exerciseNames = resolveExerciseNamesForDay(
                 routineDef.name,
                 dayDef.dayName,
                 dayDef.orderIndex
-            );
+            )
 
             for (let i = 0; i < exerciseNames.length; i++) {
-                const exName = exerciseNames[i];
-                const exId = exerciseMap.get(exName);
+                const exName = exerciseNames[i]
+                const exId = exerciseMap.get(exName)
 
-                if (!exId) continue;
+                if (!exId) continue
 
-                const exerciseData = dayDef.exercises[i];
+                const exerciseData = dayDef.exercises[i]
 
                 await routineRepo.createRoutineExercise(db, {
                     routineDayId: day.id,
@@ -684,12 +684,12 @@ export async function runSeed(
                     suggestedSets: exerciseData.suggestedSets,
                     suggestedReps: exerciseData.suggestedReps,
                     notes: exerciseData.notes,
-                });
+                })
             }
         }
     }
 
-    console.log('[seed] Seed completado exitosamente.');
+    console.log('[seed] Seed completado exitosamente.')
 }
 
 /* ─────────── Helpers de asignación de ejercicios ─────────── */
@@ -704,7 +704,7 @@ function resolveExerciseNamesForDay(
     dayName: string,
     orderIndex: number
 ): string[] {
-    const name = routineName.toLowerCase();
+    const name = routineName.toLowerCase()
 
     // ─── Full Body 3 días ───
     if (name.includes('full body')) {
@@ -715,7 +715,7 @@ function resolveExerciseNamesForDay(
                 'Press Militar con Barra',
                 'Press Francés',
                 'Plancha Frontal',
-            ];
+            ]
         }
         // orderIndex 1 = Día B: Tirón
         if (orderIndex === 1) {
@@ -724,7 +724,7 @@ function resolveExerciseNamesForDay(
                 'Remo con Mancuerna',
                 'Curl con Mancuernas',
                 'Crunch Abdominal',
-            ];
+            ]
         }
         // orderIndex 2 = Día C: Piernas
         return [
@@ -732,7 +732,7 @@ function resolveExerciseNamesForDay(
             'Peso Muerto',
             'Extensión de Cuádriceps',
             'Curl Femoral Acostado',
-        ];
+        ]
     }
 
     // ─── Upper/Lower Split ───
@@ -747,7 +747,7 @@ function resolveExerciseNamesForDay(
                     'Press Militar con Barra',
                     'Press Francés',
                     'Elevaciones Laterales',
-                ];
+                ]
             }
             return [
                 'Press Banca Inclinado',
@@ -755,7 +755,7 @@ function resolveExerciseNamesForDay(
                 'Press Militar con Mancuernas',
                 'Extensiones de Tríceps en Polea',
                 'Pájaro con Mancuernas',
-            ];
+            ]
         }
         // Lower días: orderIndex 1 y 3
         if (orderIndex === 1) {
@@ -764,19 +764,19 @@ function resolveExerciseNamesForDay(
                 'Peso Muerto',
                 'Zancadas con Mancuernas',
                 'Elevación de Talones',
-            ];
+            ]
         }
         return [
             'Prensa de Piernas',
             'Peso Muerto Rumano',
             'Zancadas con Mancuernas',
             'Elevación de Talones',
-        ];
+        ]
     }
 
     // ─── Push/Pull/Legs ───
     if (name.includes('push/pull/legs') || name.includes('push pull legs')) {
-        const day = dayName.toLowerCase();
+        const day = dayName.toLowerCase()
 
         if (day === 'push') {
             return [
@@ -785,7 +785,7 @@ function resolveExerciseNamesForDay(
                 'Fondos en Paralelas',
                 'Press Francés',
                 'Elevaciones Laterales',
-            ];
+            ]
         }
         if (day === 'pull') {
             return [
@@ -794,7 +794,7 @@ function resolveExerciseNamesForDay(
                 'Curl con Mancuernas',
                 'Curl Martillo',
                 'Pájaro con Mancuernas',
-            ];
+            ]
         }
         if (day === 'legs') {
             return [
@@ -803,9 +803,9 @@ function resolveExerciseNamesForDay(
                 'Extensión de Cuádriceps',
                 'Curl Femoral Acostado',
                 'Elevación de Talones',
-            ];
+            ]
         }
     }
 
-    return ['Sentadilla Tradicional', 'Press Banca Plano', 'Dominadas'];
+    return ['Sentadilla Tradicional', 'Press Banca Plano', 'Dominadas']
 }

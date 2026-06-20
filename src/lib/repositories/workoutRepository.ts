@@ -3,13 +3,13 @@
  * Responsabilidad: acceso a datos de entrenamientos.
  */
 
-import type { DbClient } from '@/lib/db/types';
+import type { DbClient } from '@/lib/db/types'
 import type {
     UserActiveRoutineLog,
     WorkoutSession,
     WorkoutSet,
-} from '@/lib/models';
-import { AppError, NotFoundError } from '@/lib/utils/errors';
+} from '@/lib/models'
+import { AppError, NotFoundError } from '@/lib/utils/errors'
 
 /* ─────────── workout_sessions ─────────── */
 
@@ -22,10 +22,10 @@ export async function findSessionsByUser(
         .select('*')
         .eq('user_id', userId)
         .is('deleted_at', null)
-        .order('session_date', { ascending: false });
+        .order('session_date', { ascending: false })
 
-    if (error) throw new AppError(error.message, 500);
-    return data ?? [];
+    if (error) throw new AppError(error.message, 500)
+    return data ?? []
 }
 
 export async function findSessionById(
@@ -36,10 +36,10 @@ export async function findSessionById(
         .from<WorkoutSession>('workout_sessions')
         .select('*')
         .eq('id', id)
-        .maybeSingle();
+        .maybeSingle()
 
-    if (error) throw new AppError(error.message, 500);
-    return data ?? null;
+    if (error) throw new AppError(error.message, 500)
+    return data ?? null
 }
 
 export async function createSession(
@@ -63,11 +63,11 @@ export async function createSession(
             status: 'draft',
         })
         .select()
-        .single();
+        .single()
 
     if (error || !data)
-        throw new AppError(error?.message ?? 'Error al crear sesión', 500);
-    return data;
+        throw new AppError(error?.message ?? 'Error al crear sesión', 500)
+    return data
 }
 
 export async function completeSession(
@@ -79,10 +79,10 @@ export async function completeSession(
         .update({ status: 'completed', completed_at: new Date().toISOString() })
         .eq('id', id)
         .select()
-        .single();
+        .single()
 
-    if (error || !data) throw new NotFoundError('Sesión');
-    return data;
+    if (error || !data) throw new NotFoundError('Sesión')
+    return data
 }
 
 export async function softDeleteSession(
@@ -92,9 +92,9 @@ export async function softDeleteSession(
     const { error } = await db
         .from<WorkoutSession>('workout_sessions')
         .update({ deleted_at: new Date().toISOString() })
-        .eq('id', id);
+        .eq('id', id)
 
-    if (error) throw new AppError(error.message, 500);
+    if (error) throw new AppError(error.message, 500)
 }
 
 /* ─────────── workout_sets ─────────── */
@@ -108,10 +108,10 @@ export async function findSetsBySessionId(
         .select('*')
         .eq('workout_session_id', sessionId)
         .is('deleted_at', null)
-        .order('set_number', { ascending: true });
+        .order('set_number', { ascending: true })
 
-    if (error) throw new AppError(error.message, 500);
-    return data ?? [];
+    if (error) throw new AppError(error.message, 500)
+    return data ?? []
 }
 
 export async function findSetsByExerciseId(
@@ -123,10 +123,10 @@ export async function findSetsByExerciseId(
         .select('*')
         .eq('exercise_id', exerciseId)
         .is('deleted_at', null)
-        .order('created_at', { ascending: true });
+        .order('created_at', { ascending: true })
 
-    if (error) throw new AppError(error.message, 500);
-    return data ?? [];
+    if (error) throw new AppError(error.message, 500)
+    return data ?? []
 }
 
 export async function createWorkoutSets(
@@ -144,16 +144,16 @@ export async function createWorkoutSets(
         reps: s.reps,
         weight_kg: s.weightKg,
         note: s.note ?? null,
-    }));
+    }))
 
     const { data, error } = await db
         .from<WorkoutSet>('workout_sets')
         .insert(rows as unknown[])
-        .select();
+        .select()
 
     if (error || !data)
-        throw new AppError(error?.message ?? 'Error al insertar series', 500);
-    return data;
+        throw new AppError(error?.message ?? 'Error al insertar series', 500)
+    return data
 }
 
 /* ─────────── historial / calendario ─────────── */
@@ -171,10 +171,10 @@ export async function findSessionsInDateRange(
         .gte('session_date', startDate)
         .lte('session_date', endDate)
         .is('deleted_at', null)
-        .order('session_date', { ascending: true });
+        .order('session_date', { ascending: true })
 
-    if (error) throw new AppError(error.message, 500);
-    return data ?? [];
+    if (error) throw new AppError(error.message, 500)
+    return data ?? []
 }
 
 export async function findSetsByUserAndExercise(
@@ -188,10 +188,10 @@ export async function findSetsByUserAndExercise(
         .eq('exercise_id', exerciseId)
         .eq('workout_sessions.user_id', userId)
         .is('deleted_at', null)
-        .order('created_at', { ascending: true });
+        .order('created_at', { ascending: true })
 
-    if (error) throw new AppError(error.message, 500);
-    return data ?? [];
+    if (error) throw new AppError(error.message, 500)
+    return data ?? []
 }
 
 /* ─────────── user_active_routine_log ─────────── */
@@ -205,8 +205,8 @@ export async function findActiveRoutineLog(
         .select('*')
         .eq('user_id', userId)
         .is('deactivated_at', null)
-        .maybeSingle();
+        .maybeSingle()
 
-    if (error) throw new AppError(error.message, 500);
-    return data ?? null;
+    if (error) throw new AppError(error.message, 500)
+    return data ?? null
 }

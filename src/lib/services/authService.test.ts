@@ -1,14 +1,14 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { ValidationError, AuthError } from '@/lib/utils/errors';
-import type { User, Session } from '@supabase/supabase-js';
-import type { Profile } from '@/lib/models';
+import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { ValidationError, AuthError } from '@/lib/utils/errors'
+import type { User, Session } from '@supabase/supabase-js'
+import type { Profile } from '@/lib/models'
 
 // Mock del cliente anon de Supabase
-const mockSignUp = vi.fn();
-const mockSignInWithPassword = vi.fn();
-const mockSignOut = vi.fn();
-const mockResetPasswordForEmail = vi.fn();
-const mockGetSession = vi.fn();
+const mockSignUp = vi.fn()
+const mockSignInWithPassword = vi.fn()
+const mockSignOut = vi.fn()
+const mockResetPasswordForEmail = vi.fn()
+const mockGetSession = vi.fn()
 
 vi.mock('@/lib/db/browser-client', () => ({
     getAnonClient: vi.fn(() => ({
@@ -20,22 +20,22 @@ vi.mock('@/lib/db/browser-client', () => ({
             getSession: mockGetSession,
         },
     })),
-}));
+}))
 
 // Mock del profileService
 vi.mock('@/lib/services/profileService', () => ({
     createProfile: vi.fn(),
-}));
+}))
 
 // Import dinámico después de los mocks
 const { signUp, signIn, signOut, getCurrentSession } =
-    await import('./authService');
-const { createProfile } = await import('@/lib/services/profileService');
+    await import('./authService')
+const { createProfile } = await import('@/lib/services/profileService')
 
 describe('authService', () => {
     beforeEach(() => {
-        vi.clearAllMocks();
-    });
+        vi.clearAllMocks()
+    })
 
     describe('signUp', () => {
         it('should create user and profile on success', async () => {
@@ -45,7 +45,7 @@ describe('authService', () => {
                 role: 'authenticated',
                 aud: 'authenticated',
                 created_at: new Date().toISOString(),
-            } as User;
+            } as User
 
             const mockProfile: Profile = {
                 id: 'user-123',
@@ -55,28 +55,28 @@ describe('authService', () => {
                 createdAt: new Date().toISOString(),
                 updatedAt: new Date().toISOString(),
                 deletedAt: null,
-            };
+            }
 
             mockSignUp.mockResolvedValue({
                 data: { user: mockUser },
                 error: null,
-            });
-            vi.mocked(createProfile).mockResolvedValue(mockProfile);
+            })
+            vi.mocked(createProfile).mockResolvedValue(mockProfile)
 
             const result = await signUp({
                 email: 'test@example.com',
                 password: 'password123',
                 username: 'testuser',
-            });
+            })
 
-            expect(result.user).toEqual(mockUser);
-            expect(result.profile).toEqual(mockProfile);
+            expect(result.user).toEqual(mockUser)
+            expect(result.profile).toEqual(mockProfile)
             expect(mockSignUp).toHaveBeenCalledWith({
                 email: 'test@example.com',
                 password: 'password123',
-            });
-            expect(createProfile).toHaveBeenCalledWith('user-123', 'testuser');
-        });
+            })
+            expect(createProfile).toHaveBeenCalledWith('user-123', 'testuser')
+        })
 
         it('should throw ValidationError on duplicate email', async () => {
             mockSignUp.mockResolvedValue({
@@ -85,15 +85,15 @@ describe('authService', () => {
                     message: 'User already registered',
                     code: 'email_taken',
                 },
-            });
+            })
 
             await expect(
                 signUp({ email: 'taken@example.com', password: 'password123' })
-            ).rejects.toThrow(ValidationError);
+            ).rejects.toThrow(ValidationError)
             await expect(
                 signUp({ email: 'taken@example.com', password: 'password123' })
-            ).rejects.toThrow('Email already registered');
-        });
+            ).rejects.toThrow('Email already registered')
+        })
 
         it('should return user even if profile creation fails (best-effort)', async () => {
             const mockUser: User = {
@@ -102,24 +102,24 @@ describe('authService', () => {
                 role: 'authenticated',
                 aud: 'authenticated',
                 created_at: new Date().toISOString(),
-            } as User;
+            } as User
 
             mockSignUp.mockResolvedValue({
                 data: { user: mockUser },
                 error: null,
-            });
-            vi.mocked(createProfile).mockRejectedValue(new Error('DB error'));
+            })
+            vi.mocked(createProfile).mockRejectedValue(new Error('DB error'))
 
             const result = await signUp({
                 email: 'test@example.com',
                 password: 'password123',
-            });
+            })
 
-            expect(result.user).toEqual(mockUser);
-            expect(result.profile).toBeNull();
-            expect(createProfile).toHaveBeenCalledWith('user-456', undefined);
-        });
-    });
+            expect(result.user).toEqual(mockUser)
+            expect(result.profile).toBeNull()
+            expect(createProfile).toHaveBeenCalledWith('user-456', undefined)
+        })
+    })
 
     describe('signIn', () => {
         it('should return session and user on success', async () => {
@@ -129,7 +129,7 @@ describe('authService', () => {
                 role: 'authenticated',
                 aud: 'authenticated',
                 created_at: new Date().toISOString(),
-            } as User;
+            } as User
 
             const mockSession: Session = {
                 access_token: 'token',
@@ -137,25 +137,25 @@ describe('authService', () => {
                 expires_in: 3600,
                 token_type: 'bearer',
                 user: mockUser,
-            } as Session;
+            } as Session
 
             mockSignInWithPassword.mockResolvedValue({
                 data: { session: mockSession, user: mockUser },
                 error: null,
-            });
+            })
 
             const result = await signIn({
                 email: 'test@example.com',
                 password: 'password123',
-            });
+            })
 
-            expect(result.session).toEqual(mockSession);
-            expect(result.user).toEqual(mockUser);
+            expect(result.session).toEqual(mockSession)
+            expect(result.user).toEqual(mockUser)
             expect(mockSignInWithPassword).toHaveBeenCalledWith({
                 email: 'test@example.com',
                 password: 'password123',
-            });
-        });
+            })
+        })
 
         it('should throw AuthError on invalid credentials', async () => {
             mockSignInWithPassword.mockResolvedValue({
@@ -164,25 +164,25 @@ describe('authService', () => {
                     message: 'Invalid login credentials',
                     code: 'invalid_credentials',
                 },
-            });
+            })
 
             await expect(
                 signIn({ email: 'bad@example.com', password: 'wrong' })
-            ).rejects.toThrow(AuthError);
+            ).rejects.toThrow(AuthError)
             await expect(
                 signIn({ email: 'bad@example.com', password: 'wrong' })
-            ).rejects.toThrow('Invalid email or password');
-        });
-    });
+            ).rejects.toThrow('Invalid email or password')
+        })
+    })
 
     describe('signOut', () => {
         it('should delegate to Supabase signOut', async () => {
-            mockSignOut.mockResolvedValue({ error: null });
+            mockSignOut.mockResolvedValue({ error: null })
 
-            await expect(signOut()).resolves.toBeUndefined();
-            expect(mockSignOut).toHaveBeenCalled();
-        });
-    });
+            await expect(signOut()).resolves.toBeUndefined()
+            expect(mockSignOut).toHaveBeenCalled()
+        })
+    })
 
     describe('getCurrentSession', () => {
         it('should return session and user when session exists', async () => {
@@ -192,7 +192,7 @@ describe('authService', () => {
                 role: 'authenticated',
                 aud: 'authenticated',
                 created_at: new Date().toISOString(),
-            } as User;
+            } as User
 
             const mockSession: Session = {
                 access_token: 'token',
@@ -200,29 +200,29 @@ describe('authService', () => {
                 expires_in: 3600,
                 token_type: 'bearer',
                 user: mockUser,
-            } as Session;
+            } as Session
 
             mockGetSession.mockResolvedValue({
                 data: { session: mockSession, user: mockUser },
                 error: null,
-            });
+            })
 
-            const result = await getCurrentSession();
+            const result = await getCurrentSession()
 
-            expect(result.session).toEqual(mockSession);
-            expect(result.user).toEqual(mockUser);
-        });
+            expect(result.session).toEqual(mockSession)
+            expect(result.user).toEqual(mockUser)
+        })
 
         it('should return nulls when no session exists', async () => {
             mockGetSession.mockResolvedValue({
                 data: { session: null, user: null },
                 error: null,
-            });
+            })
 
-            const result = await getCurrentSession();
+            const result = await getCurrentSession()
 
-            expect(result.session).toBeNull();
-            expect(result.user).toBeNull();
-        });
-    });
-});
+            expect(result.session).toBeNull()
+            expect(result.user).toBeNull()
+        })
+    })
+})

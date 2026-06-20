@@ -3,72 +3,72 @@
  * Client-side validation, submit via fetch to /api/auth/login.
  */
 
-import React, { useState } from 'react';
-import { Input } from '@/components/ui/Input';
-import { Button } from '@/components/ui/Button';
-import { useAuth } from './useAuth';
+import React, { useState } from 'react'
+import { Input } from '@/components/ui/Input'
+import { Button } from '@/components/ui/Button'
+import { useAuth } from './useAuth'
 
 export const LoginForm: React.FC = () => {
-    const { signIn } = useAuth();
+    const { signIn } = useAuth()
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [errors, setErrors] = useState<Record<string, string>>({});
-    const [submitting, setSubmitting] = useState(false);
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [errors, setErrors] = useState<Record<string, string>>({})
+    const [submitting, setSubmitting] = useState(false)
 
     const validate = (): boolean => {
-        const newErrors: Record<string, string> = {};
+        const newErrors: Record<string, string> = {}
 
         if (!email.trim()) {
-            newErrors.email = 'El email es requerido';
+            newErrors.email = 'El email es requerido'
         }
 
         if (!password) {
-            newErrors.password = 'La contraseña es requerida';
+            newErrors.password = 'La contraseña es requerida'
         }
 
-        setErrors(newErrors);
+        setErrors(newErrors)
 
-        return Object.keys(newErrors).length === 0;
-    };
+        return Object.keys(newErrors).length === 0
+    }
 
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+        e.preventDefault()
 
-        if (!validate()) return;
+        if (!validate()) return
 
-        setSubmitting(true);
-        setErrors({});
+        setSubmitting(true)
+        setErrors({})
 
-        const result = await signIn(email, password);
+        const result = await signIn(email, password)
 
         if (!result.ok) {
             // Si hay detalles de validación del servidor, mapearlos a los campos
             if (result.details && result.details.length > 0) {
-                const fieldErrors: Record<string, string> = {};
+                const fieldErrors: Record<string, string> = {}
                 result.details.forEach((detail) => {
                     // Traducir mensajes de error del servidor
                     const translatedMessage = translateErrorMessage(
                         detail.field,
                         detail.message
-                    );
-                    fieldErrors[detail.field] = translatedMessage;
-                });
-                setErrors(fieldErrors);
+                    )
+                    fieldErrors[detail.field] = translatedMessage
+                })
+                setErrors(fieldErrors)
             } else {
                 // Error genérico (credenciales inválidas, etc.)
                 setErrors({
                     form: translateErrorMessage('form', result.error),
-                });
+                })
             }
-            setSubmitting(false);
+            setSubmitting(false)
 
-            return;
+            return
         }
 
         // eslint-disable-next-line react-hooks/immutability
-        window.location.href = '/dashboard';
-    };
+        window.location.href = '/dashboard'
+    }
 
     // Función para traducir mensajes de error del servidor
     const translateErrorMessage = (field: string, message: string): string => {
@@ -79,10 +79,10 @@ export const LoginForm: React.FC = () => {
                 'La contraseña debe tener al menos 8 caracteres',
             'Email is required': 'El email es requerido',
             'Password is required': 'La contraseña es requerida',
-        };
+        }
 
-        return translations[message] || message;
-    };
+        return translations[message] || message
+    }
 
     return (
         <form
@@ -143,7 +143,7 @@ export const LoginForm: React.FC = () => {
                 </a>
             </p>
         </form>
-    );
-};
+    )
+}
 
-export default LoginForm;
+export default LoginForm

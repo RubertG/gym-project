@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef, useCallback } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export interface Tab {
     id: string;
@@ -21,43 +21,43 @@ export const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
         { tabs, activeTab, onChange, children, className = '', ...props },
         ref
     ) => {
-        const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+        const tabRefs = useRef<(HTMLButtonElement | null)[]>([])
         const [indicatorStyle, setIndicatorStyle] = useState({
             transform: 'translateX(0px)',
             width: '0px',
-        });
+        })
 
         const updateIndicator = useCallback(() => {
-            const activeIndex = tabs.findIndex((tab) => tab.id === activeTab);
-            const activeButton = tabRefs.current[activeIndex];
+            const activeIndex = tabs.findIndex((tab) => tab.id === activeTab)
+            const activeButton = tabRefs.current[activeIndex]
 
             if (activeButton && activeButton.parentElement) {
                 const parentRect =
-                    activeButton.parentElement.getBoundingClientRect();
-                const buttonRect = activeButton.getBoundingClientRect();
-                const left = buttonRect.left - parentRect.left;
-                const width = buttonRect.width;
+                    activeButton.parentElement.getBoundingClientRect()
+                const buttonRect = activeButton.getBoundingClientRect()
+                const left = buttonRect.left - parentRect.left
+                const width = buttonRect.width
 
                 setIndicatorStyle({
                     transform: `translateX(${left}px)`,
                     width: `${width}px`,
-                });
+                })
             }
-        }, [activeTab, tabs]);
+        }, [activeTab, tabs])
 
         useEffect(() => {
-            updateIndicator();
-        }, [updateIndicator]);
+            updateIndicator()
+        }, [updateIndicator])
 
         useEffect(() => {
             const handleResize = () => {
-                updateIndicator();
-            };
+                updateIndicator()
+            }
 
-            window.addEventListener('resize', handleResize);
+            window.addEventListener('resize', handleResize)
 
-            return () => window.removeEventListener('resize', handleResize);
-        }, [updateIndicator]);
+            return () => window.removeEventListener('resize', handleResize)
+        }, [updateIndicator])
 
         return (
             <div ref={ref} className={`w-full ${className}`.trim()} {...props}>
@@ -66,13 +66,13 @@ export const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
                     role="tablist"
                 >
                     {tabs.map((tab, index) => {
-                        const isActive = tab.id === activeTab;
+                        const isActive = tab.id === activeTab
 
                         return (
                             <button
                                 key={tab.id}
                                 ref={(el) => {
-                                    tabRefs.current[index] = el;
+                                    tabRefs.current[index] = el
                                 }}
                                 role="tab"
                                 aria-selected={isActive}
@@ -88,7 +88,7 @@ export const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
                             >
                                 {tab.label}
                             </button>
-                        );
+                        )
                     })}
                     <span className="tab-indicator" style={indicatorStyle} />
                 </div>
@@ -106,9 +106,9 @@ export const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
                     </motion.div>
                 </AnimatePresence>
             </div>
-        );
+        )
     }
-);
+)
 
-Tabs.displayName = 'Tabs';
-export default Tabs;
+Tabs.displayName = 'Tabs'
+export default Tabs

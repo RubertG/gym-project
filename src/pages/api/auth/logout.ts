@@ -4,10 +4,10 @@
  * Es idempotente: si no hay sesion, igualmente retorna 200.
  */
 
-export const prerender = false;
+export const prerender = false
 
-import type { APIContext } from 'astro';
-import * as authService from '@/lib/services/authService';
+import type { APIContext } from 'astro'
+import * as authService from '@/lib/services/authService'
 
 /**
  * Helper para respuestas JSON.
@@ -16,13 +16,13 @@ function jsonResponse(data: unknown, status: number): Response {
     return new Response(JSON.stringify(data), {
         status,
         headers: { 'Content-Type': 'application/json' },
-    });
+    })
 }
 
 export async function POST(context: APIContext): Promise<Response> {
     try {
         // Intentar cerrar sesion en Supabase (best-effort)
-        await authService.signOut();
+        await authService.signOut()
     } catch {
         // Si falla el signOut, igualmente limpiamos las cookies localmente.
         // El signOut puede fallar si la sesion ya expiro, pero las cookies
@@ -31,15 +31,15 @@ export async function POST(context: APIContext): Promise<Response> {
 
     // Limpiar todas las cookies de Supabase (sb-*)
     // Astro expone las cookies del request via context.cookies
-    const allCookies = context.request.headers.get('cookie') ?? '';
+    const allCookies = context.request.headers.get('cookie') ?? ''
     const cookieNames = allCookies
         .split(';')
         .map((c) => c.trim().split('=')[0])
-        .filter((name) => name.startsWith('sb-'));
+        .filter((name) => name.startsWith('sb-'))
 
     for (const name of cookieNames) {
-        context.cookies.delete(name, { path: '/' });
+        context.cookies.delete(name, { path: '/' })
     }
 
-    return jsonResponse({ success: true }, 200);
+    return jsonResponse({ success: true }, 200)
 }
