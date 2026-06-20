@@ -10,7 +10,6 @@ import type { APIContext } from 'astro'
 import { z } from 'zod'
 import { createSupabaseServerClient } from '@/lib/db/server-client'
 import { getServerClient } from '@/lib/db/client'
-import { createProfile } from '@/lib/services/profileService'
 import { AppError } from '@/lib/utils/errors'
 
 // Esquema de validacion para registro
@@ -100,43 +99,78 @@ export async function POST(context: APIContext): Promise<Response> {
             )
         }
 
-        // Crear perfil del usuario
+        // Actualizar perfil del usuario (ya fue creado por trigger de Supabase)
         const db = getServerClient()
         const username =
             result.data.username || data.user.email?.split('@')[0] || 'user'
-        const profile = await createProfile(
-            {
-                userId: data.user.id,
-                username,
-            },
-            db
-        )
-        // Hacer login automáticamente después del registro para establecer sesión
-        const { error: loginError } = await supabase.auth.signInWithPassword({
-            email: result.data.email,
-            password: result.data.password,
-        })
 
-        if (loginError) {
-            // El registro fue exitoso pero el login falló, aún así retornar éxito
-            // El usuario puede hacer login manualmente
-        }
+        // Intentar actualizar el perfil existente
+        const { updateProfile } = await import('@/lib/services/profileService')
 
-        return jsonResponse(
-            {
-                user: {
-                    id: data.user.id,
-                    email: data.user.email,
+        try {
+            const profile = await updateProfile(data.user.id, { username }, db)
+
+            // Hacer login automáticamente después del registro para establecer sesión
+            const { error: loginError } =
+                await supabase.auth.signInWithPassword({
+                    email: result.data.email,
+                    password: result.data.password,
+                })
+
+            if (loginError) {
+                // El registro fue exitoso pero el login falló, aún así retornar éxito
+                // El usuario puede hacer login manualmente
+            }
+
+            return jsonResponse(
+                {
+                    user: {
+                        id: data.user.id,
+                        email: data.user.email,
+                    },
+                    profile: profile
+                        ? {
+                              id: profile.id,
+                              username: profile.username,
+                          }
+                        : null,
                 },
-                profile: profile
-                    ? {
-                          id: profile.id,
-                          username: profile.username,
-                      }
-                    : null,
-            },
-            201
-        )
+                201
+            )
+        } catch {
+            // Si falla la actualización, intentar crear el perfil
+            const { createProfile } =
+                await import('@/lib/services/profileService')
+            const profile = await createProfile(
+                {
+                    userId: data.user.id,
+                    username,
+                },
+                db
+            )
+
+            // Hacer login automáticamente
+            await supabase.auth.signInWithPassword({
+                email: result.data.email,
+                password: result.data.password,
+            })
+
+            return jsonResponse(
+                {
+                    user: {
+                        id: data.user.id,
+                        email: data.user.email,
+                    },
+                    profile: profile
+                        ? {
+                              id: profile.id,
+                              username: profile.username,
+                          }
+                        : null,
+                },
+                201
+            )
+        }
     } catch (err) {
         if (err instanceof AppError) {
             // Email duplicado → 409

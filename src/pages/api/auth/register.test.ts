@@ -16,6 +16,7 @@ vi.mock('@/lib/db/server-client', () => ({
 
 // Mock de profileService
 vi.mock('@/lib/services/profileService', () => ({
+    updateProfile: vi.fn(),
     createProfile: vi.fn(),
 }))
 
@@ -60,7 +61,7 @@ describe('POST /api/auth/register', () => {
             data: { session: {} },
             error: null,
         })
-        vi.mocked(profileService.createProfile).mockResolvedValue(
+        vi.mocked(profileService.updateProfile).mockResolvedValue(
             mockProfile as Profile
         )
 
