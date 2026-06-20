@@ -39,7 +39,9 @@ describe('LoginForm', () => {
         fireEvent.change(passwordInput, { target: { value: 'somepassword' } });
 
         // Hacer submit
-        const submitButton = screen.getByRole('button', { name: /sign in/i });
+        const submitButton = screen.getByRole('button', {
+            name: /iniciar sesión/i,
+        });
 
         fireEvent.click(submitButton);
 
@@ -47,7 +49,7 @@ describe('LoginForm', () => {
         expect(mockSignIn).not.toHaveBeenCalled();
 
         // Debe mostrar error de email requerido
-        expect(screen.getByText('Email is required')).toBeTruthy();
+        expect(screen.getByText('El email es requerido')).toBeTruthy();
     });
 
     it('calls signIn with valid credentials', async () => {
@@ -63,7 +65,9 @@ describe('LoginForm', () => {
         fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
         fireEvent.change(passwordInput, { target: { value: 'password123' } });
 
-        const submitButton = screen.getByRole('button', { name: /sign in/i });
+        const submitButton = screen.getByRole('button', {
+            name: /iniciar sesión/i,
+        });
 
         fireEvent.click(submitButton);
 
@@ -89,7 +93,9 @@ describe('LoginForm', () => {
         fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
         fireEvent.change(passwordInput, { target: { value: 'wrong' } });
 
-        const submitButton = screen.getByRole('button', { name: /sign in/i });
+        const submitButton = screen.getByRole('button', {
+            name: /iniciar sesión/i,
+        });
 
         fireEvent.click(submitButton);
 

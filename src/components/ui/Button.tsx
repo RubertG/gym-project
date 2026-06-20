@@ -1,7 +1,10 @@
 import React from 'react';
 import { Loader2 } from 'lucide-react';
 
-export interface ButtonProps extends React.HTMLAttributes<HTMLElement> {
+export interface ButtonProps extends Omit<
+    React.HTMLAttributes<HTMLElement>,
+    'type'
+> {
     variant?: 'primary' | 'secondary' | 'ghost' | 'danger';
     size?: 'sm' | 'md' | 'lg';
     surface?: 'dark' | 'light';
@@ -11,6 +14,7 @@ export interface ButtonProps extends React.HTMLAttributes<HTMLElement> {
     glow?: boolean;
     href?: string;
     disabled?: boolean;
+    type?: 'button' | 'submit' | 'reset';
 }
 
 const variantStyles = {
@@ -52,6 +56,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             children,
             className = '',
             disabled,
+            type = 'button',
             ...props
         },
         ref
@@ -112,6 +117,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         return (
             <button
                 ref={ref}
+                type={type}
                 className={baseClasses}
                 disabled={disabled || loading}
                 aria-busy={loading}

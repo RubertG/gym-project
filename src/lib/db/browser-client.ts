@@ -18,8 +18,8 @@ let _anonClient: SupabaseClient | null = null;
 export function getAnonClient(): SupabaseClient {
     if (!_anonClient) {
         _anonClient = createClient(
-            envBrowser.SUPABASE_URL,
-            envBrowser.SUPABASE_ANON_KEY,
+            envBrowser.PUBLIC_SUPABASE_URL,
+            envBrowser.PUBLIC_SUPABASE_PUBLISHABLE_KEY,
             {
                 auth: {
                     persistSession: false,
@@ -36,7 +36,7 @@ export function getAnonClient(): SupabaseClient {
  * Formato esperado: https://<project-ref>.supabase.co
  */
 function getProjectRef(): string {
-    const url = new URL(envBrowser.SUPABASE_URL);
+    const url = new URL(envBrowser.PUBLIC_SUPABASE_URL);
     const host = url.hostname; // e.g. "abcdefghijk.supabase.co"
 
     return host.split('.')[0];
@@ -96,11 +96,15 @@ function createCookieStorageAdapter() {
 export function getBrowserClient(): SupabaseClient {
     const storageAdapter = createCookieStorageAdapter();
 
-    return createClient(envBrowser.SUPABASE_URL, envBrowser.SUPABASE_ANON_KEY, {
-        auth: {
-            persistSession: true,
-            autoRefreshToken: true,
-            storage: storageAdapter,
-        },
-    });
+    return createClient(
+        envBrowser.PUBLIC_SUPABASE_URL,
+        envBrowser.PUBLIC_SUPABASE_PUBLISHABLE_KEY,
+        {
+            auth: {
+                persistSession: true,
+                autoRefreshToken: true,
+                storage: storageAdapter,
+            },
+        }
+    );
 }

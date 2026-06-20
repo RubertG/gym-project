@@ -16,8 +16,8 @@ vi.mock('@/lib/services/profileService', () => ({
 // Mock de env para getProjectRef
 vi.mock('@/lib/config/env', () => ({
     env: {
-        SUPABASE_URL: 'https://testproject.supabase.co',
-        SUPABASE_ANON_KEY: 'test-anon-key',
+        PUBLIC_SUPABASE_URL: 'https://testproject.supabase.co',
+        PUBLIC_SUPABASE_PUBLISHABLE_KEY: 'test-anon-key',
         SUPABASE_SERVICE_ROLE_KEY: 'test-service-key',
     },
 }));

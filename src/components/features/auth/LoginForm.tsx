@@ -1,6 +1,6 @@
 /**
- * LoginForm — Isla React para inicio de sesion.
- * Validacion client-side, submit via fetch a /api/auth/login.
+ * LoginForm — React island for login.
+ * Client-side validation, submit via fetch to /api/auth/login.
  */
 
 import React, { useState } from 'react';
@@ -20,11 +20,11 @@ export const LoginForm: React.FC = () => {
         const newErrors: Record<string, string> = {};
 
         if (!email.trim()) {
-            newErrors.email = 'Email is required';
+            newErrors.email = 'El email es requerido';
         }
 
         if (!password) {
-            newErrors.password = 'Password is required';
+            newErrors.password = 'La contraseña es requerida';
         }
 
         setErrors(newErrors);
@@ -64,7 +64,7 @@ export const LoginForm: React.FC = () => {
                 name="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="your@email.com"
+                placeholder="tu@email.com"
                 autoComplete="email"
                 error={errors.email}
                 surface="dark"
@@ -72,7 +72,7 @@ export const LoginForm: React.FC = () => {
             />
 
             <Input
-                label="Password"
+                label="Contraseña"
                 type="password"
                 name="password"
                 value={password}
@@ -98,16 +98,16 @@ export const LoginForm: React.FC = () => {
                 disabled={submitting}
                 className="w-full rounded-none"
             >
-                Sign In
+                Iniciar Sesión
             </Button>
 
             <p className="text-word-400 text-center text-sm">
-                Don&apos;t have an account?{' '}
+                ¿No tienes cuenta?{' '}
                 <a
                     href="/register"
                     className="text-primary-300 hover:text-primary-200 font-bold transition-colors"
                 >
-                    Register
+                    Regístrate
                 </a>
             </p>
         </form>

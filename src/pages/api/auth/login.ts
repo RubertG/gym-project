@@ -32,7 +32,7 @@ function jsonResponse(data: unknown, status: number): Response {
  * Formato esperado: https://<project-ref>.supabase.co
  */
 function getProjectRef(): string {
-    const url = new URL(env.SUPABASE_URL);
+    const url = new URL(env.PUBLIC_SUPABASE_URL);
 
     return url.hostname.split('.')[0];
 }

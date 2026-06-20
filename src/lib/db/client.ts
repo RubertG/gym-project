@@ -9,12 +9,16 @@ let _serverClient: DbClient | null = null;
  * de entorno ya validadas por el modulo env.
  */
 export function createServerClient(): DbClient {
-    return createClient(env.SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY, {
-        auth: {
-            autoRefreshToken: false,
-            persistSession: false,
-        },
-    }) as unknown as DbClient;
+    return createClient(
+        env.PUBLIC_SUPABASE_URL,
+        env.SUPABASE_SERVICE_ROLE_KEY,
+        {
+            auth: {
+                autoRefreshToken: false,
+                persistSession: false,
+            },
+        }
+    ) as unknown as DbClient;
 }
 
 /**

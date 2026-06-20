@@ -32,9 +32,9 @@ const variantStyles = {
 };
 
 const sizeStyles = {
-    sm: 'text-sm py-2 px-3',
-    md: 'text-base py-3 px-4',
-    lg: 'text-lg py-4 px-5',
+    sm: 'text-xs py-1.5 px-3',
+    md: 'text-sm py-2.5 px-4',
+    lg: 'text-base py-3 px-6',
 };
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(

@@ -46,7 +46,7 @@ describe('RegisterForm', () => {
         });
 
         const submitButton = screen.getByRole('button', {
-            name: /create account/i,
+            name: /crear cuenta/i,
         });
 
         fireEvent.click(submitButton);
@@ -55,7 +55,7 @@ describe('RegisterForm', () => {
         expect(mockSignUp).not.toHaveBeenCalled();
 
         // Debe mostrar error de password mismatch
-        expect(screen.getByText('Passwords do not match')).toBeTruthy();
+        expect(screen.getByText('Las contraseñas no coinciden')).toBeTruthy();
     });
 
     it('weak password blocks submit', async () => {
@@ -74,14 +74,14 @@ describe('RegisterForm', () => {
         fireEvent.change(confirmPasswordInput, { target: { value: 'short' } });
 
         const submitButton = screen.getByRole('button', {
-            name: /create account/i,
+            name: /crear cuenta/i,
         });
 
         fireEvent.click(submitButton);
 
         expect(mockSignUp).not.toHaveBeenCalled();
         expect(
-            screen.getByText('Password must be at least 8 characters')
+            screen.getByText('La contraseña debe tener al menos 8 caracteres')
         ).toBeTruthy();
     });
 
@@ -105,7 +105,7 @@ describe('RegisterForm', () => {
         });
 
         const submitButton = screen.getByRole('button', {
-            name: /create account/i,
+            name: /crear cuenta/i,
         });
 
         fireEvent.click(submitButton);

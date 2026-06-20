@@ -27,8 +27,8 @@ function getEnvVar(key: string): string | undefined {
 
 // Claves requeridas
 const REQUIRED_KEYS = [
-    'SUPABASE_URL',
-    'SUPABASE_ANON_KEY',
+    'PUBLIC_SUPABASE_URL',
+    'PUBLIC_SUPABASE_PUBLISHABLE_KEY',
     'SUPABASE_SERVICE_ROLE_KEY',
 ] as const;
 
@@ -52,8 +52,8 @@ if (missingKeys.length > 0) {
 
 // Esquema Zod para validacion de formato
 const envSchema = z.object({
-    SUPABASE_URL: z.url(),
-    SUPABASE_ANON_KEY: z.string().min(1),
+    PUBLIC_SUPABASE_URL: z.url(),
+    PUBLIC_SUPABASE_PUBLISHABLE_KEY: z.string().min(1),
     SUPABASE_SERVICE_ROLE_KEY: z.string().min(1),
 });
 

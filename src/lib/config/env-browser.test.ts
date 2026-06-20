@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 /**
  * Tests para src/lib/config/env-browser.ts
@@ -11,43 +11,47 @@ describe('env-browser', () => {
     });
 
     it('deberia exportar un objeto tipado cuando todas las vars estan presentes', async () => {
-        vi.stubEnv('SUPABASE_URL', 'https://test.supabase.co');
-        vi.stubEnv('SUPABASE_ANON_KEY', 'test-anon-key');
+        vi.stubEnv('PUBLIC_SUPABASE_URL', 'https://test.supabase.co');
+        vi.stubEnv('PUBLIC_SUPABASE_PUBLISHABLE_KEY', 'test-anon-key');
 
         const { envBrowser } = await import('./env-browser');
 
         expect(envBrowser).toEqual({
-            SUPABASE_URL: 'https://test.supabase.co',
-            SUPABASE_ANON_KEY: 'test-anon-key',
+            PUBLIC_SUPABASE_URL: 'https://test.supabase.co',
+            PUBLIC_SUPABASE_PUBLISHABLE_KEY: 'test-anon-key',
         });
     });
 
     it('deberia lanzar error con nombre de la clave cuando falta una var', async () => {
-        vi.stubEnv('SUPABASE_URL', 'https://test.supabase.co');
-        vi.stubEnv('SUPABASE_ANON_KEY', '');
-
-        await expect(async () => {
-            await import('./env-browser');
-        }).rejects.toThrow('Missing environment variables: SUPABASE_ANON_KEY');
-    });
-
-    it('deberia listar todas las claves faltantes en el error', async () => {
-        vi.stubEnv('SUPABASE_URL', '');
-        vi.stubEnv('SUPABASE_ANON_KEY', '');
+        vi.stubEnv('PUBLIC_SUPABASE_URL', 'https://test.supabase.co');
+        vi.stubEnv('PUBLIC_SUPABASE_PUBLISHABLE_KEY', '');
 
         await expect(async () => {
             await import('./env-browser');
         }).rejects.toThrow(
-            'Missing environment variables: SUPABASE_URL, SUPABASE_ANON_KEY'
+            'Missing environment variables: PUBLIC_SUPABASE_PUBLISHABLE_KEY'
         );
     });
 
-    it('deberia lanzar error si SUPABASE_URL no es una URL valida', async () => {
-        vi.stubEnv('SUPABASE_URL', 'not-a-url');
-        vi.stubEnv('SUPABASE_ANON_KEY', 'test-anon-key');
+    it('deberia listar todas las claves faltantes en el error', async () => {
+        vi.stubEnv('PUBLIC_SUPABASE_URL', '');
+        vi.stubEnv('PUBLIC_SUPABASE_PUBLISHABLE_KEY', '');
 
         await expect(async () => {
             await import('./env-browser');
-        }).rejects.toThrow('Invalid environment variables: SUPABASE_URL');
+        }).rejects.toThrow(
+            'Missing environment variables: PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_PUBLISHABLE_KEY'
+        );
+    });
+
+    it('deberia lanzar error si PUBLIC_SUPABASE_URL no es una URL valida', async () => {
+        vi.stubEnv('PUBLIC_SUPABASE_URL', 'not-a-url');
+        vi.stubEnv('PUBLIC_SUPABASE_PUBLISHABLE_KEY', 'test-anon-key');
+
+        await expect(async () => {
+            await import('./env-browser');
+        }).rejects.toThrow(
+            'Invalid environment variables: PUBLIC_SUPABASE_URL'
+        );
     });
 });

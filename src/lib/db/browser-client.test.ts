@@ -14,8 +14,8 @@ vi.mock('@supabase/supabase-js', () => ({
 // Mock del modulo env-browser
 vi.mock('@/lib/config/env-browser', () => ({
     envBrowser: {
-        SUPABASE_URL: 'https://test-project.supabase.co',
-        SUPABASE_ANON_KEY: 'test-anon-key',
+        PUBLIC_SUPABASE_URL: 'https://test-project.supabase.co',
+        PUBLIC_SUPABASE_PUBLISHABLE_KEY: 'test-anon-key',
     },
 }));
 

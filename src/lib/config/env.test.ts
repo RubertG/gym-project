@@ -17,26 +17,26 @@ describe('env config', () => {
     beforeEach(() => {
         vi.resetModules();
         // Limpiar process.env
-        delete process.env.SUPABASE_URL;
-        delete process.env.SUPABASE_ANON_KEY;
+        delete process.env.PUBLIC_SUPABASE_URL;
+        delete process.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY;
         delete process.env.SUPABASE_SERVICE_ROLE_KEY;
     });
 
     it('deberia exportar env valido cuando todas las variables estan presentes', async () => {
-        process.env.SUPABASE_URL = VALID_URL;
-        process.env.SUPABASE_ANON_KEY = VALID_ANON_KEY;
+        process.env.PUBLIC_SUPABASE_URL = VALID_URL;
+        process.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY = VALID_ANON_KEY;
         process.env.SUPABASE_SERVICE_ROLE_KEY = VALID_SERVICE_KEY;
 
         const { env } = await import('./env');
 
-        expect(env.SUPABASE_URL).toBe(VALID_URL);
-        expect(env.SUPABASE_ANON_KEY).toBe(VALID_ANON_KEY);
+        expect(env.PUBLIC_SUPABASE_URL).toBe(VALID_URL);
+        expect(env.PUBLIC_SUPABASE_PUBLISHABLE_KEY).toBe(VALID_ANON_KEY);
         expect(env.SUPABASE_SERVICE_ROLE_KEY).toBe(VALID_SERVICE_KEY);
     });
 
     it('deberia lanzar error con la clave faltante cuando falta una variable', async () => {
-        process.env.SUPABASE_URL = VALID_URL;
-        process.env.SUPABASE_ANON_KEY = VALID_ANON_KEY;
+        process.env.PUBLIC_SUPABASE_URL = VALID_URL;
+        process.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY = VALID_ANON_KEY;
         // SUPABASE_SERVICE_ROLE_KEY falta
 
         await expect(() => import('./env')).rejects.toThrow(
@@ -47,13 +47,13 @@ describe('env config', () => {
     it('deberia lanzar error con todas las claves faltantes cuando faltan varias', async () => {
         // Todas faltan
         await expect(() => import('./env')).rejects.toThrow(
-            'Missing environment variables: SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY'
+            'Missing environment variables: PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_PUBLISHABLE_KEY, SUPABASE_SERVICE_ROLE_KEY'
         );
     });
 
     it('deberia lanzar error cuando la URL no es valida', async () => {
-        process.env.SUPABASE_URL = 'not-a-valid-url';
-        process.env.SUPABASE_ANON_KEY = VALID_ANON_KEY;
+        process.env.PUBLIC_SUPABASE_URL = 'not-a-valid-url';
+        process.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY = VALID_ANON_KEY;
         process.env.SUPABASE_SERVICE_ROLE_KEY = VALID_SERVICE_KEY;
 
         await expect(() => import('./env')).rejects.toThrow(

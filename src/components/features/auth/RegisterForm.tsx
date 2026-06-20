@@ -1,6 +1,6 @@
 /**
- * RegisterForm — Isla React para registro de usuarios.
- * Validacion client-side (password match, min length), submit via fetch a /api/auth/register.
+ * RegisterForm — React island for user registration.
+ * Client-side validation (password match, min length), submit via fetch to /api/auth/register.
  */
 
 import React, { useState } from 'react';
@@ -22,17 +22,18 @@ export const RegisterForm: React.FC = () => {
         const newErrors: Record<string, string> = {};
 
         if (!email.trim()) {
-            newErrors.email = 'Email is required';
+            newErrors.email = 'El email es requerido';
         }
 
         if (!password) {
-            newErrors.password = 'Password is required';
+            newErrors.password = 'La contraseña es requerida';
         } else if (password.length < 8) {
-            newErrors.password = 'Password must be at least 8 characters';
+            newErrors.password =
+                'La contraseña debe tener al menos 8 caracteres';
         }
 
         if (password !== confirmPassword) {
-            newErrors.confirmPassword = 'Passwords do not match';
+            newErrors.confirmPassword = 'Las contraseñas no coinciden';
         }
 
         setErrors(newErrors);
@@ -72,7 +73,7 @@ export const RegisterForm: React.FC = () => {
                 name="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="your@email.com"
+                placeholder="tu@email.com"
                 autoComplete="email"
                 error={errors.email}
                 surface="dark"
@@ -80,18 +81,18 @@ export const RegisterForm: React.FC = () => {
             />
 
             <Input
-                label="Username"
+                label="Usuario"
                 type="text"
                 name="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="optional"
+                placeholder="opcional"
                 autoComplete="username"
                 surface="dark"
             />
 
             <Input
-                label="Password"
+                label="Contraseña"
                 type="password"
                 name="password"
                 value={password}
@@ -104,7 +105,7 @@ export const RegisterForm: React.FC = () => {
             />
 
             <Input
-                label="Confirm Password"
+                label="Confirmar Contraseña"
                 type="password"
                 name="confirmPassword"
                 value={confirmPassword}
@@ -131,16 +132,16 @@ export const RegisterForm: React.FC = () => {
                 disabled={submitting}
                 className="w-full rounded-none"
             >
-                Create Account
+                Crear Cuenta
             </Button>
 
             <p className="text-word-400 text-center text-sm">
-                Already have an account?{' '}
+                ¿Ya tienes cuenta?{' '}
                 <a
                     href="/login"
                     className="text-primary-300 hover:text-primary-200 font-bold transition-colors"
                 >
-                    Sign In
+                    Inicia Sesión
                 </a>
             </p>
         </form>
