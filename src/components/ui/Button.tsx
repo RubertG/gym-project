@@ -1,8 +1,17 @@
-import React from 'react';
-import { Loader2 } from 'lucide-react';
+import React from 'react'
+import { Loader2 } from 'lucide-react'
 
-export interface ButtonProps extends React.HTMLAttributes<HTMLElement> {
-    variant?: 'primary' | 'secondary' | 'ghost' | 'danger';
+export interface ButtonProps extends Omit<
+    React.HTMLAttributes<HTMLElement>,
+    'type'
+> {
+    variant?:
+        | 'primary'
+        | 'secondary'
+        | 'ghost'
+        | 'ghost-primary'
+        | 'ghost-danger'
+        | 'danger';
     size?: 'sm' | 'md' | 'lg';
     surface?: 'dark' | 'light';
     loading?: boolean;
@@ -11,6 +20,7 @@ export interface ButtonProps extends React.HTMLAttributes<HTMLElement> {
     glow?: boolean;
     href?: string;
     disabled?: boolean;
+    type?: 'button' | 'submit' | 'reset';
 }
 
 const variantStyles = {
@@ -20,6 +30,10 @@ const variantStyles = {
         secondary:
             'bg-transparent text-secondary-200 border-2 border-secondary-400 hover:bg-secondary-400 hover:text-black',
         ghost: 'bg-transparent text-word-200 border-2 border-transparent hover:border-secondary-400 hover:text-white',
+        'ghost-primary':
+            'bg-transparent text-word-300 border-2 border-transparent hover:text-primary-300 hover:border-primary-400/30',
+        'ghost-danger':
+            'bg-transparent text-word-300 border-2 border-transparent hover:text-red-500 hover:border-red-500/30',
         danger: 'bg-red-600 text-white border-2 border-red-600 hover:bg-red-500 hover:border-red-500',
     },
     light: {
@@ -28,15 +42,19 @@ const variantStyles = {
         secondary:
             'bg-transparent text-secondary-800 border-2 border-secondary-700 hover:bg-secondary-800 hover:text-white',
         ghost: 'bg-transparent text-word-400 border-2 border-transparent hover:border-secondary-700 hover:text-background-900',
+        'ghost-primary':
+            'bg-transparent text-word-400 border-2 border-transparent hover:text-primary-600 hover:border-primary-600/30',
+        'ghost-danger':
+            'bg-transparent text-word-400 border-2 border-transparent hover:text-red-600 hover:border-red-600/30',
         danger: 'bg-transparent text-red-600 border-2 border-red-600 hover:bg-red-600 hover:text-white',
     },
-};
+}
 
 const sizeStyles = {
     sm: 'px-3 py-1.5 text-xs',
     md: 'px-4 py-2.5 text-sm',
     lg: 'px-6 py-3 text-base',
-};
+}
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     (
@@ -52,6 +70,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             children,
             className = '',
             disabled,
+            type = 'button',
             ...props
         },
         ref
@@ -59,7 +78,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         const ringOffset =
             surface === 'light'
                 ? 'focus:ring-offset-white'
-                : 'focus:ring-offset-background-900';
+                : 'focus:ring-offset-background-900'
 
         const baseClasses = [
             'inline-flex items-center justify-center gap-2 font-bold tracking-wide cursor-pointer',
@@ -74,7 +93,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             className,
         ]
             .filter(Boolean)
-            .join(' ');
+            .join(' ')
 
         const content = (
             <>
@@ -94,7 +113,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                     </span>
                 )}
             </>
-        );
+        )
 
         if (href) {
             return (
@@ -106,12 +125,13 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                 >
                     {content}
                 </a>
-            );
+            )
         }
 
         return (
             <button
                 ref={ref}
+                type={type}
                 className={baseClasses}
                 disabled={disabled || loading}
                 aria-busy={loading}
@@ -119,9 +139,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             >
                 {content}
             </button>
-        );
+        )
     }
-);
+)
 
-Button.displayName = 'Button';
-export default Button;
+Button.displayName = 'Button'
+export default Button

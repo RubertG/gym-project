@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 export interface SwitchProps extends Omit<
     React.InputHTMLAttributes<HTMLInputElement>,
@@ -14,7 +14,7 @@ export interface SwitchProps extends Omit<
 const sizeMap = {
     sm: { track: 'w-9 h-5', thumb: 'h-3 w-3', translate: 'translate-x-4' },
     md: { track: 'w-11 h-6', thumb: 'h-4 w-4', translate: 'translate-x-5' },
-};
+}
 
 export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
     (
@@ -29,10 +29,10 @@ export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
         },
         ref
     ) => {
-        const { track, thumb, translate } = sizeMap[size];
+        const { track, thumb, translate } = sizeMap[size]
 
-        const isControlled = checked !== undefined;
-        const isChecked = isControlled ? checked : defaultChecked;
+        const isControlled = checked !== undefined
+        const isChecked = isControlled ? checked : defaultChecked
 
         return (
             <label
@@ -60,9 +60,9 @@ export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
                     />
                 </div>
             </label>
-        );
+        )
     }
-);
+)
 
-Switch.displayName = 'Switch';
-export default Switch;
+Switch.displayName = 'Switch'
+export default Switch

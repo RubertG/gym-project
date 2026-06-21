@@ -1,0 +1,17 @@
+---
+/**
+ * DashboardMobileHeader — Container Astro del header mobile del dashboard.
+ * El fondo/borde/altura viven aqui para evitar perdida de estilos en transiciones.
+ */
+
+import { DashboardMobileNav } from './DashboardMobileNav';
+
+const user = Astro.locals.user;
+const profile = Astro.locals.profile;
+---
+
+<header
+    class="bg-background-800 flex h-16 items-center justify-between border-b-2 border-neutral-800 px-4 md:hidden"
+>
+    <DashboardMobileNav user={user} profile={profile} client:load />
+</header>

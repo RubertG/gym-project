@@ -3,77 +3,100 @@
  * Lógica de negocio para gestión de perfiles de usuario.
  */
 
-import { getServerClient } from '@/lib/db/client';
-import * as profileRepo from '@/lib/repositories/profileRepository';
-import { ValidationError, NotFoundError } from '@/lib/utils/errors';
-import type { Profile } from '@/lib/models';
+import { getServerClient } from '@/lib/db/client'
+import * as profileRepo from '@/lib/repositories/profileRepository'
+import { ValidationError, NotFoundError } from '@/lib/utils/errors'
+import type { Profile } from '@/lib/models'
+import type { DbClient } from '@/lib/db/types'
 
-export async function getProfile(userId: string): Promise<Profile | null> {
-    const db = getServerClient();
-    const profile = await profileRepo.findProfileByUserId(db, userId);
+export async function getProfile(
+    userId: string,
+    db?: DbClient
+): Promise<Profile | null> {
+    const client = db || getServerClient()
+    const profile = await profileRepo.findProfileByUserId(client, userId)
 
-    return profile;
+    return profile
 }
 
 export async function createProfile(
-    userId: string,
-    username?: string,
+    data: { userId: string; username?: string },
+    db?: DbClient
 ): Promise<Profile> {
-    const db = getServerClient();
+    const client = db || getServerClient()
+    const { userId, username } = data
 
     if (username) {
-        const normalized = username.trim().toLowerCase();
+        const normalized = username.trim().toLowerCase()
 
         if (normalized.length < 3) {
-            throw new ValidationError('El nombre de usuario debe tener al menos 3 caracteres');
+            throw new ValidationError(
+                'El nombre de usuario debe tener al menos 3 caracteres'
+            )
         }
-        const existing = await profileRepo.findProfileByUsername(db, normalized);
+        const existing = await profileRepo.findProfileByUsername(
+            client,
+            normalized
+        )
 
         if (existing) {
-            throw new ValidationError('El nombre de usuario ya está en uso');
+            throw new ValidationError('El nombre de usuario ya está en uso')
         }
     }
 
-    return profileRepo.createProfile(db, userId, username?.trim().toLowerCase());
+    return profileRepo.createProfile(
+        client,
+        userId,
+        username?.trim().toLowerCase()
+    )
 }
 
 export async function updateProfile(
     userId: string,
     data: Partial<Pick<Profile, 'username' | 'avatarUrl'>>,
+    db?: DbClient
 ): Promise<Profile> {
-    const db = getServerClient();
+    const client = db || getServerClient()
 
-    const current = await profileRepo.findProfileByUserId(db, userId);
+    const current = await profileRepo.findProfileByUserId(client, userId)
 
     if (!current) {
-        throw new NotFoundError('Perfil');
+        throw new NotFoundError('Perfil')
     }
 
     if (data.username) {
-        const normalized = data.username.trim().toLowerCase();
+        const normalized = data.username.trim().toLowerCase()
 
         if (normalized.length < 3) {
-            throw new ValidationError('El nombre de usuario debe tener al menos 3 caracteres');
+            throw new ValidationError(
+                'El nombre de usuario debe tener al menos 3 caracteres'
+            )
         }
-        const existing = await profileRepo.findProfileByUsername(db, normalized);
+        const existing = await profileRepo.findProfileByUsername(
+            client,
+            normalized
+        )
 
-        if (existing && existing.userId !== userId) {
-            throw new ValidationError('El nombre de usuario ya está en uso');
+        if (existing && existing.id !== userId) {
+            throw new ValidationError('El nombre de usuario ya está en uso')
         }
-        data.username = normalized;
+        data.username = normalized
     }
 
-    return profileRepo.updateProfile(db, userId, data);
+    return profileRepo.updateProfile(client, userId, data)
 }
 
-export async function softDeleteProfile(userId: string): Promise<void> {
-    const db = getServerClient();
+export async function softDeleteProfile(
+    userId: string,
+    db?: DbClient
+): Promise<void> {
+    const client = db || getServerClient()
 
-    const current = await profileRepo.findProfileByUserId(db, userId);
+    const current = await profileRepo.findProfileByUserId(client, userId)
 
     if (!current) {
-        throw new NotFoundError('Perfil');
+        throw new NotFoundError('Perfil')
     }
 
-    await profileRepo.softDeleteProfile(db, userId);
+    await profileRepo.softDeleteProfile(client, userId)
 }

@@ -1,0 +1,21 @@
+---
+/**
+ * Pagina de registro.
+ * Si el usuario ya esta autenticado, redirige a /dashboard.
+ */
+
+import AuthLayout from '@/components/layout/AuthLayout.astro';
+import { RegisterForm } from '@/components/features/auth/RegisterForm';
+
+// Redirigir usuarios autenticados al dashboard
+if (Astro.locals.user) {
+    return Astro.redirect('/dashboard');
+}
+---
+
+<AuthLayout title="Register — IRON TRACK">
+    <h2 class="font-display text-word-100 mb-6 text-xl font-bold tracking-wide">
+        CREATE ACCOUNT
+    </h2>
+    <RegisterForm client:load />
+</AuthLayout>

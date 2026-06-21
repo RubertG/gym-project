@@ -1,6 +1,6 @@
-import React, { useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X } from 'lucide-react';
+import React, { useEffect, useCallback } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { X } from 'lucide-react'
 
 export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
     isOpen: boolean;
@@ -15,7 +15,7 @@ const sizeMap = {
     sm: 'max-w-sm',
     md: 'max-w-lg',
     lg: 'max-w-2xl',
-};
+}
 
 export const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
     (
@@ -33,30 +33,30 @@ export const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
     ) => {
         const handleEscape = useCallback(
             (e: KeyboardEvent) => {
-                if (e.key === 'Escape') onClose();
+                if (e.key === 'Escape') onClose()
             },
             [onClose]
-        );
+        )
 
         useEffect(() => {
             if (isOpen) {
-                document.addEventListener('keydown', handleEscape);
+                document.addEventListener('keydown', handleEscape)
             }
 
             return () => {
-                document.removeEventListener('keydown', handleEscape);
-            };
-        }, [isOpen, handleEscape]);
+                document.removeEventListener('keydown', handleEscape)
+            }
+        }, [isOpen, handleEscape])
 
         useEffect(() => {
             if (isOpen) {
-                document.body.style.overflow = 'hidden';
+                document.body.style.overflow = 'hidden'
             }
-        }, [isOpen]);
+        }, [isOpen])
 
         const handleExitComplete = useCallback(() => {
-            document.body.style.overflow = '';
-        }, []);
+            document.body.style.overflow = ''
+        }, [])
 
         return (
             <AnimatePresence onExitComplete={handleExitComplete}>
@@ -128,9 +128,9 @@ export const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
                     </div>
                 )}
             </AnimatePresence>
-        );
+        )
     }
-);
+)
 
-Modal.displayName = 'Modal';
-export default Modal;
+Modal.displayName = 'Modal'
+export default Modal

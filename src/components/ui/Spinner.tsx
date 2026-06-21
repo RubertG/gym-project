@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 export interface SpinnerProps extends React.HTMLAttributes<SVGSVGElement> {
     size?: 'sm' | 'md' | 'lg';
@@ -9,20 +9,20 @@ const sizeMap = {
     sm: { width: 16, strokeWidth: 2 },
     md: { width: 24, strokeWidth: 2.5 },
     lg: { width: 32, strokeWidth: 3 },
-};
+}
 
 const strokeColor = {
     primary: '#CCFF00',
     secondary: '#c8c6c5',
-};
+}
 
 export const Spinner = React.forwardRef<SVGSVGElement, SpinnerProps>(
     ({ size = 'md', variant = 'primary', className = '', ...props }, ref) => {
-        const { width, strokeWidth } = sizeMap[size];
-        const color = strokeColor[variant];
-        const radius = (width - strokeWidth) / 2;
-        const circumference = 2 * Math.PI * radius;
-        const dashArray = `${circumference * 0.75} ${circumference * 0.25}`;
+        const { width, strokeWidth } = sizeMap[size]
+        const color = strokeColor[variant]
+        const radius = (width - strokeWidth) / 2
+        const circumference = 2 * Math.PI * radius
+        const dashArray = `${circumference * 0.75} ${circumference * 0.25}`
 
         return (
             <svg
@@ -55,9 +55,9 @@ export const Spinner = React.forwardRef<SVGSVGElement, SpinnerProps>(
                     strokeDasharray={dashArray}
                 />
             </svg>
-        );
+        )
     }
-);
+)
 
-Spinner.displayName = 'Spinner';
-export default Spinner;
+Spinner.displayName = 'Spinner'
+export default Spinner

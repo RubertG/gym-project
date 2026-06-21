@@ -18,8 +18,7 @@ extension if not exists "pgcrypto" with schema extensions;
 -- 1.1 profiles (complemento de auth.users)
 -- ------------------------------------------------------------
 create table if not exists public.profiles (
-    id uuid primary key default gen_random_uuid(),
-    user_id uuid not null unique references auth.users(id) on delete cascade,
+    id uuid primary key references auth.users(id) on delete cascade,
     username text,
     avatar_url text,
     role text not null default 'user' check (role in ('user', 'admin')),
@@ -168,6 +167,7 @@ create index if not exists idx_user_active_routine_log_current on public.user_ac
 create index if not exists idx_routine_likes_routine_id on public.routine_likes(routine_id);
 create index if not exists idx_routine_likes_user_id on public.routine_likes(user_id);
 create index if not exists idx_workout_sessions_user_date on public.workout_sessions(user_id, session_date);
+create index if not exists idx_exercises_category on public.exercises(category) where deleted_at is null;
 
 -- ============================================================
 -- 3. FUNCTIONS (HELPERS)
@@ -190,20 +190,16 @@ $$ language plpgsql;
 create or replace function public.create_profile_after_user_insert()
 returns trigger as $$
 begin
-    insert into public.profiles (user_id, role)
+    insert into public.profiles (id, role)
     values (new.id, 'user');
     return new;
 end;
 $$ language plpgsql security definer;
 
--- Nota: este trigger se debe crear en el schema auth
--- En Supabase, los triggers sobre auth.users deben crearse con cuidado
--- usando la consola SQL o la CLI. Se deja aquí documentado.
--- Si se ejecuta con privilegios suficientes:
--- create trigger trigger_create_profile_after_user_insert
---   after insert on auth.users
---   for each row
---   execute function public.create_profile_after_user_insert();
+create trigger trigger_create_profile_after_user_insert
+  after insert on auth.users
+  for each row
+  execute function public.create_profile_after_user_insert();
 
 -- 4.2 Actualizar likes_count en routines
 create or replace function public.update_routine_likes_count()
@@ -262,6 +258,26 @@ create trigger trigger_close_previous_active_routine
     for each row
     when (new.is_active = true)
     execute function public.close_previous_active_routine();
+
+-- 4.6 Cerrar log de rutina activa al desactivar
+create or replace function public.deactivate_routine_log()
+returns trigger as $$
+begin
+    if new.is_active = false and old.is_active = true then
+        update public.user_active_routine_log
+        set deactivated_at = now()
+        where user_id = new.user_id
+          and deactivated_at is null;
+    end if;
+    return new;
+end;
+$$ language plpgsql;
+
+create trigger trigger_deactivate_routine_log
+    after update of is_active on public.routines
+    for each row
+    when (new.is_active = false and old.is_active = true)
+    execute function public.deactivate_routine_log();
 
 -- 4.5 Soft-delete en cascada para routines
 create or replace function public.cascade_soft_delete_routine()
@@ -334,12 +350,12 @@ alter table public.routine_likes enable row level security;
 create policy "profiles_select_own"
     on public.profiles
     for select
-    using (auth.uid() = user_id or (select role from public.profiles where user_id = auth.uid()) = 'admin');
+    using ((id = auth.uid() or exists (select 1 from public.profiles where id = auth.uid() and role = 'admin' and deleted_at is null)) and deleted_at is null);
 
 create policy "profiles_update_own"
     on public.profiles
     for update
-    using (auth.uid() = user_id);
+    using ((id = auth.uid()) and deleted_at is null);
 
 -- ------------------------------------------------------------
 -- 5.2 exercises
@@ -348,7 +364,7 @@ create policy "profiles_update_own"
 create policy "exercises_select_approved"
     on public.exercises
     for select
-    using (status = 'approved' or created_by = auth.uid() or (select role from public.profiles where user_id = auth.uid()) = 'admin');
+    using ((status = 'approved' or created_by = auth.uid() or exists (select 1 from public.profiles where id = auth.uid() and role = 'admin' and deleted_at is null)) and deleted_at is null);
 
 create policy "exercises_insert_own"
     on public.exercises
@@ -358,7 +374,7 @@ create policy "exercises_insert_own"
 create policy "exercises_update_own_or_admin"
     on public.exercises
     for update
-    using (created_by = auth.uid() or (select role from public.profiles where user_id = auth.uid()) = 'admin');
+    using ((created_by = auth.uid() or exists (select 1 from public.profiles where id = auth.uid() and role = 'admin' and deleted_at is null)) and deleted_at is null);
 
 -- ------------------------------------------------------------
 -- 5.3 routines
@@ -367,7 +383,7 @@ create policy "exercises_update_own_or_admin"
 create policy "routines_select_own_or_public"
     on public.routines
     for select
-    using (user_id = auth.uid() or is_public = true);
+    using ((user_id = auth.uid() or is_public = true) and deleted_at is null);
 
 create policy "routines_insert_own"
     on public.routines
@@ -377,12 +393,12 @@ create policy "routines_insert_own"
 create policy "routines_update_own"
     on public.routines
     for update
-    using (user_id = auth.uid());
+    using ((user_id = auth.uid()) and deleted_at is null);
 
 create policy "routines_delete_own"
     on public.routines
     for delete
-    using (user_id = auth.uid());
+    using ((user_id = auth.uid()) and deleted_at is null);
 
 -- ------------------------------------------------------------
 -- 5.4 routine_days
@@ -395,7 +411,9 @@ create policy "routine_days_select_via_routine"
             select 1 from public.routines r
             where r.id = routine_id
             and (r.user_id = auth.uid() or r.is_public = true)
+            and r.deleted_at is null
         )
+        and deleted_at is null
     );
 
 create policy "routine_days_insert_own"
@@ -406,6 +424,7 @@ create policy "routine_days_insert_own"
             select 1 from public.routines r
             where r.id = routine_id
             and r.user_id = auth.uid()
+            and r.deleted_at is null
         )
     );
 
@@ -417,7 +436,9 @@ create policy "routine_days_update_own"
             select 1 from public.routines r
             where r.id = routine_id
             and r.user_id = auth.uid()
+            and r.deleted_at is null
         )
+        and deleted_at is null
     );
 
 create policy "routine_days_delete_own"
@@ -428,7 +449,9 @@ create policy "routine_days_delete_own"
             select 1 from public.routines r
             where r.id = routine_id
             and r.user_id = auth.uid()
+            and r.deleted_at is null
         )
+        and deleted_at is null
     );
 
 -- ------------------------------------------------------------
@@ -443,7 +466,10 @@ create policy "routine_exercises_select_via_routine"
             join public.routines r on r.id = rd.routine_id
             where rd.id = routine_day_id
             and (r.user_id = auth.uid() or r.is_public = true)
+            and r.deleted_at is null
+            and rd.deleted_at is null
         )
+        and deleted_at is null
     );
 
 create policy "routine_exercises_insert_own"
@@ -455,6 +481,8 @@ create policy "routine_exercises_insert_own"
             join public.routines r on r.id = rd.routine_id
             where rd.id = routine_day_id
             and r.user_id = auth.uid()
+            and r.deleted_at is null
+            and rd.deleted_at is null
         )
     );
 
@@ -467,7 +495,10 @@ create policy "routine_exercises_update_own"
             join public.routines r on r.id = rd.routine_id
             where rd.id = routine_day_id
             and r.user_id = auth.uid()
+            and r.deleted_at is null
+            and rd.deleted_at is null
         )
+        and deleted_at is null
     );
 
 create policy "routine_exercises_delete_own"
@@ -479,7 +510,10 @@ create policy "routine_exercises_delete_own"
             join public.routines r on r.id = rd.routine_id
             where rd.id = routine_day_id
             and r.user_id = auth.uid()
+            and r.deleted_at is null
+            and rd.deleted_at is null
         )
+        and deleted_at is null
     );
 
 -- ------------------------------------------------------------
@@ -488,7 +522,7 @@ create policy "routine_exercises_delete_own"
 create policy "user_active_routine_log_select_own"
     on public.user_active_routine_log
     for select
-    using (user_id = auth.uid());
+    using ((user_id = auth.uid()) and deleted_at is null);
 
 create policy "user_active_routine_log_insert_own"
     on public.user_active_routine_log
@@ -498,7 +532,7 @@ create policy "user_active_routine_log_insert_own"
 create policy "user_active_routine_log_update_own"
     on public.user_active_routine_log
     for update
-    using (user_id = auth.uid());
+    using ((user_id = auth.uid()) and deleted_at is null);
 
 -- ------------------------------------------------------------
 -- 5.7 workout_sessions
@@ -506,7 +540,7 @@ create policy "user_active_routine_log_update_own"
 create policy "workout_sessions_select_own"
     on public.workout_sessions
     for select
-    using (user_id = auth.uid());
+    using ((user_id = auth.uid()) and deleted_at is null);
 
 create policy "workout_sessions_insert_own"
     on public.workout_sessions
@@ -516,12 +550,12 @@ create policy "workout_sessions_insert_own"
 create policy "workout_sessions_update_own"
     on public.workout_sessions
     for update
-    using (user_id = auth.uid());
+    using ((user_id = auth.uid()) and deleted_at is null);
 
 create policy "workout_sessions_delete_own"
     on public.workout_sessions
     for delete
-    using (user_id = auth.uid());
+    using ((user_id = auth.uid()) and deleted_at is null);
 
 -- ------------------------------------------------------------
 -- 5.8 workout_sets
@@ -534,7 +568,9 @@ create policy "workout_sets_select_own"
             select 1 from public.workout_sessions ws
             where ws.id = workout_session_id
             and ws.user_id = auth.uid()
+            and ws.deleted_at is null
         )
+        and deleted_at is null
     );
 
 create policy "workout_sets_insert_own"
@@ -545,6 +581,7 @@ create policy "workout_sets_insert_own"
             select 1 from public.workout_sessions ws
             where ws.id = workout_session_id
             and ws.user_id = auth.uid()
+            and ws.deleted_at is null
         )
     );
 
@@ -556,7 +593,9 @@ create policy "workout_sets_update_own"
             select 1 from public.workout_sessions ws
             where ws.id = workout_session_id
             and ws.user_id = auth.uid()
+            and ws.deleted_at is null
         )
+        and deleted_at is null
     );
 
 create policy "workout_sets_delete_own"
@@ -567,7 +606,9 @@ create policy "workout_sets_delete_own"
             select 1 from public.workout_sessions ws
             where ws.id = workout_session_id
             and ws.user_id = auth.uid()
+            and ws.deleted_at is null
         )
+        and deleted_at is null
     );
 
 -- ------------------------------------------------------------
@@ -576,7 +617,7 @@ create policy "workout_sets_delete_own"
 create policy "routine_likes_select_public"
     on public.routine_likes
     for select
-    using (true);
+    using (deleted_at is null);
 
 create policy "routine_likes_insert_own"
     on public.routine_likes
@@ -586,7 +627,7 @@ create policy "routine_likes_insert_own"
 create policy "routine_likes_delete_own"
     on public.routine_likes
     for delete
-    using (user_id = auth.uid());
+    using ((user_id = auth.uid()) and deleted_at is null);
 
 -- ============================================================
 -- FIN DEL SCHEMA

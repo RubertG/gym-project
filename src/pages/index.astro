@@ -2,10 +2,12 @@
 import Layout from '@/layouts/Layout.astro';
 import Card from '@/components/ui/Card.tsx';
 import { Button } from '@/components';
+import LandingHeader from '@/components/features/landing/LandingHeader.astro';
 ---
 
 <Layout title="IRON TRACK - Voltage Industrial">
-    <main class="min-h-screen">
+    <LandingHeader />
+    <main class="min-h-screen pt-16">
         <!-- Hero Section - Dark -->
         <section
             class="animate-fade-in-up bg-background-900 flex min-h-screen flex-col items-center justify-center p-4 text-center md:p-8"

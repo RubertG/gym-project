@@ -1,6 +1,6 @@
-import React from 'react';
-import { AnimatePresence } from 'framer-motion';
-import { Toast, type ToastType, type ToastPosition } from './Toast';
+import React from 'react'
+import { AnimatePresence } from 'framer-motion'
+import { Toast, type ToastType, type ToastPosition } from './Toast'
 
 export interface ToastItem {
     id: string;
@@ -20,17 +20,17 @@ const positionMap: Record<ToastPosition, string> = {
     'bottom-right': 'toast-container bottom-right flex-col-reverse',
     'top-left': 'toast-container top-left flex-col',
     'bottom-left': 'toast-container bottom-left flex-col-reverse',
-};
+}
 
 export function ToastContainer({ toasts, onRemove }: ToastContainerProps) {
     const grouped = toasts.reduce<Record<ToastPosition, ToastItem[]>>(
         (acc, toast) => {
             if (!acc[toast.position]) {
-                acc[toast.position] = [];
+                acc[toast.position] = []
             }
-            acc[toast.position].push(toast);
+            acc[toast.position].push(toast)
 
-            return acc;
+            return acc
         },
         {
             'top-right': [],
@@ -38,14 +38,14 @@ export function ToastContainer({ toasts, onRemove }: ToastContainerProps) {
             'top-left': [],
             'bottom-left': [],
         }
-    );
+    )
 
     return (
         <>
             {(Object.keys(grouped) as ToastPosition[]).map((position) => {
-                const positionToasts = grouped[position];
+                const positionToasts = grouped[position]
 
-                if (positionToasts.length === 0) return null;
+                if (positionToasts.length === 0) return null
 
                 return (
                     <div key={position} className={positionMap[position]}>
@@ -63,14 +63,14 @@ export function ToastContainer({ toasts, onRemove }: ToastContainerProps) {
                             ))}
                         </AnimatePresence>
                     </div>
-                );
+                )
             })}
         </>
-    );
+    )
 }
 
 export function useToast() {
-    const [toasts, setToasts] = React.useState<ToastItem[]>([]);
+    const [toasts, setToasts] = React.useState<ToastItem[]>([])
 
     const addToast = React.useCallback(
         (
@@ -81,24 +81,24 @@ export function useToast() {
         ) => {
             const id = crypto.randomUUID
                 ? crypto.randomUUID()
-                : `${Date.now()}-${Math.random()}`;
+                : `${Date.now()}-${Math.random()}`
             const newToast: ToastItem = {
                 id,
                 message,
                 type,
                 position,
                 duration,
-            };
-            setToasts((prev) => [...prev, newToast]);
+            }
+            setToasts((prev) => [...prev, newToast])
         },
         []
-    );
+    )
 
     const removeToast = React.useCallback((id: string) => {
-        setToasts((prev) => prev.filter((t) => t.id !== id));
-    }, []);
+        setToasts((prev) => prev.filter((t) => t.id !== id))
+    }, [])
 
-    return { toasts, addToast, removeToast };
+    return { toasts, addToast, removeToast }
 }
 
-export default ToastContainer;
+export default ToastContainer

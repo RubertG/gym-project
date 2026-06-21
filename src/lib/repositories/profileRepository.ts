@@ -3,9 +3,9 @@
  * Responsabilidad: abstraer todo el acceso a datos de la tabla profiles.
  */
 
-import type { DbClient } from '@/lib/db/types';
-import type { Profile } from '@/lib/models';
-import { AppError, NotFoundError } from '@/lib/utils/errors';
+import type { DbClient } from '@/lib/db/types'
+import type { Profile } from '@/lib/models'
+import { AppError, NotFoundError } from '@/lib/utils/errors'
 
 export async function findProfileByUserId(
     db: DbClient,
@@ -14,11 +14,11 @@ export async function findProfileByUserId(
     const { data, error } = await db
         .from<Profile>('profiles')
         .select('*')
-        .eq('user_id', userId)
-        .maybeSingle();
+        .eq('id', userId)
+        .maybeSingle()
 
-    if (error) throw new AppError(error.message, 500);
-    return data ?? null;
+    if (error) throw new AppError(error.message, 500)
+    return data ?? null
 }
 
 export async function findProfileByUsername(
@@ -29,10 +29,10 @@ export async function findProfileByUsername(
         .from<Profile>('profiles')
         .select('*')
         .ilike('username', username)
-        .maybeSingle();
+        .maybeSingle()
 
-    if (error) throw new AppError(error.message, 500);
-    return data ?? null;
+    if (error) throw new AppError(error.message, 500)
+    return data ?? null
 }
 
 export async function createProfile(
@@ -42,13 +42,13 @@ export async function createProfile(
 ): Promise<Profile> {
     const { data, error } = await db
         .from<Profile>('profiles')
-        .insert({ user_id: userId, username: username ?? null })
+        .insert({ id: userId, username: username ?? null })
         .select()
-        .single();
+        .single()
 
     if (error || !data)
-        throw new AppError(error?.message ?? 'Error al crear perfil', 500);
-    return data;
+        throw new AppError(error?.message ?? 'Error al crear perfil', 500)
+    return data
 }
 
 export async function updateProfile(
@@ -56,20 +56,20 @@ export async function updateProfile(
     userId: string,
     payload: Partial<Pick<Profile, 'username' | 'avatarUrl'>>
 ): Promise<Profile> {
-    const mapped: Record<string, unknown> = {};
+    const mapped: Record<string, unknown> = {}
 
-    if (payload.username !== undefined) mapped.username = payload.username;
-    if (payload.avatarUrl !== undefined) mapped.avatar_url = payload.avatarUrl;
+    if (payload.username !== undefined) mapped.username = payload.username
+    if (payload.avatarUrl !== undefined) mapped.avatar_url = payload.avatarUrl
 
     const { data, error } = await db
         .from<Profile>('profiles')
         .update(mapped)
-        .eq('user_id', userId)
+        .eq('id', userId)
         .select()
-        .single();
+        .single()
 
-    if (error || !data) throw new NotFoundError('Perfil');
-    return data;
+    if (error || !data) throw new NotFoundError('Perfil')
+    return data
 }
 
 export async function softDeleteProfile(
@@ -79,7 +79,7 @@ export async function softDeleteProfile(
     const { error } = await db
         .from<Profile>('profiles')
         .update({ deleted_at: new Date().toISOString() })
-        .eq('user_id', userId);
+        .eq('id', userId)
 
-    if (error) throw new AppError(error.message, 500);
+    if (error) throw new AppError(error.message, 500)
 }

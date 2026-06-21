@@ -1,0 +1,102 @@
+---
+/**
+ * Sidebar — Navegacion lateral del dashboard.
+ * Links: Dashboard, Profile.
+ * Desktop: siempre visible. Mobile: overlay con transicion CSS.
+ */
+
+interface Props {
+    currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+
+const navLinks = [
+    { href: '/dashboard', label: 'Dashboard', icon: 'grid' },
+    { href: '/dashboard/profile', label: 'Profile', icon: 'user' },
+];
+
+function isActive(href: string, current: string): boolean {
+    if (href === '/dashboard') {
+        return current === '/dashboard' || current === '/dashboard/';
+    }
+    return current.startsWith(href);
+}
+---
+
+<aside
+    id="sidebar"
+    class="bg-background-800 fixed top-0 left-0 z-40 flex h-screen w-64 -translate-x-full flex-col border-r-2 border-neutral-800 transition-transform duration-300 ease-in-out md:static md:z-auto md:translate-x-0"
+>
+    <!-- Logo -->
+    <div class="flex h-16 items-center border-b-2 border-neutral-800 px-6">
+        <a href="/" class="font-display text-xl font-bold tracking-tight">
+            <span class="text-primary-300">IRON</span>
+            <span class="text-word-100"> TRACK</span>
+        </a>
+    </div>
+
+    <!-- Navigation links -->
+    <nav class="flex flex-1 flex-col gap-1 px-3 py-6">
+        {
+            navLinks.map((link) => {
+                const active = isActive(link.href, currentPath);
+
+                return (
+                    <a
+                        href={link.href}
+                        class={`flex items-center gap-3 rounded-none px-4 py-3 text-sm font-bold tracking-wide transition-colors duration-150 ${
+                            active
+                                ? 'text-primary-300 bg-primary-400/10 border-primary-300 border-l-2'
+                                : 'hover:text-word-200 hover:bg-background-700 text-neutral-400'
+                        }`}
+                    >
+                        {/* Icono Dashboard */}
+                        {link.icon === 'grid' && (
+                            <svg
+                                class="h-5 w-5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="square"
+                                    stroke-width="2"
+                                    d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"
+                                />
+                            </svg>
+                        )}
+                        {/* Icono Profile */}
+                        {link.icon === 'user' && (
+                            <svg
+                                class="h-5 w-5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="square"
+                                    stroke-width="2"
+                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                />
+                            </svg>
+                        )}
+                        {link.label}
+                    </a>
+                );
+            })
+        }
+    </nav>
+
+    <!-- Footer -->
+    <div class="border-t-2 border-neutral-800 p-4">
+        <p class="text-word-400 font-mono text-xs tracking-wider">v0.1.0</p>
+    </div>
+</aside>
+
+<!-- Overlay para mobile -->
+<div
+    id="sidebar-overlay"
+    class="fixed inset-0 z-30 hidden bg-black/60 md:hidden"
+>
+</div>

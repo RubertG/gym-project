@@ -5,8 +5,8 @@ description: >-
     Use this skill whenever creating, modifying, or reviewing React components,
     Astro pages, CSS, Tailwind classes, or any UI element. Ensures dark-only
     mode, exact color tokens (#CCFF00 primary), zero border-radius, glass cards,
-    and strict typography. Do not allow any light mode sections, shadows, or
-    rounded corners.
+    strict typography, and Framer Motion animations with AnimatePresence.
+    Do not allow any light mode sections, shadows, or rounded corners.
 ---
 
 # Voltage Industrial Design System — Enforcement Rules
@@ -63,16 +63,100 @@ description: >-
 
 > Consulta `references/component-patterns.md` para ejemplos copy-paste en Tailwind.
 
-## 8. Animation & Motion
+## 8. Animation & Motion — Framer Motion
 
-- Solo `transform` y `opacity` para animaciones.
-- Easing: `cubic-bezier(0.23, 1, 0.32, 1)` para interacciones UI.
-- No bounce, no elastic.
-- Respetar `prefers-reduced-motion`.
+**Librería obligatoria:** `framer-motion` con `AnimatePresence` para todas las transiciones de entrada/salida.
+
+### Reglas de Animación
+
+- **SIEMPRE usar Framer Motion** para animaciones de componentes interactivos.
+- **AnimatePresence** para mount/unmount con animaciones de entrada y salida.
+- **Solo `transform` y `opacity`** — no animar `width`, `height`, `top`, `left`.
+- **Easing industrial:** `cubic-bezier(0.23, 1, 0.32, 1)` o `easeOut` de Framer Motion.
+- **Duraciones cortas:** 0.2s–0.4s para UI, 0.4s–0.6s para modales/overlays.
+- **No bounce, no elastic, no spring agresivos.** Movimiento limpio y mecánico.
+- **Respetar `prefers-reduced-motion`** — desactivar animaciones si el usuario lo requiere.
+
+### Patrones Obligatorios
+
+#### Entrada/Salida de Modales y Overlays
+
+```tsx
+import { motion, AnimatePresence } from 'framer-motion';
+
+<AnimatePresence>
+    {isOpen && (
+        <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
+        >
+            {/* Modal content */}
+        </motion.div>
+    )}
+</AnimatePresence>;
+```
+
+#### Fade In/Out para Listas y Items
+
+```tsx
+<AnimatePresence>
+    {items.map((item) => (
+        <motion.div
+            key={item.id}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+        >
+            {item.content}
+        </motion.div>
+    ))}
+</AnimatePresence>
+```
+
+#### Feedback de Interacción (Botones, Cards)
+
+```tsx
+<motion.button
+    whileHover={{ scale: 1.02 }}
+    whileTap={{ scale: 0.97 }}
+    transition={{ duration: 0.15 }}
+>
+    Click me
+</motion.button>
+```
+
+#### Transición de Tabs y Paneles
+
+```tsx
+<AnimatePresence mode="wait">
+    <motion.div
+        key={activeTab}
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: -20 }}
+        transition={{ duration: 0.25, ease: 'easeOut' }}
+    >
+        {tabContent}
+    </motion.div>
+</AnimatePresence>
+```
+
+### Anti-patrones (NO HACER)
+
+- ❌ Usar `setTimeout` + `useState` para animaciones manuales.
+- ❌ Animar propiedades de layout (`width`, `height`, `margin`).
+- ❌ Usar `bounce` o `spring` con stiffness alto.
+- ❌ Olvidar `AnimatePresence` para componentes que se desmontan.
+- ❌ Animaciones sin `initial`, `animate`, `exit` en modales/overlays.
 
 ## 9. Pre-flight Check Visual Obligatorio
 
 Antes de entregar cualquier output de UI, verifica:
+
+### Design System
 
 - [ ] No border-radius found except circular avatars.
 - [ ] Primary color is exactly `#CCFF00` on all CTAs and active states.
@@ -82,3 +166,15 @@ Antes de entregar cualquier output de UI, verifica:
 - [ ] All interactive elements have `:active scale(0.97)` feedback.
 - [ ] Touch targets >= 44px on mobile.
 - [ ] No shadows (except glow effects).
+
+### Animaciones (Framer Motion)
+
+- [ ] ¿Usa `framer-motion` para animaciones de componentes interactivos?
+- [ ] ¿Usa `AnimatePresence` para mount/unmount con transiciones?
+- [ ] ¿Solo anima `transform` y `opacity`? (no width, height, top, left)
+- [ ] ¿Duraciones cortas? (0.2s–0.4s para UI, 0.4s–0.6s para modales)
+- [ ] ¿Easing industrial? (`easeOut` o `cubic-bezier(0.23, 1, 0.32, 1)`)
+- [ ] ¿No usa bounce, elastic, o spring agresivos?
+- [ ] ¿Respeta `prefers-reduced-motion`?
+- [ ] ¿Tiene `initial`, `animate`, `exit` en modales/overlays?
+- [ ] ¿Feedback de interacción? (`whileHover`, `whileTap`)

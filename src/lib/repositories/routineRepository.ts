@@ -3,14 +3,14 @@
  * Responsabilidad: acceso a datos de routines, routine_days, routine_exercises y routine_likes.
  */
 
-import type { DbClient } from '@/lib/db/types';
+import type { DbClient } from '@/lib/db/types'
 import type {
     Routine,
     RoutineDay,
     RoutineExercise,
     RoutineLike,
-} from '@/lib/models';
-import { AppError, NotFoundError } from '@/lib/utils/errors';
+} from '@/lib/models'
+import { AppError, NotFoundError } from '@/lib/utils/errors'
 
 /* ─────────── routines ─────────── */
 
@@ -23,10 +23,10 @@ export async function findRoutinesByUser(
         .select('*')
         .eq('user_id', userId)
         .is('deleted_at', null)
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
 
-    if (error) throw new AppError(error.message, 500);
-    return data ?? [];
+    if (error) throw new AppError(error.message, 500)
+    return data ?? []
 }
 
 export async function findPublicRoutines(db: DbClient): Promise<Routine[]> {
@@ -35,10 +35,10 @@ export async function findPublicRoutines(db: DbClient): Promise<Routine[]> {
         .select('*')
         .eq('is_public', true)
         .is('deleted_at', null)
-        .order('likes_count', { ascending: false });
+        .order('likes_count', { ascending: false })
 
-    if (error) throw new AppError(error.message, 500);
-    return data ?? [];
+    if (error) throw new AppError(error.message, 500)
+    return data ?? []
 }
 
 export async function findRoutineById(
@@ -49,10 +49,10 @@ export async function findRoutineById(
         .from<Routine>('routines')
         .select('*')
         .eq('id', id)
-        .maybeSingle();
+        .maybeSingle()
 
-    if (error) throw new AppError(error.message, 500);
-    return data ?? null;
+    if (error) throw new AppError(error.message, 500)
+    return data ?? null
 }
 
 export async function createRoutine(
@@ -67,11 +67,11 @@ export async function createRoutine(
             is_public: payload.isPublic ?? false,
         })
         .select()
-        .single();
+        .single()
 
     if (error || !data)
-        throw new AppError(error?.message ?? 'Error al crear rutina', 500);
-    return data;
+        throw new AppError(error?.message ?? 'Error al crear rutina', 500)
+    return data
 }
 
 export async function updateRoutine(
@@ -79,21 +79,21 @@ export async function updateRoutine(
     id: string,
     payload: Partial<Pick<Routine, 'name' | 'isActive' | 'isPublic'>>
 ): Promise<Routine> {
-    const mapped: Record<string, unknown> = {};
+    const mapped: Record<string, unknown> = {}
 
-    if (payload.name !== undefined) mapped.name = payload.name;
-    if (payload.isActive !== undefined) mapped.is_active = payload.isActive;
-    if (payload.isPublic !== undefined) mapped.is_public = payload.isPublic;
+    if (payload.name !== undefined) mapped.name = payload.name
+    if (payload.isActive !== undefined) mapped.is_active = payload.isActive
+    if (payload.isPublic !== undefined) mapped.is_public = payload.isPublic
 
     const { data, error } = await db
         .from<Routine>('routines')
         .update(mapped)
         .eq('id', id)
         .select()
-        .single();
+        .single()
 
-    if (error || !data) throw new NotFoundError('Rutina');
-    return data;
+    if (error || !data) throw new NotFoundError('Rutina')
+    return data
 }
 
 export async function softDeleteRoutine(
@@ -103,9 +103,9 @@ export async function softDeleteRoutine(
     const { error } = await db
         .from<Routine>('routines')
         .update({ deleted_at: new Date().toISOString() })
-        .eq('id', id);
+        .eq('id', id)
 
-    if (error) throw new AppError(error.message, 500);
+    if (error) throw new AppError(error.message, 500)
 }
 
 /* ─────────── routine_days ─────────── */
@@ -119,10 +119,10 @@ export async function findDaysByRoutineId(
         .select('*')
         .eq('routine_id', routineId)
         .is('deleted_at', null)
-        .order('order_index', { ascending: true });
+        .order('order_index', { ascending: true })
 
-    if (error) throw new AppError(error.message, 500);
-    return data ?? [];
+    if (error) throw new AppError(error.message, 500)
+    return data ?? []
 }
 
 export async function createRoutineDay(
@@ -138,14 +138,49 @@ export async function createRoutineDay(
             order_index: payload.orderIndex,
         })
         .select()
-        .single();
+        .single()
 
     if (error || !data)
         throw new AppError(
             error?.message ?? 'Error al crear día de rutina',
             500
-        );
-    return data;
+        )
+    return data
+}
+
+export async function updateRoutineDay(
+    db: DbClient,
+    id: string,
+    payload: Partial<Pick<RoutineDay, 'dayOfWeek' | 'dayName' | 'orderIndex'>>
+): Promise<RoutineDay> {
+    const mapped: Record<string, unknown> = {}
+
+    if (payload.dayOfWeek !== undefined) mapped.day_of_week = payload.dayOfWeek
+    if (payload.dayName !== undefined) mapped.day_name = payload.dayName
+    if (payload.orderIndex !== undefined)
+        mapped.order_index = payload.orderIndex
+
+    const { data, error } = await db
+        .from<RoutineDay>('routine_days')
+        .update(mapped)
+        .eq('id', id)
+        .select()
+        .single()
+
+    if (error || !data) throw new NotFoundError('RoutineDay')
+    return data
+}
+
+export async function deleteDaysByRoutineId(
+    db: DbClient,
+    routineId: string
+): Promise<void> {
+    const { error } = await db
+        .from('routine_days')
+        .delete()
+        .eq('routine_id', routineId)
+
+    if (error) throw new AppError(error.message, 500)
 }
 
 /* ─────────── routine_exercises ─────────── */
@@ -159,10 +194,10 @@ export async function findExercisesByDayId(
         .select('*')
         .eq('routine_day_id', routineDayId)
         .is('deleted_at', null)
-        .order('order_index', { ascending: true });
+        .order('order_index', { ascending: true })
 
-    if (error) throw new AppError(error.message, 500);
-    return data ?? [];
+    if (error) throw new AppError(error.message, 500)
+    return data ?? []
 }
 
 export async function createRoutineExercise(
@@ -183,17 +218,74 @@ export async function createRoutineExercise(
             notes: payload.notes,
         })
         .select()
-        .single();
+        .single()
 
     if (error || !data)
         throw new AppError(
             error?.message ?? 'Error al crear ejercicio de rutina',
             500
-        );
-    return data;
+        )
+    return data
+}
+
+export async function updateRoutineExercise(
+    db: DbClient,
+    id: string,
+    payload: Partial<
+        Pick<
+            RoutineExercise,
+            'orderIndex' | 'suggestedSets' | 'suggestedReps' | 'notes'
+        >
+    >
+): Promise<RoutineExercise> {
+    const mapped: Record<string, unknown> = {}
+
+    if (payload.orderIndex !== undefined)
+        mapped.order_index = payload.orderIndex
+    if (payload.suggestedSets !== undefined)
+        mapped.suggested_sets = payload.suggestedSets
+    if (payload.suggestedReps !== undefined)
+        mapped.suggested_reps = payload.suggestedReps
+    if (payload.notes !== undefined) mapped.notes = payload.notes
+
+    const { data, error } = await db
+        .from<RoutineExercise>('routine_exercises')
+        .update(mapped)
+        .eq('id', id)
+        .select()
+        .single()
+
+    if (error || !data) throw new NotFoundError('RoutineExercise')
+    return data
+}
+
+export async function deleteExercisesByDayId(
+    db: DbClient,
+    routineDayId: string
+): Promise<void> {
+    const { error } = await db
+        .from('routine_exercises')
+        .delete()
+        .eq('routine_day_id', routineDayId)
+
+    if (error) throw new AppError(error.message, 500)
 }
 
 /* ─────────── routine_likes ─────────── */
+
+export async function findLikesByRoutineId(
+    db: DbClient,
+    routineId: string
+): Promise<RoutineLike[]> {
+    const { data, error } = await db
+        .from<RoutineLike>('routine_likes')
+        .select('*')
+        .eq('routine_id', routineId)
+        .order('created_at', { ascending: false })
+
+    if (error) throw new AppError(error.message, 500)
+    return data ?? []
+}
 
 export async function findLike(
     db: DbClient,
@@ -205,10 +297,10 @@ export async function findLike(
         .select('*')
         .eq('user_id', userId)
         .eq('routine_id', routineId)
-        .maybeSingle();
+        .maybeSingle()
 
-    if (error) throw new AppError(error.message, 500);
-    return data ?? null;
+    if (error) throw new AppError(error.message, 500)
+    return data ?? null
 }
 
 export async function createLike(
@@ -218,9 +310,9 @@ export async function createLike(
 ): Promise<void> {
     const { error } = await db
         .from('routine_likes')
-        .insert({ user_id: userId, routine_id: routineId });
+        .insert({ user_id: userId, routine_id: routineId })
 
-    if (error) throw new AppError(error.message, 500);
+    if (error) throw new AppError(error.message, 500)
 }
 
 export async function deleteLike(
@@ -232,9 +324,9 @@ export async function deleteLike(
         .from('routine_likes')
         .delete()
         .eq('user_id', userId)
-        .eq('routine_id', routineId);
+        .eq('routine_id', routineId)
 
-    if (error) throw new AppError(error.message, 500);
+    if (error) throw new AppError(error.message, 500)
 }
 
 /* ─────────── misc ─────────── */
@@ -247,11 +339,11 @@ export async function countSessionsByRoutineId(
         .from('workout_sessions')
         .select('*', { count: 'exact', head: true })
         .eq('routine_id', routineId)
-        .is('deleted_at', null);
+        .is('deleted_at', null)
 
-    const { error } = await builder;
-    const count = (builder as unknown as { count: number | null }).count;
+    const { error } = await builder
+    const count = (builder as unknown as { count: number | null }).count
 
-    if (error) throw new AppError(error.message, 500);
-    return count ?? 0;
+    if (error) throw new AppError(error.message, 500)
+    return count ?? 0
 }

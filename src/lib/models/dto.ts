@@ -1,11 +1,17 @@
-import type { RoutineDay, RoutineExercise } from './index';
+import type { RoutineDay, RoutineExercise } from './index'
 
 /*
  * DTOs para payloads de creación/actualización en services.
  */
 
-export interface RoutineDayInput extends Omit<RoutineDay, 'id' | 'routineId' | 'createdAt' | 'updatedAt' | 'deletedAt'> {
-    exercises: Omit<RoutineExercise, 'id' | 'routineDayId' | 'createdAt' | 'updatedAt' | 'deletedAt'>[];
+export interface RoutineDayInput extends Omit<
+    RoutineDay,
+    'id' | 'routineId' | 'createdAt' | 'updatedAt' | 'deletedAt'
+> {
+    exercises: Omit<
+        RoutineExercise,
+        'id' | 'routineDayId' | 'createdAt' | 'updatedAt' | 'deletedAt'
+    >[];
 }
 
 export interface WorkoutSetInput {
@@ -15,17 +21,13 @@ export interface WorkoutSetInput {
     note: string | null;
 }
 
-export interface CreateRoutinePayload {
-    userId: string;
+export interface CreateExercisePayload {
     name: string;
-    isPublic?: boolean;
-    days: RoutineDayInput[];
+    category?: string | null;
+    imageUrl?: string | null;
 }
 
-export interface CreateSessionPayload {
-    userId: string;
-    routineId: string | null;
-    routineDayId: string | null;
-    sessionDate: string;
-    note?: string | null;
+export interface UpdateProfilePayload {
+    username?: string;
+    avatarUrl?: string | null;
 }

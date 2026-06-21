@@ -1,5 +1,5 @@
-import React from 'react';
-import { User } from 'lucide-react';
+import React from 'react'
+import { User } from 'lucide-react'
 
 export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
     src?: string;
@@ -12,11 +12,11 @@ const sizeMap = {
     md: 40,
     lg: 48,
     xl: 64,
-};
+}
 
 export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
     ({ src, fallback, size = 'md', className = '', ...props }, ref) => {
-        const dimension = sizeMap[size];
+        const dimension = sizeMap[size]
         const initials = fallback
             ? fallback
                   .split(' ')
@@ -24,7 +24,7 @@ export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
                   .join('')
                   .toUpperCase()
                   .slice(0, 2)
-            : '';
+            : ''
 
         return (
             <div
@@ -47,9 +47,9 @@ export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
                     <User className="text-word-400 h-5 w-5" />
                 )}
             </div>
-        );
+        )
     }
-);
+)
 
-Avatar.displayName = 'Avatar';
-export default Avatar;
+Avatar.displayName = 'Avatar'
+export default Avatar

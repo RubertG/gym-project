@@ -1,0 +1,96 @@
+---
+/**
+ * Dashboard home page.
+ * Pagina principal del area protegida.
+ * Muestra contenido de bienvenida al usuario autenticado.
+ */
+
+import DashboardLayout from '@/components/layout/DashboardLayout.astro';
+
+const profile = Astro.locals.profile;
+const displayName = profile?.username ?? 'Athlete';
+---
+
+<DashboardLayout title="Dashboard — IRON TRACK">
+    <div class="max-w-4xl">
+        <!-- Welcome section -->
+        <div class="mb-8">
+            <h1
+                class="font-display text-word-100 text-2xl font-bold tracking-wide lg:text-3xl"
+            >
+                Welcome back, <span class="text-primary-300">{displayName}</span
+                >
+            </h1>
+            <p class="text-word-400 mt-2 text-sm">
+                Ready to push your limits today?
+            </p>
+        </div>
+
+        <!-- Quick stats cards -->
+        <div class="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <!-- Active Routine -->
+            <div
+                class="bg-background-800/80 border-primary-400/20 rounded-none border p-6 backdrop-blur-md"
+            >
+                <p
+                    class="text-word-400 mb-2 font-mono text-xs tracking-widest uppercase"
+                >
+                    Active Routine
+                </p>
+                <p class="text-word-100 text-2xl font-bold">—</p>
+                <p class="text-word-400 mt-1 text-xs">No routine selected</p>
+            </div>
+
+            <!-- This Week -->
+            <div
+                class="bg-background-800/80 border-primary-400/20 rounded-none border p-6 backdrop-blur-md"
+            >
+                <p
+                    class="text-word-400 mb-2 font-mono text-xs tracking-widest uppercase"
+                >
+                    Sessions This Week
+                </p>
+                <p class="text-primary-300 text-2xl font-bold">0</p>
+                <p class="text-word-400 mt-1 text-xs">Keep going!</p>
+            </div>
+
+            <!-- Total Sessions -->
+            <div
+                class="bg-background-800/80 border-primary-400/20 rounded-none border p-6 backdrop-blur-md"
+            >
+                <p
+                    class="text-word-400 mb-2 font-mono text-xs tracking-widest uppercase"
+                >
+                    Total Sessions
+                </p>
+                <p class="text-word-100 text-2xl font-bold">0</p>
+                <p class="text-word-400 mt-1 text-xs">Start your journey</p>
+            </div>
+        </div>
+
+        <!-- Quick actions -->
+        <div
+            class="bg-background-800/80 border-primary-400/20 rounded-none border p-6 backdrop-blur-md"
+        >
+            <h2
+                class="font-display text-word-100 mb-4 text-lg font-bold tracking-wide"
+            >
+                QUICK ACTIONS
+            </h2>
+            <div class="flex flex-wrap gap-3">
+                <a
+                    href="/dashboard/routines"
+                    class="bg-primary-300 border-primary-300 hover:bg-primary-200 inline-flex items-center gap-2 rounded-none border-2 px-4 py-2.5 text-sm font-bold text-black transition-all duration-200"
+                >
+                    View Routines
+                </a>
+                <a
+                    href="/dashboard/profile"
+                    class="text-word-200 hover:border-primary-400 hover:text-primary-300 inline-flex items-center gap-2 rounded-none border-2 border-neutral-700 bg-transparent px-4 py-2.5 text-sm font-bold transition-all duration-200"
+                >
+                    Edit Profile
+                </a>
+            </div>
+        </div>
+    </div>
+</DashboardLayout>

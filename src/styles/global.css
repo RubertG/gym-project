@@ -54,6 +54,11 @@
 }
 
 @layer base {
+    html,
+    body {
+        overflow-x: hidden;
+    }
+
     body {
         background-color: var(--color-background-900);
         color: var(--color-word-100);
