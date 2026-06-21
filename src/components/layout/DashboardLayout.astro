@@ -23,8 +23,8 @@ const currentPath = Astro.url.pathname;
 
 <Layout title={title}>
     <div class="bg-background-900 flex h-screen overflow-hidden">
-        <!-- Sidebar: solo desktop -->
-        <div class="hidden lg:block">
+        <!-- Sidebar: tablet y desktop -->
+        <div class="hidden md:block">
             <Sidebar currentPath={currentPath} />
         </div>
 
@@ -34,7 +34,7 @@ const currentPath = Astro.url.pathname;
             <DashboardMobileHeader />
 
             <!-- Desktop navbar -->
-            <div class="hidden lg:block">
+            <div class="hidden md:block">
                 <Navbar user={user} profile={profile} />
             </div>
 

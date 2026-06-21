@@ -5,6 +5,7 @@
 
 import React, { useState } from 'react'
 import { LogOut } from 'lucide-react'
+import { Button } from '@/components/ui/Button'
 
 interface LogoutButtonProps {
     hideLabelOnMobile?: boolean;
@@ -30,15 +31,17 @@ export const LogoutButton: React.FC<LogoutButtonProps> = ({
     const labelClass = hideLabelOnMobile ? 'hidden sm:inline' : 'inline'
 
     return (
-        <button
+        <Button
+            variant="ghost-primary"
+            size="sm"
+            leftIcon={<LogOut className="h-4 w-4" />}
             onClick={handleLogout}
+            loading={loading}
             disabled={loading}
-            className="text-word-300 hover:text-primary-300 hover:border-primary-400/30 inline-flex cursor-pointer items-center gap-2 rounded-none border-2 border-transparent px-3 py-2 text-sm font-bold transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50"
             aria-label="Cerrar sesion"
         >
-            <LogOut className="h-4 w-4" />
             <span className={labelClass}>Logout</span>
-        </button>
+        </Button>
     )
 }
 

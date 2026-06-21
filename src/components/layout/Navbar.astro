@@ -19,12 +19,12 @@ const displayName = profile?.username ?? user?.id ?? 'User';
 ---
 
 <nav
-    class="bg-background-800 flex h-16 items-center justify-between border-b-2 border-neutral-800 px-4 lg:px-6"
+    class="bg-background-800 flex h-16 items-center justify-between border-b-2 border-neutral-800 px-4 md:px-6"
 >
     <!-- Mobile: hamburger toggle -->
     <button
         id="sidebar-toggle"
-        class="text-word-300 hover:text-primary-300 cursor-pointer rounded-none p-2 transition-colors lg:hidden"
+        class="text-word-300 hover:text-primary-300 hover:border-primary-400/30 inline-flex h-11 w-11 cursor-pointer items-center justify-center border-2 border-transparent transition-colors md:hidden"
         aria-label="Toggle sidebar"
         aria-expanded="false"
     >
@@ -43,12 +43,12 @@ const displayName = profile?.username ?? user?.id ?? 'User';
     </button>
 
     <!-- App name (mobile) -->
-    <span class="font-display text-lg font-bold tracking-tight lg:hidden">
+    <span class="font-display text-lg font-bold tracking-tight md:hidden">
         <span class="text-primary-300">IRON</span> TRACK
     </span>
 
     <!-- Spacer for desktop -->
-    <div class="hidden lg:block"></div>
+    <div class="hidden md:block"></div>
 
     <!-- User info + logout -->
     <div class="flex items-center gap-4">

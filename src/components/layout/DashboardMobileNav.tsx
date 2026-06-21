@@ -7,6 +7,7 @@ import React, { useState } from 'react'
 import { Menu, LayoutGrid, User } from 'lucide-react'
 import type { Profile } from '@/lib/models'
 import { LogoutButton } from '@/components/features/auth/LogoutButton'
+import { IconButton } from '@/components/ui/IconButton'
 import { MobileNavOverlay } from '@/components/ui/MobileNavOverlay'
 
 interface DashboardMobileNavProps {
@@ -48,16 +49,13 @@ export const DashboardMobileNav: React.FC<DashboardMobileNavProps> = ({
 
     return (
         <>
-            <button
-                type="button"
+            <IconButton
+                icon={<Menu className="h-6 w-6" aria-hidden="true" />}
                 onClick={toggleMenu}
-                className="text-word-300 hover:text-primary-300 cursor-pointer rounded-none p-2 transition-colors"
                 aria-label={isOpen ? 'Cerrar menu' : 'Abrir menu'}
                 aria-expanded={isOpen}
                 aria-controls="dashboard-mobile-overlay"
-            >
-                <Menu className="h-6 w-6" aria-hidden="true" />
-            </button>
+            />
 
             <span className="font-display text-lg font-bold tracking-tight">
                 <span className="text-primary-300">IRON</span> TRACK
@@ -71,6 +69,7 @@ export const DashboardMobileNav: React.FC<DashboardMobileNavProps> = ({
                 links={dashboardLinks}
                 footer={footer}
                 brandHref="/dashboard"
+                hideFrom="lg"
             />
         </>
     )

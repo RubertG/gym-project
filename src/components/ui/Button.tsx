@@ -5,7 +5,7 @@ export interface ButtonProps extends Omit<
     React.HTMLAttributes<HTMLElement>,
     'type'
 > {
-    variant?: 'primary' | 'secondary' | 'ghost' | 'danger';
+    variant?: 'primary' | 'secondary' | 'ghost' | 'ghost-primary' | 'danger';
     size?: 'sm' | 'md' | 'lg';
     surface?: 'dark' | 'light';
     loading?: boolean;
@@ -24,6 +24,8 @@ const variantStyles = {
         secondary:
             'bg-transparent text-secondary-200 border-2 border-secondary-400 hover:bg-secondary-400 hover:text-black',
         ghost: 'bg-transparent text-word-200 border-2 border-transparent hover:border-secondary-400 hover:text-white',
+        'ghost-primary':
+            'bg-transparent text-word-300 border-2 border-transparent hover:text-primary-300 hover:border-primary-400/30',
         danger: 'bg-red-600 text-white border-2 border-red-600 hover:bg-red-500 hover:border-red-500',
     },
     light: {
@@ -32,6 +34,8 @@ const variantStyles = {
         secondary:
             'bg-transparent text-secondary-800 border-2 border-secondary-700 hover:bg-secondary-800 hover:text-white',
         ghost: 'bg-transparent text-word-400 border-2 border-transparent hover:border-secondary-700 hover:text-background-900',
+        'ghost-primary':
+            'bg-transparent text-word-400 border-2 border-transparent hover:text-primary-600 hover:border-primary-600/30',
         danger: 'bg-transparent text-red-600 border-2 border-red-600 hover:bg-red-600 hover:text-white',
     },
 }

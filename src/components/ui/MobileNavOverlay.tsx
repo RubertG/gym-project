@@ -6,6 +6,7 @@
 import React from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X } from 'lucide-react'
+import { IconButton } from './IconButton'
 
 export interface MobileNavLink {
     label: string;
@@ -19,6 +20,7 @@ interface MobileNavOverlayProps {
     links: MobileNavLink[];
     footer?: React.ReactNode;
     brandHref?: string;
+    hideFrom?: 'md' | 'lg';
 }
 
 const EASE_INDUSTRIAL = [0.23, 1, 0.32, 1] as const
@@ -50,7 +52,10 @@ export const MobileNavOverlay: React.FC<MobileNavOverlayProps> = ({
     links,
     footer,
     brandHref = '/',
+    hideFrom = 'md',
 }) => {
+    const hiddenClass = hideFrom === 'lg' ? 'lg:hidden' : 'md:hidden'
+
     return (
         <AnimatePresence>
             {isOpen && (
@@ -63,7 +68,7 @@ export const MobileNavOverlay: React.FC<MobileNavOverlayProps> = ({
                         duration: 0.35,
                         ease: EASE_INDUSTRIAL,
                     }}
-                    className="bg-background-950/95 fixed inset-0 z-50 flex flex-col overflow-x-hidden backdrop-blur-2xl md:hidden"
+                    className={`bg-background-950/95 fixed inset-0 z-50 flex flex-col overflow-hidden backdrop-blur-2xl ${hiddenClass}`}
                     aria-hidden={!isOpen}
                 >
                     {/* Header */}
@@ -76,14 +81,11 @@ export const MobileNavOverlay: React.FC<MobileNavOverlayProps> = ({
                             <span className="text-primary-300">IRON</span>{' '}
                             <span className="text-word-100">TRACK</span>
                         </a>
-                        <button
-                            type="button"
+                        <IconButton
+                            icon={<X className="h-6 w-6" aria-hidden="true" />}
                             onClick={onClose}
-                            className="text-word-300 hover:text-primary-300 hover:border-primary-400/30 inline-flex h-11 w-11 cursor-pointer items-center justify-center border-2 border-transparent transition-colors"
                             aria-label="Cerrar panel de navegacion"
-                        >
-                            <X className="h-6 w-6" aria-hidden="true" />
-                        </button>
+                        />
                     </div>
 
                     {/* Decorative line */}
@@ -95,7 +97,7 @@ export const MobileNavOverlay: React.FC<MobileNavOverlayProps> = ({
                         animate="visible"
                         exit="hidden"
                         variants={listVariants}
-                        className="flex flex-1 flex-col items-center justify-center gap-2 overflow-y-auto px-6 py-8"
+                        className="flex flex-1 flex-col items-center justify-center gap-2 overflow-hidden px-6 py-8"
                         aria-label="Menu mobile"
                     >
                         {links.map((link, index) => (

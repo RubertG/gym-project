@@ -8,6 +8,7 @@ import { Menu } from 'lucide-react'
 import type { Profile } from '@/lib/models'
 import { LogoutButton } from '@/components/features/auth/LogoutButton'
 import { Button } from '@/components/ui/Button'
+import { IconButton } from '@/components/ui/IconButton'
 import { MobileNavOverlay } from '@/components/ui/MobileNavOverlay'
 
 interface LandingNavbarProps {
@@ -127,20 +128,13 @@ export const LandingNavbar: React.FC<LandingNavbarProps> = ({
 
                 {/* Mobile toggle */}
                 <div className="flex flex-1 basis-0 items-center justify-end md:hidden">
-                    <button
-                        type="button"
+                    <IconButton
+                        icon={<Menu className="h-6 w-6" aria-hidden="true" />}
                         onClick={toggleMenu}
-                        className="text-word-300 hover:text-primary-300 hover:border-primary-400/30 inline-flex h-11 w-11 cursor-pointer items-center justify-center border-2 border-transparent transition-colors"
                         aria-label={isOpen ? 'Cerrar menu' : 'Abrir menu'}
                         aria-expanded={isOpen}
                         aria-controls="landing-mobile-overlay"
-                    >
-                        {isOpen ? (
-                            <Menu className="h-6 w-6" aria-hidden="true" />
-                        ) : (
-                            <Menu className="h-6 w-6" aria-hidden="true" />
-                        )}
-                    </button>
+                    />
                 </div>
             </div>
 
