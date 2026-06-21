@@ -32,7 +32,7 @@ export const LogoutButton: React.FC<LogoutButtonProps> = ({
 
     return (
         <Button
-            variant="danger-outline"
+            variant="ghost-danger"
             leftIcon={<LogOut className="h-4 w-4" />}
             onClick={handleLogout}
             loading={loading}

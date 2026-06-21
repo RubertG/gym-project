@@ -10,8 +10,8 @@ export interface ButtonProps extends Omit<
         | 'secondary'
         | 'ghost'
         | 'ghost-primary'
-        | 'danger'
-        | 'danger-outline';
+        | 'ghost-danger'
+        | 'danger';
     size?: 'sm' | 'md' | 'lg';
     surface?: 'dark' | 'light';
     loading?: boolean;
@@ -32,9 +32,9 @@ const variantStyles = {
         ghost: 'bg-transparent text-word-200 border-2 border-transparent hover:border-secondary-400 hover:text-white',
         'ghost-primary':
             'bg-transparent text-word-300 border-2 border-transparent hover:text-primary-300 hover:border-primary-400/30',
+        'ghost-danger':
+            'bg-transparent text-word-300 border-2 border-transparent hover:text-red-500 hover:border-red-500/30',
         danger: 'bg-red-600 text-white border-2 border-red-600 hover:bg-red-500 hover:border-red-500',
-        'danger-outline':
-            'bg-transparent text-red-500 border-2 border-red-500 hover:bg-red-500/10 hover:text-red-400 hover:border-red-400',
     },
     light: {
         primary:
@@ -44,9 +44,9 @@ const variantStyles = {
         ghost: 'bg-transparent text-word-400 border-2 border-transparent hover:border-secondary-700 hover:text-background-900',
         'ghost-primary':
             'bg-transparent text-word-400 border-2 border-transparent hover:text-primary-600 hover:border-primary-600/30',
+        'ghost-danger':
+            'bg-transparent text-word-400 border-2 border-transparent hover:text-red-600 hover:border-red-600/30',
         danger: 'bg-transparent text-red-600 border-2 border-red-600 hover:bg-red-600 hover:text-white',
-        'danger-outline':
-            'bg-transparent text-red-600 border-2 border-red-600 hover:bg-red-600/10 hover:text-red-700 hover:border-red-700',
     },
 }
 
