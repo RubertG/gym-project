@@ -4,6 +4,7 @@
  */
 
 import React from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X } from 'lucide-react'
 import { IconButton } from './IconButton'
@@ -21,6 +22,7 @@ interface MobileNavOverlayProps {
     footer?: React.ReactNode;
     brandHref?: string;
     hideFrom?: 'md' | 'lg';
+    id?: string;
 }
 
 const EASE_INDUSTRIAL = [0.23, 1, 0.32, 1] as const
@@ -53,13 +55,15 @@ export const MobileNavOverlay: React.FC<MobileNavOverlayProps> = ({
     footer,
     brandHref = '/',
     hideFrom = 'md',
+    id,
 }) => {
     const hiddenClass = hideFrom === 'lg' ? 'lg:hidden' : 'md:hidden'
 
-    return (
+    const overlay = (
         <AnimatePresence>
             {isOpen && (
                 <motion.div
+                    id={id}
                     initial="hidden"
                     animate="visible"
                     exit="exit"
@@ -148,6 +152,12 @@ export const MobileNavOverlay: React.FC<MobileNavOverlayProps> = ({
             )}
         </AnimatePresence>
     )
+
+    if (typeof document === 'undefined') {
+        return null
+    }
+
+    return createPortal(overlay, document.body)
 }
 
 export default MobileNavOverlay

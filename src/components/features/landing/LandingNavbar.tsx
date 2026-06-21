@@ -135,6 +135,7 @@ export const LandingNavbar: React.FC<LandingNavbarProps> = ({
                 links={mainLinks}
                 footer={footer}
                 brandHref="/"
+                id="landing-mobile-overlay"
             />
         </>
     )

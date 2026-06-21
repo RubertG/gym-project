@@ -70,6 +70,7 @@ export const DashboardMobileNav: React.FC<DashboardMobileNavProps> = ({
                 footer={footer}
                 brandHref="/dashboard"
                 hideFrom="lg"
+                id="dashboard-mobile-overlay"
             />
         </>
     )
