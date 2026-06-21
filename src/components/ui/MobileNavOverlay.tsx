@@ -1,6 +1,6 @@
 /**
  * MobileNavOverlay — Menu mobile full-screen reusable con animaciones stagger.
- * Usado por LandingNavbar.
+ * Usado por LandingNavbar y DashboardMobileNav.
  */
 
 import React from 'react'
