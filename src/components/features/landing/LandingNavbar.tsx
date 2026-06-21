@@ -10,6 +10,7 @@ import { LogoutButton } from '@/components/features/auth/LogoutButton'
 import { Button } from '@/components/ui/Button'
 import { IconButton } from '@/components/ui/IconButton'
 import { MobileNavOverlay } from '@/components/ui/MobileNavOverlay'
+import { NavLink } from '@/components/ui/NavLink'
 
 interface LandingNavbarProps {
     user: { id: string } | null;
@@ -53,7 +54,6 @@ export const LandingNavbar: React.FC<LandingNavbarProps> = ({
             <Button
                 href="/login"
                 variant="ghost"
-                size="lg"
                 className="w-full justify-center"
                 onClick={closeMenu}
             >
@@ -62,7 +62,6 @@ export const LandingNavbar: React.FC<LandingNavbarProps> = ({
             <Button
                 href="/register"
                 variant="primary"
-                size="lg"
                 className="w-full justify-center"
                 onClick={closeMenu}
             >
@@ -89,13 +88,9 @@ export const LandingNavbar: React.FC<LandingNavbarProps> = ({
                 {/* Center: desktop navigation */}
                 <nav className="hidden flex-1 basis-0 items-center justify-center gap-1 md:flex">
                     {mainLinks.map((link) => (
-                        <a
-                            key={link.href}
-                            href={link.href}
-                            className="text-word-300 hover:text-primary-300 hover:border-primary-400/30 inline-flex min-h-[44px] items-center border-2 border-transparent px-3 py-2 text-sm font-bold tracking-wide whitespace-nowrap uppercase transition-all duration-200"
-                        >
+                        <NavLink key={link.href} href={link.href}>
                             {link.label}
-                        </a>
+                        </NavLink>
                     ))}
                 </nav>
 
@@ -112,14 +107,10 @@ export const LandingNavbar: React.FC<LandingNavbarProps> = ({
                         </>
                     ) : (
                         <>
-                            <Button href="/login" variant="ghost" size="sm">
+                            <Button href="/login" variant="ghost">
                                 Login
                             </Button>
-                            <Button
-                                href="/register"
-                                variant="primary"
-                                size="sm"
-                            >
+                            <Button href="/register" variant="primary">
                                 Sign Up
                             </Button>
                         </>
