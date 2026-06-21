@@ -131,6 +131,9 @@ export function DesignSystemPage() {
                                 <Button variant="secondary">Secundario</Button>
                                 <Button variant="ghost">Ghost</Button>
                                 <Button variant="danger">Peligro</Button>
+                                <Button variant="danger-outline">
+                                    Peligro Outline
+                                </Button>
                             </div>
                         </div>
                         <div className="space-y-4">
