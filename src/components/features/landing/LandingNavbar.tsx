@@ -1,9 +1,9 @@
 /**
  * LandingNavbar — Navegación mobile-first para la landing page.
- * Detecta sesión del usuario y muestra Login/Sign Up o Dashboard/Logout.
+ * Overlay futurista con animaciones stagger y glassmorphism.
  */
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, LayoutDashboard } from 'lucide-react'
 import type { Profile } from '@/lib/models'
@@ -15,17 +15,7 @@ interface LandingNavbarProps {
     profile: Profile | null;
 }
 
-const navLinks = [
-    { label: 'Inicio', href: '/' },
-    { label: 'Design System', href: '/design-system' },
-    { label: 'Componentes', href: '/design-system/components' },
-]
-
-const menuVariants = {
-    hidden: { opacity: 0, y: -16 },
-    visible: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -16 },
-}
+const EASE_INDUSTRIAL = [0.23, 1, 0.32, 1] as const
 
 export const LandingNavbar: React.FC<LandingNavbarProps> = ({
     user,
@@ -37,148 +27,227 @@ export const LandingNavbar: React.FC<LandingNavbarProps> = ({
     const toggleMenu = () => setIsOpen((prev) => !prev)
     const closeMenu = () => setIsOpen(false)
 
+    // Bloquear scroll cuando el overlay está abierto
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden'
+        } else {
+            document.body.style.overflow = ''
+        }
+
+        return () => {
+            document.body.style.overflow = ''
+        }
+    }, [isOpen])
+
+    const mainLinks = user
+        ? [
+              { label: 'Inicio', href: '/' },
+              { label: 'Design System', href: '/design-system' },
+              { label: 'Componentes', href: '/design-system/components' },
+              { label: 'Dashboard', href: '/dashboard' },
+          ]
+        : [
+              { label: 'Inicio', href: '/' },
+              { label: 'Design System', href: '/design-system' },
+              { label: 'Componentes', href: '/design-system/components' },
+          ]
+
     return (
-        <header className="bg-background-900/95 border-secondary-800/30 sticky top-0 z-50 border-b backdrop-blur-md">
-            <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-6">
-                {/* Logo */}
-                <a
-                    href="/"
-                    className="font-display text-xl font-bold tracking-tight transition-colors"
-                    aria-label="IRON TRACK Inicio"
-                >
-                    <span className="text-primary-300">IRON</span>{' '}
-                    <span className="text-word-100">TRACK</span>
-                </a>
-
-                {/* Desktop navigation */}
-                <nav className="hidden items-center gap-1 md:flex">
-                    {navLinks.map((link) => (
+        <>
+            <header className="bg-background-900/80 border-secondary-800/30 sticky top-0 z-40 border-b backdrop-blur-xl">
+                <div className="mx-auto flex h-16 max-w-7xl items-center px-4 md:px-6">
+                    {/* Left: logo */}
+                    <div className="flex flex-1 basis-0 items-center justify-start">
                         <a
-                            key={link.href}
-                            href={link.href}
-                            className="text-word-300 hover:text-primary-300 hover:border-primary-400/30 inline-flex min-h-[44px] items-center border-2 border-transparent px-3 py-2 text-sm font-bold tracking-wide uppercase transition-colors"
+                            href="/"
+                            className="font-display text-xl font-bold tracking-tight transition-colors"
+                            aria-label="IRON TRACK Inicio"
                         >
-                            {link.label}
+                            <span className="text-primary-300">IRON</span>{' '}
+                            <span className="text-word-100">TRACK</span>
                         </a>
-                    ))}
-                </nav>
+                    </div>
 
-                {/* Desktop auth actions */}
-                <div className="hidden items-center gap-3 md:flex">
-                    {user ? (
-                        <>
-                            <span className="text-word-400 font-mono text-xs tracking-wide uppercase">
-                                Conectado como{' '}
-                                <span className="text-primary-300">
-                                    {displayName}
+                    {/* Center: desktop navigation */}
+                    <nav className="hidden flex-1 basis-0 items-center justify-center gap-1 md:flex">
+                        {mainLinks.map((link) => (
+                            <a
+                                key={link.href}
+                                href={link.href}
+                                className="text-word-300 hover:text-primary-300 hover:border-primary-400/30 inline-flex min-h-[44px] items-center border-2 border-transparent px-3 py-2 text-sm font-bold tracking-wide uppercase transition-all duration-200"
+                            >
+                                {link.label}
+                            </a>
+                        ))}
+                    </nav>
+
+                    {/* Right: auth actions */}
+                    <div className="hidden flex-1 basis-0 items-center justify-end gap-3 md:flex">
+                        {user ? (
+                            <>
+                                <span className="text-word-400 font-mono text-xs tracking-wide uppercase">
+                                    Conectado como{' '}
+                                    <span className="text-primary-300">
+                                        {displayName}
+                                    </span>
                                 </span>
-                            </span>
-                            <Button
-                                href="/dashboard"
-                                variant="ghost"
-                                size="sm"
-                                leftIcon={
-                                    <LayoutDashboard className="h-4 w-4" />
-                                }
-                            >
-                                Dashboard
-                            </Button>
-                            <LogoutButton />
-                        </>
-                    ) : (
-                        <>
-                            <Button href="/login" variant="ghost" size="sm">
-                                Login
-                            </Button>
-                            <Button
-                                href="/register"
-                                variant="primary"
-                                size="sm"
-                            >
-                                Sign Up
-                            </Button>
-                        </>
-                    )}
+                                <LogoutButton hideLabelOnMobile={false} />
+                            </>
+                        ) : (
+                            <>
+                                <Button href="/login" variant="ghost" size="sm">
+                                    Login
+                                </Button>
+                                <Button
+                                    href="/register"
+                                    variant="primary"
+                                    size="sm"
+                                >
+                                    Sign Up
+                                </Button>
+                            </>
+                        )}
+                    </div>
+
+                    {/* Mobile toggle */}
+                    <div className="flex flex-1 basis-0 items-center justify-end md:hidden">
+                        <button
+                            type="button"
+                            onClick={toggleMenu}
+                            className="text-word-300 hover:text-primary-300 hover:border-primary-400/30 inline-flex h-11 w-11 cursor-pointer items-center justify-center border-2 border-transparent transition-colors"
+                            aria-label={isOpen ? 'Cerrar menu' : 'Abrir menu'}
+                            aria-expanded={isOpen}
+                            aria-controls="landing-mobile-overlay"
+                        >
+                            {isOpen ? (
+                                <X className="h-6 w-6" aria-hidden="true" />
+                            ) : (
+                                <Menu className="h-6 w-6" aria-hidden="true" />
+                            )}
+                        </button>
+                    </div>
                 </div>
+            </header>
 
-                {/* Mobile menu toggle */}
-                <button
-                    type="button"
-                    onClick={toggleMenu}
-                    className="text-word-300 hover:text-primary-300 hover:border-primary-400/30 inline-flex h-11 w-11 cursor-pointer items-center justify-center border-2 border-transparent transition-colors md:hidden"
-                    aria-label={isOpen ? 'Cerrar menu' : 'Abrir menu'}
-                    aria-expanded={isOpen}
-                    aria-controls="landing-mobile-menu"
-                >
-                    {isOpen ? (
-                        <X className="h-6 w-6" aria-hidden="true" />
-                    ) : (
-                        <Menu className="h-6 w-6" aria-hidden="true" />
-                    )}
-                </button>
-            </div>
-
-            {/* Mobile menu */}
-            <AnimatePresence initial={false}>
+            {/* Mobile overlay */}
+            <AnimatePresence>
                 {isOpen && (
-                    <motion.nav
-                        id="landing-mobile-menu"
-                        aria-label="Menu mobile"
-                        variants={menuVariants}
-                        initial="hidden"
-                        animate="visible"
-                        exit="exit"
+                    <motion.div
+                        id="landing-mobile-overlay"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
                         transition={{
-                            duration: 0.25,
-                            ease: [0.23, 1, 0.32, 1],
+                            duration: 0.35,
+                            ease: EASE_INDUSTRIAL,
                         }}
-                        className="bg-background-900 border-secondary-800/30 border-t md:hidden"
+                        className="bg-background-950/95 fixed inset-0 z-50 flex flex-col backdrop-blur-2xl md:hidden"
                     >
-                        <div className="flex flex-col gap-1 p-4">
-                            {navLinks.map((link) => (
-                                <a
+                        {/* Overlay header */}
+                        <div className="flex h-16 items-center justify-between px-4">
+                            <a
+                                href="/"
+                                className="font-display text-xl font-bold tracking-tight"
+                                onClick={closeMenu}
+                            >
+                                <span className="text-primary-300">IRON</span>{' '}
+                                <span className="text-word-100">TRACK</span>
+                            </a>
+                            <button
+                                type="button"
+                                onClick={closeMenu}
+                                className="text-word-300 hover:text-primary-300 hover:border-primary-400/30 inline-flex h-11 w-11 cursor-pointer items-center justify-center border-2 border-transparent transition-colors"
+                                aria-label="Cerrar panel de navegacion"
+                            >
+                                <X className="h-6 w-6" aria-hidden="true" />
+                            </button>
+                        </div>
+
+                        {/* Decorative top line */}
+                        <div className="bg-primary-400/20 h-px w-full" />
+
+                        {/* Main nav links */}
+                        <motion.nav
+                            initial="hidden"
+                            animate="visible"
+                            exit="hidden"
+                            variants={{
+                                hidden: {},
+                                visible: {
+                                    transition: {
+                                        staggerChildren: 0.08,
+                                        delayChildren: 0.1,
+                                    },
+                                },
+                            }}
+                            className="flex flex-1 flex-col items-center justify-center gap-2 px-6"
+                            aria-label="Menu mobile"
+                        >
+                            {mainLinks.map((link, index) => (
+                                <motion.a
                                     key={link.href}
                                     href={link.href}
                                     onClick={closeMenu}
-                                    className="text-word-200 hover:text-primary-300 hover:bg-background-800 inline-flex min-h-[48px] items-center px-3 text-sm font-bold tracking-wide uppercase transition-colors"
+                                    variants={{
+                                        hidden: {
+                                            opacity: 0,
+                                            x: 60,
+                                        },
+                                        visible: {
+                                            opacity: 1,
+                                            x: 0,
+                                        },
+                                    }}
+                                    transition={{
+                                        duration: 0.45,
+                                        ease: EASE_INDUSTRIAL,
+                                    }}
+                                    className="group relative inline-flex items-center gap-3 py-3 text-center"
                                 >
-                                    {link.label}
-                                </a>
-                            ))}
-
-                            <div className="bg-secondary-800/30 my-3 h-px" />
-
-                            {user ? (
-                                <>
-                                    <span className="text-word-400 px-3 py-2 font-mono text-xs tracking-wide uppercase">
-                                        Conectado como{' '}
-                                        <span className="text-primary-300">
-                                            {displayName}
-                                        </span>
+                                    <span className="text-primary-400/60 font-mono text-xs">
+                                        {String(index + 1).padStart(2, '0')}
                                     </span>
-                                    <Button
-                                        href="/dashboard"
-                                        variant="ghost"
-                                        size="md"
-                                        className="justify-start"
-                                        leftIcon={
-                                            <LayoutDashboard className="h-4 w-4" />
-                                        }
-                                        onClick={closeMenu}
-                                    >
-                                        Dashboard
-                                    </Button>
-                                    <div className="px-3 py-2">
-                                        <LogoutButton />
+                                    <span className="font-display text-word-100 group-hover:text-primary-300 text-3xl font-bold tracking-tighter uppercase transition-all duration-300 group-hover:tracking-wide">
+                                        {link.label}
+                                    </span>
+                                    <span className="bg-primary-400 absolute -bottom-1 left-0 h-0.5 w-0 transition-all duration-300 group-hover:w-full" />
+                                </motion.a>
+                            ))}
+                        </motion.nav>
+
+                        {/* Bottom auth section */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 20 }}
+                            transition={{
+                                duration: 0.4,
+                                delay: 0.35,
+                                ease: EASE_INDUSTRIAL,
+                            }}
+                            className="border-secondary-800/30 border-t px-6 py-8"
+                        >
+                            {user ? (
+                                <div className="flex flex-col items-center gap-4">
+                                    <div className="flex items-center gap-3">
+                                        <LayoutDashboard className="text-primary-300 h-5 w-5" />
+                                        <span className="text-word-400 font-mono text-xs tracking-wide uppercase">
+                                            Conectado como{' '}
+                                            <span className="text-primary-300">
+                                                {displayName}
+                                            </span>
+                                        </span>
                                     </div>
-                                </>
+                                    <LogoutButton hideLabelOnMobile={false} />
+                                </div>
                             ) : (
-                                <>
+                                <div className="flex flex-col gap-3">
                                     <Button
                                         href="/login"
                                         variant="ghost"
-                                        size="md"
-                                        className="justify-start"
+                                        size="lg"
+                                        className="w-full justify-center"
                                         onClick={closeMenu}
                                     >
                                         Login
@@ -186,19 +255,19 @@ export const LandingNavbar: React.FC<LandingNavbarProps> = ({
                                     <Button
                                         href="/register"
                                         variant="primary"
-                                        size="md"
-                                        className="justify-start"
+                                        size="lg"
+                                        className="w-full justify-center"
                                         onClick={closeMenu}
                                     >
                                         Sign Up
                                     </Button>
-                                </>
+                                </div>
                             )}
-                        </div>
-                    </motion.nav>
+                        </motion.div>
+                    </motion.div>
                 )}
             </AnimatePresence>
-        </header>
+        </>
     )
 }
 

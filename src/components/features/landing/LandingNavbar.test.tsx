@@ -1,11 +1,11 @@
 // @vitest-environment jsdom
 /**
  * Tests unitarios para LandingNavbar.
- * Verifica estados de autenticacion y navegacion mobile.
+ * Verifica estados de autenticacion, estructura desktop y overlay mobile.
  */
 
 import { describe, it, expect, vi } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 
 const mockLogoutButton = vi.fn(() => <button type="button">Logout</button>)
 
@@ -24,7 +24,7 @@ describe('LandingNavbar', () => {
         expect(screen.queryByText(/conectado como/i)).toBeNull()
     })
 
-    it('muestra el nombre del usuario y Dashboard cuando hay sesion', () => {
+    it('muestra el nombre del usuario junto al logout cuando hay sesion', () => {
         const profile = {
             id: 'user-123',
             username: 'ironathlete',
@@ -39,12 +39,17 @@ describe('LandingNavbar', () => {
 
         expect(screen.getByText(/conectado como/i)).toBeTruthy()
         expect(screen.getByText('ironathlete')).toBeTruthy()
-        expect(screen.getByRole('link', { name: /dashboard/i })).toBeTruthy()
         expect(screen.getByRole('button', { name: /logout/i })).toBeTruthy()
         expect(screen.queryByRole('link', { name: /login/i })).toBeNull()
     })
 
-    it('abre y cierra el menu mobile al hacer click en el toggle', () => {
+    it('incluye Dashboard en los links principales cuando hay sesion', () => {
+        render(<LandingNavbar user={{ id: 'user-123' }} profile={null} />)
+
+        expect(screen.getByRole('link', { name: /dashboard/i })).toBeTruthy()
+    })
+
+    it('abre y cierra el overlay mobile al hacer click en el toggle', async () => {
         render(<LandingNavbar user={null} profile={null} />)
 
         const toggle = screen.getByRole('button', {
@@ -52,24 +57,32 @@ describe('LandingNavbar', () => {
         })
 
         expect(toggle.getAttribute('aria-expanded')).toBe('false')
+        expect(document.getElementById('landing-mobile-overlay')).toBeNull()
 
         fireEvent.click(toggle)
 
-        const closeToggle = screen.getByRole('button', {
+        await waitFor(() => {
+            expect(
+                document.getElementById('landing-mobile-overlay')
+            ).toBeTruthy()
+        })
+
+        const headerToggle = screen.getByRole('button', {
             name: /cerrar menu/i,
         })
 
-        expect(closeToggle.getAttribute('aria-expanded')).toBe('true')
-        expect(
-            screen.getByRole('navigation', { name: /menu mobile/i })
-        ).toBeTruthy()
+        expect(headerToggle.getAttribute('aria-expanded')).toBe('true')
 
-        fireEvent.click(closeToggle)
+        const overlayClose = screen.getByRole('button', {
+            name: /cerrar panel de navegacion/i,
+        })
 
-        expect(
-            screen
-                .getByRole('button', { name: /abrir menu/i })
-                .getAttribute('aria-expanded')
-        ).toBe('false')
+        fireEvent.click(overlayClose)
+
+        await waitFor(() => {
+            expect(
+                document.getElementById('landing-mobile-overlay')
+            ).toBeNull()
+        })
     })
 })

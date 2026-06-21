@@ -6,7 +6,13 @@
 import React, { useState } from 'react'
 import { LogOut } from 'lucide-react'
 
-export const LogoutButton: React.FC = () => {
+interface LogoutButtonProps {
+    hideLabelOnMobile?: boolean;
+}
+
+export const LogoutButton: React.FC<LogoutButtonProps> = ({
+    hideLabelOnMobile = true,
+}) => {
     const [loading, setLoading] = useState(false)
 
     const handleLogout = async () => {
@@ -21,6 +27,8 @@ export const LogoutButton: React.FC = () => {
         window.location.href = '/login'
     }
 
+    const labelClass = hideLabelOnMobile ? 'hidden sm:inline' : 'inline'
+
     return (
         <button
             onClick={handleLogout}
@@ -29,7 +37,7 @@ export const LogoutButton: React.FC = () => {
             aria-label="Cerrar sesion"
         >
             <LogOut className="h-4 w-4" />
-            <span className="hidden sm:inline">Logout</span>
+            <span className={labelClass}>Logout</span>
         </button>
     )
 }
