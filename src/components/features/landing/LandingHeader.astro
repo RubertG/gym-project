@@ -1,7 +1,7 @@
 ---
 /**
  * LandingHeader — Container Astro del header de la landing.
- * El fondo/blur/sticky viven aqui para evitar que ClientRouter
+ * El fondo/blur/fixed viven aqui para evitar que ClientRouter
  * pierda los estilos durante transiciones.
  */
 
@@ -12,7 +12,7 @@ const profile = Astro.locals.profile;
 ---
 
 <header
-    class="bg-background-900/80 border-secondary-800/30 sticky top-0 z-40 border-b backdrop-blur-xl"
+    class="bg-background-900/80 border-secondary-800/30 fixed top-0 z-40 w-full border-b backdrop-blur-xl"
 >
     <LandingNavbar user={user} profile={profile} client:load />
 </header>
