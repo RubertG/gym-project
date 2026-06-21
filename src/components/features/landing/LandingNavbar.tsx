@@ -72,79 +72,77 @@ export const LandingNavbar: React.FC<LandingNavbarProps> = ({
 
     return (
         <>
-            <header className="bg-background-900/80 border-secondary-800/30 sticky top-0 z-40 border-b backdrop-blur-xl">
-                <div className="mx-auto flex h-16 max-w-7xl items-center px-4 md:px-6">
-                    {/* Left: logo */}
-                    <div className="flex flex-1 basis-0 items-center justify-start">
-                        <a
-                            href="/"
-                            className="font-display text-xl font-bold tracking-tight transition-colors"
-                            aria-label="IRON TRACK Inicio"
-                        >
-                            <span className="text-primary-300">IRON</span>{' '}
-                            <span className="text-word-100">TRACK</span>
-                        </a>
-                    </div>
-
-                    {/* Center: desktop navigation */}
-                    <nav className="hidden flex-1 basis-0 items-center justify-center gap-1 md:flex">
-                        {mainLinks.map((link) => (
-                            <a
-                                key={link.href}
-                                href={link.href}
-                                className="text-word-300 hover:text-primary-300 hover:border-primary-400/30 inline-flex min-h-[44px] items-center border-2 border-transparent px-3 py-2 text-sm font-bold tracking-wide whitespace-nowrap uppercase transition-all duration-200"
-                            >
-                                {link.label}
-                            </a>
-                        ))}
-                    </nav>
-
-                    {/* Right: auth actions */}
-                    <div className="hidden flex-1 basis-0 items-center justify-end gap-3 md:flex">
-                        {user ? (
-                            <>
-                                <span className="text-word-400 font-mono text-xs tracking-wide uppercase">
-                                    <span className="text-primary-300">
-                                        {displayName}
-                                    </span>
-                                </span>
-                                <LogoutButton hideLabelOnMobile={false} />
-                            </>
-                        ) : (
-                            <>
-                                <Button href="/login" variant="ghost" size="sm">
-                                    Login
-                                </Button>
-                                <Button
-                                    href="/register"
-                                    variant="primary"
-                                    size="sm"
-                                >
-                                    Sign Up
-                                </Button>
-                            </>
-                        )}
-                    </div>
-
-                    {/* Mobile toggle */}
-                    <div className="flex flex-1 basis-0 items-center justify-end md:hidden">
-                        <button
-                            type="button"
-                            onClick={toggleMenu}
-                            className="text-word-300 hover:text-primary-300 hover:border-primary-400/30 inline-flex h-11 w-11 cursor-pointer items-center justify-center border-2 border-transparent transition-colors"
-                            aria-label={isOpen ? 'Cerrar menu' : 'Abrir menu'}
-                            aria-expanded={isOpen}
-                            aria-controls="landing-mobile-overlay"
-                        >
-                            {isOpen ? (
-                                <Menu className="h-6 w-6" aria-hidden="true" />
-                            ) : (
-                                <Menu className="h-6 w-6" aria-hidden="true" />
-                            )}
-                        </button>
-                    </div>
+            <div className="mx-auto flex h-16 max-w-7xl items-center px-4 md:px-6">
+                {/* Left: logo */}
+                <div className="flex flex-1 basis-0 items-center justify-start">
+                    <a
+                        href="/"
+                        className="font-display text-xl font-bold tracking-tight transition-colors"
+                        aria-label="IRON TRACK Inicio"
+                    >
+                        <span className="text-primary-300">IRON</span>{' '}
+                        <span className="text-word-100">TRACK</span>
+                    </a>
                 </div>
-            </header>
+
+                {/* Center: desktop navigation */}
+                <nav className="hidden flex-1 basis-0 items-center justify-center gap-1 md:flex">
+                    {mainLinks.map((link) => (
+                        <a
+                            key={link.href}
+                            href={link.href}
+                            className="text-word-300 hover:text-primary-300 hover:border-primary-400/30 inline-flex min-h-[44px] items-center border-2 border-transparent px-3 py-2 text-sm font-bold tracking-wide whitespace-nowrap uppercase transition-all duration-200"
+                        >
+                            {link.label}
+                        </a>
+                    ))}
+                </nav>
+
+                {/* Right: auth actions */}
+                <div className="hidden flex-1 basis-0 items-center justify-end gap-3 md:flex">
+                    {user ? (
+                        <>
+                            <span className="text-word-400 font-mono text-xs tracking-wide uppercase">
+                                <span className="text-primary-300">
+                                    {displayName}
+                                </span>
+                            </span>
+                            <LogoutButton hideLabelOnMobile={false} />
+                        </>
+                    ) : (
+                        <>
+                            <Button href="/login" variant="ghost" size="sm">
+                                Login
+                            </Button>
+                            <Button
+                                href="/register"
+                                variant="primary"
+                                size="sm"
+                            >
+                                Sign Up
+                            </Button>
+                        </>
+                    )}
+                </div>
+
+                {/* Mobile toggle */}
+                <div className="flex flex-1 basis-0 items-center justify-end md:hidden">
+                    <button
+                        type="button"
+                        onClick={toggleMenu}
+                        className="text-word-300 hover:text-primary-300 hover:border-primary-400/30 inline-flex h-11 w-11 cursor-pointer items-center justify-center border-2 border-transparent transition-colors"
+                        aria-label={isOpen ? 'Cerrar menu' : 'Abrir menu'}
+                        aria-expanded={isOpen}
+                        aria-controls="landing-mobile-overlay"
+                    >
+                        {isOpen ? (
+                            <Menu className="h-6 w-6" aria-hidden="true" />
+                        ) : (
+                            <Menu className="h-6 w-6" aria-hidden="true" />
+                        )}
+                    </button>
+                </div>
+            </div>
 
             <MobileNavOverlay
                 isOpen={isOpen}

@@ -2,14 +2,11 @@
 import Layout from '@/layouts/Layout.astro';
 import Card from '@/components/ui/Card.tsx';
 import { Button } from '@/components';
-import { LandingNavbar } from '@/components/features/landing/LandingNavbar';
-
-const user = Astro.locals.user;
-const profile = Astro.locals.profile;
+import LandingHeader from '@/components/features/landing/LandingHeader.astro';
 ---
 
 <Layout title="IRON TRACK - Voltage Industrial">
-    <LandingNavbar user={user} profile={profile} client:load />
+    <LandingHeader />
     <main class="min-h-screen">
         <!-- Hero Section - Dark -->
         <section

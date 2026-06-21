@@ -48,24 +48,22 @@ export const DashboardMobileNav: React.FC<DashboardMobileNavProps> = ({
 
     return (
         <>
-            <header className="bg-background-800 flex h-16 items-center justify-between border-b-2 border-neutral-800 px-4 lg:hidden">
-                <button
-                    type="button"
-                    onClick={toggleMenu}
-                    className="text-word-300 hover:text-primary-300 cursor-pointer rounded-none p-2 transition-colors"
-                    aria-label={isOpen ? 'Cerrar menu' : 'Abrir menu'}
-                    aria-expanded={isOpen}
-                    aria-controls="dashboard-mobile-overlay"
-                >
-                    <Menu className="h-6 w-6" aria-hidden="true" />
-                </button>
+            <button
+                type="button"
+                onClick={toggleMenu}
+                className="text-word-300 hover:text-primary-300 cursor-pointer rounded-none p-2 transition-colors"
+                aria-label={isOpen ? 'Cerrar menu' : 'Abrir menu'}
+                aria-expanded={isOpen}
+                aria-controls="dashboard-mobile-overlay"
+            >
+                <Menu className="h-6 w-6" aria-hidden="true" />
+            </button>
 
-                <span className="font-display text-lg font-bold tracking-tight">
-                    <span className="text-primary-300">IRON</span> TRACK
-                </span>
+            <span className="font-display text-lg font-bold tracking-tight">
+                <span className="text-primary-300">IRON</span> TRACK
+            </span>
 
-                <div className="w-10" />
-            </header>
+            <div className="w-10" />
 
             <MobileNavOverlay
                 isOpen={isOpen}

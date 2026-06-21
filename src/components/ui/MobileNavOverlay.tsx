@@ -63,7 +63,7 @@ export const MobileNavOverlay: React.FC<MobileNavOverlayProps> = ({
                         duration: 0.35,
                         ease: EASE_INDUSTRIAL,
                     }}
-                    className="bg-background-950/95 fixed inset-0 z-50 flex flex-col backdrop-blur-2xl md:hidden"
+                    className="bg-background-950/95 fixed inset-0 z-50 flex flex-col overflow-x-hidden backdrop-blur-2xl md:hidden"
                     aria-hidden={!isOpen}
                 >
                     {/* Header */}
