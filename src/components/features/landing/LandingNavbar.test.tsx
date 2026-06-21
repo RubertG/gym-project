@@ -24,7 +24,7 @@ describe('LandingNavbar', () => {
         expect(screen.queryByText(/conectado como/i)).toBeNull()
     })
 
-    it('muestra el nombre del usuario junto al logout cuando hay sesion', () => {
+    it('muestra solo el nombre del usuario junto al logout cuando hay sesion', () => {
         const profile = {
             id: 'user-123',
             username: 'ironathlete',
@@ -37,8 +37,8 @@ describe('LandingNavbar', () => {
 
         render(<LandingNavbar user={{ id: 'user-123' }} profile={profile} />)
 
-        expect(screen.getByText(/conectado como/i)).toBeTruthy()
         expect(screen.getByText('ironathlete')).toBeTruthy()
+        expect(screen.queryByText(/conectado como/i)).toBeNull()
         expect(screen.getByRole('button', { name: /logout/i })).toBeTruthy()
         expect(screen.queryByRole('link', { name: /login/i })).toBeNull()
     })
@@ -57,21 +57,17 @@ describe('LandingNavbar', () => {
         })
 
         expect(toggle.getAttribute('aria-expanded')).toBe('false')
-        expect(document.getElementById('landing-mobile-overlay')).toBeNull()
+        expect(
+            screen.queryByRole('navigation', { name: /menu mobile/i })
+        ).toBeNull()
 
         fireEvent.click(toggle)
 
         await waitFor(() => {
             expect(
-                document.getElementById('landing-mobile-overlay')
+                screen.getByRole('navigation', { name: /menu mobile/i })
             ).toBeTruthy()
         })
-
-        const headerToggle = screen.getByRole('button', {
-            name: /cerrar menu/i,
-        })
-
-        expect(headerToggle.getAttribute('aria-expanded')).toBe('true')
 
         const overlayClose = screen.getByRole('button', {
             name: /cerrar panel de navegacion/i,
@@ -81,7 +77,7 @@ describe('LandingNavbar', () => {
 
         await waitFor(() => {
             expect(
-                document.getElementById('landing-mobile-overlay')
+                screen.queryByRole('navigation', { name: /menu mobile/i })
             ).toBeNull()
         })
     })

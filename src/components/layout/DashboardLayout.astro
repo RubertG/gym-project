@@ -8,6 +8,7 @@
 import Layout from '@/layouts/Layout.astro';
 import Sidebar from './Sidebar.astro';
 import Navbar from './Navbar.astro';
+import { DashboardMobileNav } from './DashboardMobileNav';
 
 interface Props {
     title?: string;
@@ -22,13 +23,20 @@ const currentPath = Astro.url.pathname;
 
 <Layout title={title}>
     <div class="bg-background-900 flex h-screen overflow-hidden">
-        <!-- Sidebar -->
-        <Sidebar currentPath={currentPath} />
+        <!-- Sidebar: solo desktop -->
+        <div class="hidden lg:block">
+            <Sidebar currentPath={currentPath} />
+        </div>
 
         <!-- Main content area -->
         <div class="flex min-w-0 flex-1 flex-col overflow-hidden">
-            <!-- Navbar -->
-            <Navbar user={user} profile={profile} />
+            <!-- Mobile header + overlay -->
+            <DashboardMobileNav user={user} profile={profile} client:load />
+
+            <!-- Desktop navbar -->
+            <div class="hidden lg:block">
+                <Navbar user={user} profile={profile} />
+            </div>
 
             <!-- Page content -->
             <main class="flex-1 overflow-y-auto p-4 lg:p-6">
