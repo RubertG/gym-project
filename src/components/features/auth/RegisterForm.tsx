@@ -126,7 +126,7 @@ export const RegisterForm: React.FC = () => {
                 name="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="opcional"
+                placeholder="Nombre de usuario"
                 autoComplete="username"
                 surface="dark"
             />
