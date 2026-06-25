@@ -2,24 +2,24 @@ import { create } from 'zustand'
 import type { WorkoutSession, WorkoutSet } from '@/lib/models'
 
 interface WorkoutExerciseState {
-    exerciseId: string;
-    sets: WorkoutSet[];
+    exerciseId: string
+    sets: WorkoutSet[]
 }
 
 interface WorkoutState {
-    session: WorkoutSession | null;
-    activeExercises: WorkoutExerciseState[];
-    currentExerciseIndex: number;
-    isResting: boolean;
-    restSeconds: number;
+    session: WorkoutSession | null
+    activeExercises: WorkoutExerciseState[]
+    currentExerciseIndex: number
+    isResting: boolean
+    restSeconds: number
     // Actions (placeholders)
-    startSession: (session: WorkoutSession) => void;
-    addSet: (exerciseId: string, set: WorkoutSet) => void;
-    completeExercise: (exerciseId: string) => void;
-    finishSession: () => void;
-    startRest: (seconds: number) => void;
-    stopRest: () => void;
-    reset: () => void;
+    startSession: (session: WorkoutSession) => void
+    addSet: (exerciseId: string, set: WorkoutSet) => void
+    completeExercise: (exerciseId: string) => void
+    finishSession: () => void
+    startRest: (seconds: number) => void
+    stopRest: () => void
+    reset: () => void
 }
 
 export const useWorkoutStore = create<WorkoutState>((set) => ({

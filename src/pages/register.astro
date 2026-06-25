@@ -4,12 +4,12 @@
  * Si el usuario ya esta autenticado, redirige a /dashboard.
  */
 
-import AuthLayout from '@/components/layout/AuthLayout.astro';
-import { RegisterForm } from '@/components/features/auth/RegisterForm';
+import AuthLayout from '@/components/layout/AuthLayout.astro'
+import { RegisterForm } from '@/components/features/auth/RegisterForm'
 
 // Redirigir usuarios autenticados al dashboard
 if (Astro.locals.user) {
-    return Astro.redirect('/dashboard');
+    return Astro.redirect('/dashboard')
 }
 ---
 

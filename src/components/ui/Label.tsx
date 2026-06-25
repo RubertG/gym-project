@@ -1,8 +1,8 @@
 import React from 'react'
 
 export interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
-    required?: boolean;
-    children: React.ReactNode;
+    required?: boolean
+    children: React.ReactNode
 }
 
 export const Label = React.forwardRef<HTMLLabelElement, LabelProps>(

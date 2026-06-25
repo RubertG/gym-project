@@ -1,9 +1,9 @@
 import React from 'react'
 
 export interface GlowEffectProps extends React.HTMLAttributes<HTMLDivElement> {
-    color?: 'primary' | 'secondary';
-    intensity?: 'sm' | 'md' | 'lg';
-    children: React.ReactNode;
+    color?: 'primary' | 'secondary'
+    intensity?: 'sm' | 'md' | 'lg'
+    children: React.ReactNode
 }
 
 const colorStyles = {

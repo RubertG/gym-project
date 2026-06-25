@@ -32,58 +32,58 @@ schemaVersion: 1
 changeName: <change-name-or-null>
 artifactStore: openspec
 planningHome:
-  mode: repo-local
-  path: <absolute path to openspec>
+    mode: repo-local
+    path: <absolute path to openspec>
 changeRoot: <absolute path to openspec/changes/<change> or null>
 artifactPaths:
-  proposal: [<absolute path>]
-  specs: [<absolute paths>]
-  design: [<absolute path>]
-  tasks: [<absolute path>]
-  applyProgress: [<absolute path>]
-  verifyReport: [<absolute path>]
+    proposal: [<absolute path>]
+    specs: [<absolute paths>]
+    design: [<absolute path>]
+    tasks: [<absolute path>]
+    applyProgress: [<absolute path>]
+    verifyReport: [<absolute path>]
 contextFiles:
-  proposal: [<absolute readable files>]
-  specs: [<absolute readable files>]
-  design: [<absolute readable files>]
-  tasks: [<absolute readable files>]
-  applyProgress: [<absolute readable files>]
-  verifyReport: [<absolute readable files>]
+    proposal: [<absolute readable files>]
+    specs: [<absolute readable files>]
+    design: [<absolute readable files>]
+    tasks: [<absolute readable files>]
+    applyProgress: [<absolute readable files>]
+    verifyReport: [<absolute readable files>]
 artifacts:
-  proposal: missing | done | partial
-  specs: missing | done | partial
-  design: missing | done | partial
-  tasks: missing | done | partial
-  applyProgress: missing | done | partial
-  verifyReport: missing | done | partial
+    proposal: missing | done | partial
+    specs: missing | done | partial
+    design: missing | done | partial
+    tasks: missing | done | partial
+    applyProgress: missing | done | partial
+    verifyReport: missing | done | partial
 taskProgress:
-  total: 0
-  completed: 0
-  pending: 0
-  allComplete: false
+    total: 0
+    completed: 0
+    pending: 0
+    allComplete: false
 dependencies:
-  proposal: blocked | ready | all_done
-  specs: blocked | ready | all_done
-  design: blocked | ready | all_done
-  tasks: blocked | ready | all_done
-  apply: blocked | ready | all_done
-  verify: blocked | ready | all_done
-  archive: blocked | ready | all_done
+    proposal: blocked | ready | all_done
+    specs: blocked | ready | all_done
+    design: blocked | ready | all_done
+    tasks: blocked | ready | all_done
+    apply: blocked | ready | all_done
+    verify: blocked | ready | all_done
+    archive: blocked | ready | all_done
 applyState: blocked | all_done | ready
 actionContext:
-  mode: repo-local
-  workspaceRoot: <absolute path>
-  allowedEditRoots: [<absolute paths>]
+    mode: repo-local
+    workspaceRoot: <absolute path>
+    allowedEditRoots: [<absolute paths>]
 relationships:
-  dependsOn: []
-  supersedes: []
-  amends: []
-  conflictsWith: []
-  sameDomainActiveChanges: []
+    dependsOn: []
+    supersedes: []
+    amends: []
+    conflictsWith: []
+    sameDomainActiveChanges: []
 phaseInstructions:
-  apply: [<instruction strings>]
-  verify: [<instruction strings>]
-  archive: [<instruction strings>]
+    apply: [<instruction strings>]
+    verify: [<instruction strings>]
+    archive: [<instruction strings>]
 nextRecommended: apply | verify | archive | sdd-new | select-change | resolve-blockers
 blockedReasons: []
 ```

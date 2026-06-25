@@ -10,19 +10,19 @@ import { X } from 'lucide-react'
 import { IconButton } from './IconButton'
 
 export interface MobileNavLink {
-    label: string;
-    href: string;
-    icon?: React.ReactNode;
+    label: string
+    href: string
+    icon?: React.ReactNode
 }
 
 interface MobileNavOverlayProps {
-    isOpen: boolean;
-    onClose: () => void;
-    links: MobileNavLink[];
-    footer?: React.ReactNode;
-    brandHref?: string;
-    hideFrom?: 'md' | 'lg';
-    id?: string;
+    isOpen: boolean
+    onClose: () => void
+    links: MobileNavLink[]
+    footer?: React.ReactNode
+    brandHref?: string
+    hideFrom?: 'md' | 'lg'
+    id?: string
 }
 
 const EASE_INDUSTRIAL = [0.23, 1, 0.32, 1] as const

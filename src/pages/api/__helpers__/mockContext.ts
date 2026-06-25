@@ -11,10 +11,10 @@ import type { APIContext } from 'astro'
  */
 export function createMockContext(
     options: {
-        body?: unknown;
-        user?: { id: string } | null;
-        profile?: unknown;
-        cookies?: string;
+        body?: unknown
+        user?: { id: string } | null
+        profile?: unknown
+        cookies?: string
     } = {}
 ): APIContext {
     const {

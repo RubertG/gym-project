@@ -1,8 +1,8 @@
 import React from 'react'
 
 export interface SpinnerProps extends React.HTMLAttributes<SVGSVGElement> {
-    size?: 'sm' | 'md' | 'lg';
-    variant?: 'primary' | 'secondary';
+    size?: 'sm' | 'md' | 'lg'
+    variant?: 'primary' | 'secondary'
 }
 
 const sizeMap = {

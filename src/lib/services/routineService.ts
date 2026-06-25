@@ -47,8 +47,8 @@ export async function getPublicRoutines(): Promise<Routine[]> {
 }
 
 export async function getRoutineById(id: string): Promise<{
-    routine: Routine;
-    days: (RoutineDay & { exercises: RoutineExercise[] })[];
+    routine: Routine
+    days: (RoutineDay & { exercises: RoutineExercise[] })[]
 } | null> {
     const db = getServerClient()
 
@@ -59,10 +59,7 @@ export async function getRoutineById(id: string): Promise<{
     const days = await routineRepo.findDaysByRoutineId(db, id)
     const daysWithExercises = await Promise.all(
         days.map(async (day) => {
-            const exercises = await routineRepo.findExercisesByDayId(
-                db,
-                day.id
-            )
+            const exercises = await routineRepo.findExercisesByDayId(db, day.id)
 
             return { ...day, exercises }
         })
@@ -149,9 +146,7 @@ export async function updateRoutine(
     await ensureNoSessions(db, id)
 
     if (data.name !== undefined && data.name.trim().length === 0) {
-        throw new ValidationError(
-            'El nombre de la rutina no puede estar vacío'
-        )
+        throw new ValidationError('El nombre de la rutina no puede estar vacío')
     }
 
     return routineRepo.updateRoutine(db, id, {

@@ -5,20 +5,20 @@
  * Mobile: sidebar oculto, hamburger toggle, main full width.
  */
 
-import Layout from '@/layouts/Layout.astro';
-import Sidebar from './Sidebar.astro';
-import Navbar from './Navbar.astro';
-import DashboardMobileHeader from './DashboardMobileHeader.astro';
+import Layout from '@/layouts/Layout.astro'
+import Sidebar from './Sidebar.astro'
+import Navbar from './Navbar.astro'
+import DashboardMobileHeader from './DashboardMobileHeader.astro'
 
 interface Props {
-    title?: string;
+    title?: string
 }
 
-const { title = 'Dashboard — IRON TRACK' } = Astro.props;
+const { title = 'Dashboard — IRON TRACK' } = Astro.props
 
-const user = Astro.locals.user;
-const profile = Astro.locals.profile;
-const currentPath = Astro.url.pathname;
+const user = Astro.locals.user
+const profile = Astro.locals.profile
+const currentPath = Astro.url.pathname
 ---
 
 <Layout title={title}>

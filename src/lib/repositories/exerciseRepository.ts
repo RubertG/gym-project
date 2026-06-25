@@ -69,11 +69,11 @@ export async function searchExercisesByName(
 export async function createExercise(
     db: DbClient,
     payload: {
-        name: string;
-        imageUrl?: string;
-        category?: string;
-        createdBy: string | null;
-        status: 'pending' | 'approved';
+        name: string
+        imageUrl?: string
+        category?: string
+        createdBy: string | null
+        status: 'pending' | 'approved'
     }
 ): Promise<Exercise> {
     const { data, error } = await db

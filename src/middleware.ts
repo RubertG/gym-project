@@ -16,8 +16,8 @@ declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace App {
         interface Locals {
-            user: { id: string } | null;
-            profile: Profile | null;
+            user: { id: string } | null
+            profile: Profile | null
         }
     }
 }

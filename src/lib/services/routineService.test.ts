@@ -87,11 +87,7 @@ describe('routineService', () => {
                 },
             ]
 
-            const result = await createRoutine(
-                'user-1',
-                'Push Pull Legs',
-                days
-            )
+            const result = await createRoutine('user-1', 'Push Pull Legs', days)
 
             expect(result).toEqual(mockRoutine)
             expect(routineRepo.createRoutine).toHaveBeenCalledWith(
@@ -188,9 +184,7 @@ describe('routineService', () => {
             vi.mocked(routineRepo.findRoutineById).mockResolvedValue(
                 mockRoutine
             )
-            vi.mocked(routineRepo.countSessionsByRoutineId).mockResolvedValue(
-                5
-            )
+            vi.mocked(routineRepo.countSessionsByRoutineId).mockResolvedValue(5)
 
             await expect(
                 updateRoutine('routine-1', 'user-1', { name: 'New Name' })
@@ -204,9 +198,7 @@ describe('routineService', () => {
             vi.mocked(routineRepo.findRoutineById).mockResolvedValue(
                 mockRoutine
             )
-            vi.mocked(routineRepo.countSessionsByRoutineId).mockResolvedValue(
-                0
-            )
+            vi.mocked(routineRepo.countSessionsByRoutineId).mockResolvedValue(0)
 
             await expect(
                 updateRoutine('routine-1', 'user-1', { name: '' })
@@ -219,9 +211,7 @@ describe('routineService', () => {
             vi.mocked(routineRepo.findRoutineById).mockResolvedValue(
                 mockRoutine
             )
-            vi.mocked(routineRepo.countSessionsByRoutineId).mockResolvedValue(
-                0
-            )
+            vi.mocked(routineRepo.countSessionsByRoutineId).mockResolvedValue(0)
             vi.mocked(routineRepo.updateRoutine).mockResolvedValue(
                 updatedRoutine
             )
@@ -363,9 +353,7 @@ describe('routineService', () => {
             vi.mocked(routineRepo.findRoutineById).mockResolvedValue(
                 mockRoutine
             )
-            vi.mocked(routineRepo.countSessionsByRoutineId).mockResolvedValue(
-                3
-            )
+            vi.mocked(routineRepo.countSessionsByRoutineId).mockResolvedValue(3)
 
             await expect(
                 softDeleteRoutine('routine-1', 'user-1')
@@ -376,9 +364,7 @@ describe('routineService', () => {
             vi.mocked(routineRepo.findRoutineById).mockResolvedValue(
                 mockRoutine
             )
-            vi.mocked(routineRepo.countSessionsByRoutineId).mockResolvedValue(
-                0
-            )
+            vi.mocked(routineRepo.countSessionsByRoutineId).mockResolvedValue(0)
             vi.mocked(routineRepo.softDeleteRoutine).mockResolvedValue()
 
             await expect(

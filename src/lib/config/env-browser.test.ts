@@ -50,8 +50,6 @@ describe('env-browser', () => {
 
         await expect(async () => {
             await import('./env-browser')
-        }).rejects.toThrow(
-            'Invalid environment variables: PUBLIC_SUPABASE_URL'
-        )
+        }).rejects.toThrow('Invalid environment variables: PUBLIC_SUPABASE_URL')
     })
 })

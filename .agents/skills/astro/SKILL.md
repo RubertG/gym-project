@@ -56,11 +56,11 @@ Reference [project structure docs](https://docs.astro.build/en/basics/project-st
 ### Example `astro.config.ts`
 
 ```ts
-import { defineConfig } from 'astro/config';
+import { defineConfig } from 'astro/config'
 
 export default defineConfig({
     site: 'https://example.com',
-});
+})
 ```
 
 ---
@@ -74,7 +74,7 @@ Add a file to `src/pages/` — the filename becomes the route:
 ```astro
 ---
 // src/pages/index.astro
-const title = 'Hello, Astro!';
+const title = 'Hello, Astro!'
 ---
 
 <html>
@@ -90,7 +90,7 @@ const title = 'Hello, Astro!';
 ```astro
 ---
 // src/components/Card.astro
-const { title, body } = Astro.props;
+const { title, body } = Astro.props
 ---
 
 <div class="card">

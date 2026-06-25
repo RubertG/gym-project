@@ -55,88 +55,88 @@ Supabase PostgreSQL
 
 ```typescript
 // src/pages/api/exercises/index.ts
-import type { APIRoute } from 'astro';
-import { getApprovedExercises } from '@/lib/services/exerciseService';
-import { AppError } from '@/lib/utils/errors';
+import type { APIRoute } from 'astro'
+import { getApprovedExercises } from '@/lib/services/exerciseService'
+import { AppError } from '@/lib/utils/errors'
 
 export const GET: APIRoute = async ({ request, cookies }) => {
     try {
         // 1. Extraer auth (si es necesario)
-        const session = cookies.get('sb-session');
+        const session = cookies.get('sb-session')
 
         // 2. Parsear query params
-        const url = new URL(request.url);
-        const page = Number(url.searchParams.get('page') ?? '1');
-        const limit = Number(url.searchParams.get('limit') ?? '20');
+        const url = new URL(request.url)
+        const page = Number(url.searchParams.get('page') ?? '1')
+        const limit = Number(url.searchParams.get('limit') ?? '20')
 
         // 3. Llamar al Service
-        const result = await getApprovedExercises({ page, limit });
+        const result = await getApprovedExercises({ page, limit })
 
         // 4. Responder con JSON
         return new Response(JSON.stringify(result), {
             status: 200,
             headers: { 'Content-Type': 'application/json' },
-        });
+        })
     } catch (error) {
-        return handleError(error);
+        return handleError(error)
     }
-};
+}
 ```
 
 ### POST — Crear recurso
 
 ```typescript
 // src/pages/api/routines/index.ts
-import type { APIRoute } from 'astro';
-import { createRoutine } from '@/lib/services/routineService';
-import { ValidationError, AuthError } from '@/lib/utils/errors';
-import { handleError } from '@/lib/utils/api-errors';
-import { CreateRoutinePayload } from '@/lib/models';
+import type { APIRoute } from 'astro'
+import { createRoutine } from '@/lib/services/routineService'
+import { ValidationError, AuthError } from '@/lib/utils/errors'
+import { handleError } from '@/lib/utils/api-errors'
+import { CreateRoutinePayload } from '@/lib/models'
 
 export const POST: APIRoute = async ({ request, cookies }) => {
     try {
         // 1. Verificar autenticación
-        const userId = cookies.get('sb-user-id')?.value;
+        const userId = cookies.get('sb-user-id')?.value
         if (!userId) {
-            throw new AuthError('Usuario no autenticado');
+            throw new AuthError('Usuario no autenticado')
         }
 
         // 2. Parsear y validar body
-        const body = await request.json();
-        const payload: CreateRoutinePayload = validateRoutineInput(body);
+        const body = await request.json()
+        const payload: CreateRoutinePayload = validateRoutineInput(body)
 
         // 3. Llamar al Service
-        const routine = await createRoutine(userId, payload);
+        const routine = await createRoutine(userId, payload)
 
         // 4. Responder 201 Created
         return new Response(JSON.stringify(routine), {
             status: 201,
             headers: { 'Content-Type': 'application/json' },
-        });
+        })
     } catch (error) {
-        return handleError(error);
+        return handleError(error)
     }
-};
+}
 
 function validateRoutineInput(body: unknown): CreateRoutinePayload {
     if (!body || typeof body !== 'object') {
-        throw new ValidationError('Body inválido');
+        throw new ValidationError('Body inválido')
     }
 
-    const { name, isPublic } = body as Record<string, unknown>;
+    const { name, isPublic } = body as Record<string, unknown>
 
     if (!name || typeof name !== 'string' || name.trim().length === 0) {
-        throw new ValidationError('El nombre de la rutina es obligatorio');
+        throw new ValidationError('El nombre de la rutina es obligatorio')
     }
 
     if (name.length > 100) {
-        throw new ValidationError('El nombre no puede exceder 100 caracteres');
+        throw new ValidationError('El nombre no puede exceder 100 caracteres')
     }
 
     return {
         name: name.trim(),
         isPublic: typeof isPublic === 'boolean' ? isPublic : false,
-    };
+    }
 }
 ```
 
@@ -144,34 +144,34 @@ function validateRoutineInput(body: unknown): CreateRoutinePayload {
 
 ```typescript
 // src/pages/api/routines/[id].ts
-import type { APIRoute } from 'astro';
-import { updateRoutine } from '@/lib/services/routineService';
-import { ValidationError, AuthError, NotFoundError } from '@/lib/utils/errors';
-import { handleError } from '@/lib/utils/api-errors';
+import type { APIRoute } from 'astro'
+import { updateRoutine } from '@/lib/services/routineService'
+import { ValidationError, AuthError, NotFoundError } from '@/lib/utils/errors'
+import { handleError } from '@/lib/utils/api-errors'
 
 export const PUT: APIRoute = async ({ params, request, cookies }) => {
     try {
-        const userId = cookies.get('sb-user-id')?.value;
+        const userId = cookies.get('sb-user-id')?.value
         if (!userId) {
-            throw new AuthError('Usuario no autenticado');
+            throw new AuthError('Usuario no autenticado')
         }
 
-        const routineId = params.id;
+        const routineId = params.id
         if (!routineId) {
-            throw new ValidationError('ID de rutina requerido');
+            throw new ValidationError('ID de rutina requerido')
         }
 
-        const body = await request.json();
-        const updated = await updateRoutine(userId, routineId, body);
+        const body = await request.json()
+        const updated = await updateRoutine(userId, routineId, body)
 
         return new Response(JSON.stringify(updated), {
             status: 200,
             headers: { 'Content-Type': 'application/json' },
-        });
+        })
     } catch (error) {
-        return handleError(error);
+        return handleError(error)
     }
-};
+}
 ```
 
 ### DELETE — Eliminar recurso (soft delete)
@@ -180,19 +180,19 @@ export const PUT: APIRoute = async ({ params, request, cookies }) => {
 // src/pages/api/routines/[id].ts
 export const DELETE: APIRoute = async ({ params, cookies }) => {
     try {
-        const userId = cookies.get('sb-user-id')?.value;
+        const userId = cookies.get('sb-user-id')?.value
         if (!userId) {
-            throw new AuthError('Usuario no autenticado');
+            throw new AuthError('Usuario no autenticado')
         }
 
-        const routineId = params.id;
-        await deleteRoutine(userId, routineId);
+        const routineId = params.id
+        await deleteRoutine(userId, routineId)
 
-        return new Response(null, { status: 204 });
+        return new Response(null, { status: 204 })
     } catch (error) {
-        return handleError(error);
+        return handleError(error)
     }
-};
+}
 ```
 
 ## 3. Manejo de Errores Centralizado
@@ -200,7 +200,7 @@ export const DELETE: APIRoute = async ({ params, cookies }) => {
 Crear `src/lib/utils/api-errors.ts`:
 
 ```typescript
-import { AppError, ValidationError, AuthError, NotFoundError } from './errors';
+import { AppError, ValidationError, AuthError, NotFoundError } from './errors'
 
 export function handleError(error: unknown): Response {
     // Errores custom del dominio
@@ -208,36 +208,36 @@ export function handleError(error: unknown): Response {
         return new Response(
             JSON.stringify({ error: error.message, details: error.details }),
             { status: 400, headers: { 'Content-Type': 'application/json' } }
-        );
+        )
     }
 
     if (error instanceof AuthError) {
         return new Response(JSON.stringify({ error: error.message }), {
             status: 401,
             headers: { 'Content-Type': 'application/json' },
-        });
+        })
     }
 
     if (error instanceof NotFoundError) {
         return new Response(JSON.stringify({ error: error.message }), {
             status: 404,
             headers: { 'Content-Type': 'application/json' },
-        });
+        })
     }
 
     if (error instanceof AppError) {
         return new Response(JSON.stringify({ error: error.message }), {
             status: error.statusCode ?? 500,
             headers: { 'Content-Type': 'application/json' },
-        });
+        })
     }
 
     // Errores inesperados
-    console.error('Unexpected error in API route:', error);
+    console.error('Unexpected error in API route:', error)
     return new Response(
         JSON.stringify({ error: 'Error interno del servidor' }),
         { status: 500, headers: { 'Content-Type': 'application/json' } }
-    );
+    )
 }
 ```
 
@@ -247,43 +247,43 @@ En `src/lib/utils/errors.ts`:
 
 ```typescript
 export class AppError extends Error {
-    statusCode?: number;
+    statusCode?: number
 
     constructor(message: string, statusCode?: number) {
-        super(message);
-        this.name = 'AppError';
-        this.statusCode = statusCode;
+        super(message)
+        this.name = 'AppError'
+        this.statusCode = statusCode
     }
 }
 
 export class ValidationError extends AppError {
-    details?: Record<string, string[]>;
+    details?: Record<string, string[]>
 
     constructor(message: string, details?: Record<string, string[]>) {
-        super(message, 400);
-        this.name = 'ValidationError';
-        this.details = details;
+        super(message, 400)
+        this.name = 'ValidationError'
+        this.details = details
     }
 }
 
 export class AuthError extends AppError {
     constructor(message: string) {
-        super(message, 401);
-        this.name = 'AuthError';
+        super(message, 401)
+        this.name = 'AuthError'
     }
 }
 
 export class NotFoundError extends AppError {
     constructor(message: string) {
-        super(message, 404);
-        this.name = 'NotFoundError';
+        super(message, 404)
+        this.name = 'NotFoundError'
     }
 }
 
 export class ForbiddenError extends AppError {
     constructor(message: string) {
-        super(message, 403);
-        this.name = 'ForbiddenError';
+        super(message, 403)
+        this.name = 'ForbiddenError'
     }
 }
 ```
@@ -356,76 +356,76 @@ Antes de entregar cualquier API Route, verificar:
 ### Controller: `src/pages/api/routines/index.ts`
 
 ```typescript
-import type { APIRoute } from 'astro';
-import { getUserRoutines, createRoutine } from '@/lib/services/routineService';
-import { ValidationError, AuthError } from '@/lib/utils/errors';
-import { handleError } from '@/lib/utils/api-errors';
-import type { CreateRoutinePayload } from '@/lib/models';
+import type { APIRoute } from 'astro'
+import { getUserRoutines, createRoutine } from '@/lib/services/routineService'
+import { ValidationError, AuthError } from '@/lib/utils/errors'
+import { handleError } from '@/lib/utils/api-errors'
+import type { CreateRoutinePayload } from '@/lib/models'
 
 export const GET: APIRoute = async ({ cookies }) => {
     try {
-        const userId = cookies.get('sb-user-id')?.value;
-        if (!userId) throw new AuthError('No autenticado');
+        const userId = cookies.get('sb-user-id')?.value
+        if (!userId) throw new AuthError('No autenticado')
 
-        const routines = await getUserRoutines(userId);
+        const routines = await getUserRoutines(userId)
         return new Response(JSON.stringify(routines), {
             status: 200,
             headers: { 'Content-Type': 'application/json' },
-        });
+        })
     } catch (error) {
-        return handleError(error);
+        return handleError(error)
     }
-};
+}
 
 export const POST: APIRoute = async ({ request, cookies }) => {
     try {
-        const userId = cookies.get('sb-user-id')?.value;
-        if (!userId) throw new AuthError('No autenticado');
+        const userId = cookies.get('sb-user-id')?.value
+        if (!userId) throw new AuthError('No autenticado')
 
-        const body = await request.json();
-        const payload = validateCreateRoutine(body);
-        const routine = await createRoutine(userId, payload);
+        const body = await request.json()
+        const payload = validateCreateRoutine(body)
+        const routine = await createRoutine(userId, payload)
 
         return new Response(JSON.stringify(routine), {
             status: 201,
             headers: { 'Content-Type': 'application/json' },
-        });
+        })
     } catch (error) {
-        return handleError(error);
+        return handleError(error)
     }
-};
+}
 
 function validateCreateRoutine(body: unknown): CreateRoutinePayload {
     if (!body || typeof body !== 'object') {
-        throw new ValidationError('Body inválido');
+        throw new ValidationError('Body inválido')
     }
 
-    const { name, isPublic } = body as Record<string, unknown>;
+    const { name, isPublic } = body as Record<string, unknown>
 
     if (!name || typeof name !== 'string' || name.trim().length === 0) {
-        throw new ValidationError('Nombre de rutina requerido');
+        throw new ValidationError('Nombre de rutina requerido')
     }
 
     return {
         name: name.trim(),
         isPublic: typeof isPublic === 'boolean' ? isPublic : false,
-    };
+    }
 }
 ```
 
 ### Service: `src/lib/services/routineService.ts`
 
 ```typescript
-import { routineRepository } from '@/lib/repositories/routineRepository';
+import { routineRepository } from '@/lib/repositories/routineRepository'
 import {
     ValidationError,
     NotFoundError,
     ForbiddenError,
-} from '@/lib/utils/errors';
-import type { Routine, CreateRoutinePayload } from '@/lib/models';
+} from '@/lib/utils/errors'
+import type { Routine, CreateRoutinePayload } from '@/lib/models'
 
 export async function getUserRoutines(userId: string): Promise<Routine[]> {
-    return routineRepository.findByUserId(userId);
+    return routineRepository.findByUserId(userId)
 }
 
 export async function createRoutine(
@@ -433,38 +433,38 @@ export async function createRoutine(
     payload: CreateRoutinePayload
 ): Promise<Routine> {
     // Regla de negocio: máximo 10 rutinas activas por usuario
-    const activeRoutines = await routineRepository.findActiveByUserId(userId);
+    const activeRoutines = await routineRepository.findActiveByUserId(userId)
     if (activeRoutines.length >= 10) {
-        throw new ValidationError('Máximo de 10 rutinas activas alcanzado');
+        throw new ValidationError('Máximo de 10 rutinas activas alcanzado')
     }
 
-    return routineRepository.create(userId, payload);
+    return routineRepository.create(userId, payload)
 }
 
 export async function deleteRoutine(
     userId: string,
     routineId: string
 ): Promise<void> {
-    const routine = await routineRepository.findById(routineId);
+    const routine = await routineRepository.findById(routineId)
 
     if (!routine) {
-        throw new NotFoundError('Rutina no encontrada');
+        throw new NotFoundError('Rutina no encontrada')
     }
 
     if (routine.userId !== userId) {
-        throw new ForbiddenError('No tienes permiso para eliminar esta rutina');
+        throw new ForbiddenError('No tienes permiso para eliminar esta rutina')
     }
 
     // Soft delete
-    await routineRepository.softDelete(routineId);
+    await routineRepository.softDelete(routineId)
 }
 ```
 
 ### Repository: `src/lib/repositories/routineRepository.ts`
 
 ```typescript
-import { supabase } from '@/lib/db/supabase';
-import type { Routine, CreateRoutinePayload } from '@/lib/models';
+import { supabase } from '@/lib/db/supabase'
+import type { Routine, CreateRoutinePayload } from '@/lib/models'
 
 export const routineRepository = {
     async findByUserId(userId: string): Promise<Routine[]> {
@@ -473,10 +473,10 @@ export const routineRepository = {
             .select('*')
             .eq('user_id', userId)
             .is('deleted_at', null)
-            .order('created_at', { ascending: false });
+            .order('created_at', { ascending: false })
 
-        if (error) throw error;
-        return data ?? [];
+        if (error) throw error
+        return data ?? []
     },
 
     async findActiveByUserId(userId: string): Promise<Routine[]> {
@@ -485,10 +485,10 @@ export const routineRepository = {
             .select('*')
             .eq('user_id', userId)
             .eq('is_active', true)
-            .is('deleted_at', null);
+            .is('deleted_at', null)
 
-        if (error) throw error;
-        return data ?? [];
+        if (error) throw error
+        return data ?? []
     },
 
     async findById(id: string): Promise<Routine | null> {
@@ -497,13 +497,13 @@ export const routineRepository = {
             .select('*')
             .eq('id', id)
             .is('deleted_at', null)
-            .single();
+            .single()
 
         if (error) {
-            if (error.code === 'PGRST116') return null; // Not found
-            throw error;
+            if (error.code === 'PGRST116') return null // Not found
+            throw error
         }
-        return data;
+        return data
     },
 
     async create(
@@ -514,21 +514,21 @@ export const routineRepository = {
             .from('routines')
             .insert({ ...payload, user_id: userId })
             .select()
-            .single();
+            .single()
 
-        if (error) throw error;
-        return data;
+        if (error) throw error
+        return data
     },
 
     async softDelete(id: string): Promise<void> {
         const { error } = await supabase
             .from('routines')
             .update({ deleted_at: new Date().toISOString() })
-            .eq('id', id);
+            .eq('id', id)
 
-        if (error) throw error;
+        if (error) throw error
     },
-};
+}
 ```
 
 ## 10. Clean Code y SOLID

@@ -11,23 +11,23 @@ export interface RoutineDayInput extends Omit<
     exercises: Omit<
         RoutineExercise,
         'id' | 'routineDayId' | 'createdAt' | 'updatedAt' | 'deletedAt'
-    >[];
+    >[]
 }
 
 export interface WorkoutSetInput {
-    setNumber: number;
-    reps: number;
-    weightKg: number;
-    note: string | null;
+    setNumber: number
+    reps: number
+    weightKg: number
+    note: string | null
 }
 
 export interface CreateExercisePayload {
-    name: string;
-    category?: string | null;
-    imageUrl?: string | null;
+    name: string
+    category?: string | null
+    imageUrl?: string | null
 }
 
 export interface UpdateProfilePayload {
-    username?: string;
-    avatarUrl?: string | null;
+    username?: string
+    avatarUrl?: string | null
 }

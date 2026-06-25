@@ -32,9 +32,7 @@ describe('RegisterForm', () => {
         const { container } = render(<RegisterForm />)
 
         const emailInput = container.querySelector('input[name="email"]')!
-        const passwordInput = container.querySelector(
-            'input[name="password"]'
-        )!
+        const passwordInput = container.querySelector('input[name="password"]')!
         const confirmPasswordInput = container.querySelector(
             'input[name="confirmPassword"]'
         )!
@@ -62,9 +60,7 @@ describe('RegisterForm', () => {
         const { container } = render(<RegisterForm />)
 
         const emailInput = container.querySelector('input[name="email"]')!
-        const passwordInput = container.querySelector(
-            'input[name="password"]'
-        )!
+        const passwordInput = container.querySelector('input[name="password"]')!
         const confirmPasswordInput = container.querySelector(
             'input[name="confirmPassword"]'
         )!
@@ -91,9 +87,7 @@ describe('RegisterForm', () => {
         const { container } = render(<RegisterForm />)
 
         const emailInput = container.querySelector('input[name="email"]')!
-        const passwordInput = container.querySelector(
-            'input[name="password"]'
-        )!
+        const passwordInput = container.querySelector('input[name="password"]')!
         const confirmPasswordInput = container.querySelector(
             'input[name="confirmPassword"]'
         )!
@@ -132,9 +126,7 @@ describe('RegisterForm', () => {
         const { container } = render(<RegisterForm />)
 
         const emailInput = container.querySelector('input[name="email"]')!
-        const passwordInput = container.querySelector(
-            'input[name="password"]'
-        )!
+        const passwordInput = container.querySelector('input[name="password"]')!
         const confirmPasswordInput = container.querySelector(
             'input[name="confirmPassword"]'
         )!

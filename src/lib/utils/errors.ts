@@ -7,7 +7,7 @@ export class AppError extends Error {
         this.statusCode = statusCode
         this.isOperational = isOperational
         const ErrorConstructor = Error as unknown as {
-            captureStackTrace?: (error: Error, constructor: unknown) => void;
+            captureStackTrace?: (error: Error, constructor: unknown) => void
         }
 
         if (typeof ErrorConstructor.captureStackTrace === 'function') {

@@ -10,8 +10,8 @@ export interface IconButtonProps extends Omit<
     ButtonProps,
     'leftIcon' | 'rightIcon' | 'children' | 'href'
 > {
-    icon: React.ReactNode;
-    'aria-label': string;
+    icon: React.ReactNode
+    'aria-label': string
 }
 
 export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(

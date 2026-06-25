@@ -4,12 +4,12 @@ export interface TextareaProps extends Omit<
     React.TextareaHTMLAttributes<HTMLTextAreaElement>,
     'size'
 > {
-    rows?: number;
-    maxLength?: number;
-    resize?: boolean;
-    label?: string;
-    error?: string;
-    helperText?: string;
+    rows?: number
+    maxLength?: number
+    resize?: boolean
+    label?: string
+    error?: string
+    helperText?: string
 }
 
 export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(

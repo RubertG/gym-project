@@ -10,13 +10,13 @@ export type ToastPosition =
     | 'bottom-left'
 
 export interface ToastProps {
-    id: string;
-    message: string;
-    type?: ToastType;
-    duration?: number;
-    onClose: () => void;
-    position?: ToastPosition;
-    className?: string;
+    id: string
+    message: string
+    type?: ToastType
+    duration?: number
+    onClose: () => void
+    position?: ToastPosition
+    className?: string
 }
 
 const typeConfig = {

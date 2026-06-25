@@ -14,25 +14,25 @@ import type { Profile } from '@/lib/models'
  * Credenciales para registro de usuario.
  */
 export interface SignUpParams {
-    email: string;
-    password: string;
-    username?: string;
+    email: string
+    password: string
+    username?: string
 }
 
 /**
  * Resultado del registro: usuario autenticado + perfil (si se creó).
  */
 export interface SignUpResult {
-    user: User;
-    profile: Profile | null;
+    user: User
+    profile: Profile | null
 }
 
 /**
  * Resultado de login: sesión activa + usuario.
  */
 export interface SignInResult {
-    session: Session;
-    user: User;
+    session: Session
+    user: User
 }
 
 /**
@@ -76,8 +76,8 @@ export async function signUp(params: SignUpParams): Promise<SignUpResult> {
  * Si las credenciales son inválidas, lanza AuthError con mensaje genérico.
  */
 export async function signIn(params: {
-    email: string;
-    password: string;
+    email: string
+    password: string
 }): Promise<SignInResult> {
     const { email, password } = params
     const client = getAnonClient()

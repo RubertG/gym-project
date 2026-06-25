@@ -20,17 +20,17 @@ import { ValidationError } from '@/lib/utils/errors'
  * buscando el nombre en el mapa de ejercicios creados/existentes.
  */
 interface SeedExerciseInput {
-    orderIndex: number;
-    suggestedSets: number;
-    suggestedReps: string;
-    notes: string | null;
+    orderIndex: number
+    suggestedSets: number
+    suggestedReps: string
+    notes: string | null
 }
 
 interface SeedDayInput {
-    dayOfWeek: number;
-    dayName: string;
-    orderIndex: number;
-    exercises: SeedExerciseInput[];
+    dayOfWeek: number
+    dayName: string
+    orderIndex: number
+    exercises: SeedExerciseInput[]
 }
 
 /* ─────────── Datos de seed ─────────── */
@@ -599,10 +599,7 @@ export async function runSeed(
     const exerciseMap = new Map<string, string>()
 
     for (const ex of EXERCISES) {
-        const existing = await exerciseRepo.findExerciseByNameLower(
-            db,
-            ex.name
-        )
+        const existing = await exerciseRepo.findExerciseByNameLower(db, ex.name)
 
         if (existing) {
             exerciseMap.set(ex.name, existing.id)

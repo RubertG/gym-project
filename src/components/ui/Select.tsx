@@ -3,19 +3,19 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 
 export interface SelectOption {
-    value: string;
-    label: string;
+    value: string
+    label: string
 }
 
 export interface SelectProps {
-    options: SelectOption[];
-    value?: string;
-    onChange?: (value: string) => void;
-    placeholder?: string;
-    label?: string;
-    error?: string;
-    disabled?: boolean;
-    className?: string;
+    options: SelectOption[]
+    value?: string
+    onChange?: (value: string) => void
+    placeholder?: string
+    label?: string
+    error?: string
+    disabled?: boolean
+    className?: string
 }
 
 export const Select = React.forwardRef<HTMLDivElement, SelectProps>(

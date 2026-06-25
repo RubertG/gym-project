@@ -45,11 +45,11 @@ export async function findSessionById(
 export async function createSession(
     db: DbClient,
     payload: {
-        userId: string;
-        routineId: string | null;
-        routineDayId: string | null;
-        sessionDate: string;
-        note?: string | null;
+        userId: string
+        routineId: string | null
+        routineDayId: string | null
+        sessionDate: string
+        note?: string | null
     }
 ): Promise<WorkoutSession> {
     const { data, error } = await db
@@ -132,9 +132,9 @@ export async function findSetsByExerciseId(
 export async function createWorkoutSets(
     db: DbClient,
     payload: {
-        workoutSessionId: string;
-        exerciseId: string;
-        sets: Pick<WorkoutSet, 'setNumber' | 'reps' | 'weightKg' | 'note'>[];
+        workoutSessionId: string
+        exerciseId: string
+        sets: Pick<WorkoutSet, 'setNumber' | 'reps' | 'weightKg' | 'note'>[]
     }
 ): Promise<WorkoutSet[]> {
     const rows = payload.sets.map((s) => ({

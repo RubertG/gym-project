@@ -1,7 +1,7 @@
 ---
 name: iron-track-architecture-guardian
 description: >-
-  Enforce IRON TRACK's strict layered architecture, folder conventions, and coding rules. Use this skill whenever creating, modifying, or reviewing backend code, API routes, services, repositories, models, or any file in src/lib/ or src/pages/api/. Also use when suggesting file placement, naming conventions, or architectural decisions. This skill ensures NO Server Actions, proper layer separation, and correct folder structure.
+    Enforce IRON TRACK's strict layered architecture, folder conventions, and coding rules. Use this skill whenever creating, modifying, or reviewing backend code, API routes, services, repositories, models, or any file in src/lib/ or src/pages/api/. Also use when suggesting file placement, naming conventions, or architectural decisions. This skill ensures NO Server Actions, proper layer separation, and correct folder structure.
 ---
 
 # IRON TRACK — Architecture Guardian
@@ -52,47 +52,47 @@ Supabase PostgreSQL
 
 Ubicación obligatoria de cada tipo de archivo:
 
-| Tipo de archivo | Carpeta |
-| --------------- | ------- |
-| Primitivos UI compartidos (Button, Input, Card, Checkbox, Toast, Spinner, Badge) | `src/components/ui/` |
-| Componentes de formulario compuestos | `src/components/forms/` |
-| Layouts (Navbar, Sidebar, Footer, Layout.astro) | `src/components/layout/` o `src/layouts/` |
-| Componentes específicos de dominio/feature | `src/components/features/<modulo>/` |
-| Endpoints REST (API Routes) | `src/pages/api/` |
-| Lógica de negocio | `src/lib/services/` |
-| Acceso a datos | `src/lib/repositories/` |
-| Tipos, interfaces, DTOs | `src/lib/models/` |
-| Helpers y utilidades | `src/lib/utils/` |
-| Cliente Supabase / setup DB | `src/lib/db/` |
-| Estado global (Zustand, solo workout activo) | `src/lib/stores/` |
-| Estilos globales / Tailwind entry | `src/styles/` |
+| Tipo de archivo                                                                  | Carpeta                                   |
+| -------------------------------------------------------------------------------- | ----------------------------------------- |
+| Primitivos UI compartidos (Button, Input, Card, Checkbox, Toast, Spinner, Badge) | `src/components/ui/`                      |
+| Componentes de formulario compuestos                                             | `src/components/forms/`                   |
+| Layouts (Navbar, Sidebar, Footer, Layout.astro)                                  | `src/components/layout/` o `src/layouts/` |
+| Componentes específicos de dominio/feature                                       | `src/components/features/<modulo>/`       |
+| Endpoints REST (API Routes)                                                      | `src/pages/api/`                          |
+| Lógica de negocio                                                                | `src/lib/services/`                       |
+| Acceso a datos                                                                   | `src/lib/repositories/`                   |
+| Tipos, interfaces, DTOs                                                          | `src/lib/models/`                         |
+| Helpers y utilidades                                                             | `src/lib/utils/`                          |
+| Cliente Supabase / setup DB                                                      | `src/lib/db/`                             |
+| Estado global (Zustand, solo workout activo)                                     | `src/lib/stores/`                         |
+| Estilos globales / Tailwind entry                                                | `src/styles/`                             |
 
 ## 4. Convenciones de Nomenclatura
 
-| Categoría | Convención | Ejemplo |
-| --------- | ---------- | ------- |
-| Componentes React / Astro | PascalCase | `WorkoutCard.tsx`, `BaseLayout.astro` |
-| Funciones y variables | camelCase | `getWorkoutById`, `sessionDate` |
-| Archivos que NO son componentes | kebab-case | `api-client.ts`, `use-auth.ts` |
-| Tipos / Interfaces | PascalCase | `WorkoutSession`, `UserProfile` |
+| Categoría                       | Convención | Ejemplo                               |
+| ------------------------------- | ---------- | ------------------------------------- |
+| Componentes React / Astro       | PascalCase | `WorkoutCard.tsx`, `BaseLayout.astro` |
+| Funciones y variables           | camelCase  | `getWorkoutById`, `sessionDate`       |
+| Archivos que NO son componentes | kebab-case | `api-client.ts`, `use-auth.ts`        |
+| Tipos / Interfaces              | PascalCase | `WorkoutSession`, `UserProfile`       |
 
 ## 5. Reglas de Componentes UI
 
 - Si un componente es un **primitivo visual** (Button, Input, Card, Checkbox, Toast, Spinner, Badge) → debe ir en `src/components/ui/`.
 - Todo componente en `src/components/ui/` debe ser **100% presentacional**:
-  - Sin lógica de negocio.
-  - Sin fetch de datos.
-  - Sin dependencia de Zustand ni estado global.
+    - Sin lógica de negocio.
+    - Sin fetch de datos.
+    - Sin dependencia de Zustand ni estado global.
 - **Antes de crear un nuevo componente en `src/components/ui/`**, verificar que no exista ya uno equivalente en esa carpeta.
 - Componentes específicos de un módulo o feature van en `src/components/features/<modulo>/`.
 
 ## 6. Manejo de Errores
 
 - Usar siempre las clases de error custom definidas en `src/lib/utils/errors.ts`:
-  - `AppError`
-  - `ValidationError`
-  - `AuthError`
-  - `NotFoundError`
+    - `AppError`
+    - `ValidationError`
+    - `AuthError`
+    - `NotFoundError`
 - No lanzar errores genéricos de tipo `Error` con mensajes sueltos.
 - Los Services deben capturar errores de Repository y transformarlos en instancias de las clases custom cuando sea necesario.
 - Los Controllers deben responder con códigos HTTP apropiados según el tipo de error (400 para ValidationError, 401 para AuthError, 404 para NotFoundError, 500 para AppError inesperado).
@@ -101,9 +101,9 @@ Ubicación obligatoria de cada tipo de archivo:
 
 - El proyecto usa **TypeScript en modo strict**.
 - Tipos explícitos obligatorios en:
-  - Parámetros de funciones.
-  - Valores de retorno.
-  - Objetos complejos (DTOs, payloads).
+    - Parámetros de funciones.
+    - Valores de retorno.
+    - Objetos complejos (DTOs, payloads).
 - Evitar `any`. Usar `unknown` con type narrowing cuando sea necesario.
 - Preferir `const` y `let` sobre `var`.
 - Usar async/await sobre promesas crudas cuando sea posible.

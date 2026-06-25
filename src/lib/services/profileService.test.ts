@@ -94,9 +94,7 @@ describe('profileService', () => {
                 deletedAt: null,
             }
 
-            vi.mocked(profileRepo.findProfileByUsername).mockResolvedValue(
-                null
-            )
+            vi.mocked(profileRepo.findProfileByUsername).mockResolvedValue(null)
             vi.mocked(profileRepo.createProfile).mockResolvedValue(mockProfile)
 
             await createProfile({ userId: 'user-1', username: '  TestUser  ' })
@@ -120,9 +118,7 @@ describe('profileService', () => {
                 deletedAt: null,
             }
 
-            vi.mocked(profileRepo.findProfileByUsername).mockResolvedValue(
-                null
-            )
+            vi.mocked(profileRepo.findProfileByUsername).mockResolvedValue(null)
             vi.mocked(profileRepo.createProfile).mockResolvedValue(mockProfile)
 
             const result = await createProfile({
@@ -228,9 +224,7 @@ describe('profileService', () => {
             vi.mocked(profileRepo.findProfileByUserId).mockResolvedValue(
                 mockProfile
             )
-            vi.mocked(profileRepo.findProfileByUsername).mockResolvedValue(
-                null
-            )
+            vi.mocked(profileRepo.findProfileByUsername).mockResolvedValue(null)
             vi.mocked(profileRepo.updateProfile).mockResolvedValue(
                 updatedProfile
             )

@@ -48,11 +48,11 @@ Library can't use class?→ style prop with var() constants
 ## The cn() Utility
 
 ```typescript
-import { clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+import { clsx } from 'clsx'
+import { twMerge } from 'tailwind-merge'
 
 export function cn(...inputs: ClassValue[]) {
-    return twMerge(clsx(inputs));
+    return twMerge(clsx(inputs))
 }
 ```
 

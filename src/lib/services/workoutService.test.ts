@@ -307,9 +307,7 @@ describe('workoutService', () => {
             vi.mocked(workoutRepo.findSessionById).mockResolvedValue(
                 mockSession
             )
-            vi.mocked(workoutRepo.createWorkoutSets).mockResolvedValue(
-                mockSets
-            )
+            vi.mocked(workoutRepo.createWorkoutSets).mockResolvedValue(mockSets)
 
             const result = await addSetsToSession('session-1', 'ex-1', [
                 { reps: 10, weightKg: 50 },
@@ -443,9 +441,7 @@ describe('workoutService', () => {
         })
 
         it('should handle February in leap year', async () => {
-            vi.mocked(workoutRepo.findSessionsInDateRange).mockResolvedValue(
-                []
-            )
+            vi.mocked(workoutRepo.findSessionsInDateRange).mockResolvedValue([])
 
             const result = await getCalendarData('user-1', 2024, 2)
 
@@ -453,9 +449,7 @@ describe('workoutService', () => {
         })
 
         it('should handle February in non-leap year', async () => {
-            vi.mocked(workoutRepo.findSessionsInDateRange).mockResolvedValue(
-                []
-            )
+            vi.mocked(workoutRepo.findSessionsInDateRange).mockResolvedValue([])
 
             const result = await getCalendarData('user-1', 2023, 2)
 

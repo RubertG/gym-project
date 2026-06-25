@@ -8,7 +8,7 @@ import { LogOut } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 
 interface LogoutButtonProps {
-    hideLabelOnMobile?: boolean;
+    hideLabelOnMobile?: boolean
 }
 
 export const LogoutButton: React.FC<LogoutButtonProps> = ({

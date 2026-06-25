@@ -2,18 +2,18 @@ import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 export interface Tab {
-    id: string;
-    label: string;
+    id: string
+    label: string
 }
 
 export interface TabsProps extends Omit<
     React.HTMLAttributes<HTMLDivElement>,
     'onChange'
 > {
-    tabs: Tab[];
-    activeTab: string;
-    onChange: (tabId: string) => void;
-    children: React.ReactNode;
+    tabs: Tab[]
+    activeTab: string
+    onChange: (tabId: string) => void
+    children: React.ReactNode
 }
 
 export const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(

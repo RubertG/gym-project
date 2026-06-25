@@ -44,14 +44,14 @@ function Counter() {
 ## Persist Middleware
 
 ```typescript
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
 interface SettingsStore {
-    theme: 'light' | 'dark';
-    language: string;
-    setTheme: (theme: 'light' | 'dark') => void;
-    setLanguage: (language: string) => void;
+    theme: 'light' | 'dark'
+    language: string
+    setTheme: (theme: 'light' | 'dark') => void
+    setLanguage: (language: string) => void
 }
 
 const useSettingsStore = create<SettingsStore>()(
@@ -66,7 +66,7 @@ const useSettingsStore = create<SettingsStore>()(
             name: 'settings-storage', // localStorage key
         }
     )
-);
+)
 ```
 
 ## Selectors (Zustand 5)
@@ -96,10 +96,10 @@ const store = useUserStore();  // Re-renders on ANY state change
 
 ```typescript
 interface UserStore {
-    user: User | null;
-    loading: boolean;
-    error: string | null;
-    fetchUser: (id: string) => Promise<void>;
+    user: User | null
+    loading: boolean
+    error: string | null
+    fetchUser: (id: string) => Promise<void>
 }
 
 const useUserStore = create<UserStore>((set) => ({
@@ -108,16 +108,16 @@ const useUserStore = create<UserStore>((set) => ({
     error: null,
 
     fetchUser: async (id) => {
-        set({ loading: true, error: null });
+        set({ loading: true, error: null })
         try {
-            const response = await fetch(`/api/users/${id}`);
-            const user = await response.json();
-            set({ user, loading: false });
+            const response = await fetch(`/api/users/${id}`)
+            const user = await response.json()
+            set({ user, loading: false })
         } catch (error) {
-            set({ error: 'Failed to fetch user', loading: false });
+            set({ error: 'Failed to fetch user', loading: false })
         }
     },
-}));
+}))
 ```
 
 ## Slices Pattern
@@ -125,22 +125,22 @@ const useUserStore = create<UserStore>((set) => ({
 ```typescript
 // userSlice.ts
 interface UserSlice {
-    user: User | null;
-    setUser: (user: User) => void;
-    clearUser: () => void;
+    user: User | null
+    setUser: (user: User) => void
+    clearUser: () => void
 }
 
 const createUserSlice = (set): UserSlice => ({
     user: null,
     setUser: (user) => set({ user }),
     clearUser: () => set({ user: null }),
-});
+})
 
 // cartSlice.ts
 interface CartSlice {
-    items: CartItem[];
-    addItem: (item: CartItem) => void;
-    removeItem: (id: string) => void;
+    items: CartItem[]
+    addItem: (item: CartItem) => void
+    removeItem: (id: string) => void
 }
 
 const createCartSlice = (set): CartSlice => ({
@@ -150,27 +150,27 @@ const createCartSlice = (set): CartSlice => ({
         set((state) => ({
             items: state.items.filter((i) => i.id !== id),
         })),
-});
+})
 
 // store.ts
-type Store = UserSlice & CartSlice;
+type Store = UserSlice & CartSlice
 
 const useStore = create<Store>()((...args) => ({
     ...createUserSlice(...args),
     ...createCartSlice(...args),
-}));
+}))
 ```
 
 ## Immer Middleware
 
 ```typescript
-import { create } from 'zustand';
-import { immer } from 'zustand/middleware/immer';
+import { create } from 'zustand'
+import { immer } from 'zustand/middleware/immer'
 
 interface TodoStore {
-    todos: Todo[];
-    addTodo: (text: string) => void;
-    toggleTodo: (id: string) => void;
+    todos: Todo[]
+    addTodo: (text: string) => void
+    toggleTodo: (id: string) => void
 }
 
 const useTodoStore = create<TodoStore>()(
@@ -184,23 +184,23 @@ const useTodoStore = create<TodoStore>()(
                     id: crypto.randomUUID(),
                     text,
                     done: false,
-                });
+                })
             }),
 
         toggleTodo: (id) =>
             set((state) => {
-                const todo = state.todos.find((t) => t.id === id);
-                if (todo) todo.done = !todo.done;
+                const todo = state.todos.find((t) => t.id === id)
+                if (todo) todo.done = !todo.done
             }),
     }))
-);
+)
 ```
 
 ## DevTools
 
 ```typescript
-import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
+import { create } from 'zustand'
+import { devtools } from 'zustand/middleware'
 
 const useStore = create<Store>()(
     devtools(
@@ -209,20 +209,20 @@ const useStore = create<Store>()(
         }),
         { name: 'MyStore' } // Name in Redux DevTools
     )
-);
+)
 ```
 
 ## Outside React
 
 ```typescript
 // Access store outside components
-const { count, increment } = useCounterStore.getState();
-increment();
+const { count, increment } = useCounterStore.getState()
+increment()
 
 // Subscribe to changes
 const unsubscribe = useCounterStore.subscribe((state) =>
     console.log('Count changed:', state.count)
-);
+)
 ```
 
 ## Keywords

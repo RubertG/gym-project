@@ -13,8 +13,8 @@ import { MobileNavOverlay } from '@/components/ui/MobileNavOverlay'
 import { NavLink } from '@/components/ui/NavLink'
 
 interface LandingNavbarProps {
-    user: { id: string } | null;
-    profile: Profile | null;
+    user: { id: string } | null
+    profile: Profile | null
 }
 
 export const LandingNavbar: React.FC<LandingNavbarProps> = ({

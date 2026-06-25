@@ -11,16 +11,16 @@ export interface ButtonProps extends Omit<
         | 'ghost'
         | 'ghost-primary'
         | 'ghost-danger'
-        | 'danger';
-    size?: 'sm' | 'md' | 'lg';
-    surface?: 'dark' | 'light';
-    loading?: boolean;
-    leftIcon?: React.ReactNode;
-    rightIcon?: React.ReactNode;
-    glow?: boolean;
-    href?: string;
-    disabled?: boolean;
-    type?: 'button' | 'submit' | 'reset';
+        | 'danger'
+    size?: 'sm' | 'md' | 'lg'
+    surface?: 'dark' | 'light'
+    loading?: boolean
+    leftIcon?: React.ReactNode
+    rightIcon?: React.ReactNode
+    glow?: boolean
+    href?: string
+    disabled?: boolean
+    type?: 'button' | 'submit' | 'reset'
 }
 
 const variantStyles = {

@@ -6,21 +6,21 @@
  */
 
 interface Props {
-    currentPath: string;
+    currentPath: string
 }
 
-const { currentPath } = Astro.props;
+const { currentPath } = Astro.props
 
 const navLinks = [
     { href: '/dashboard', label: 'Dashboard', icon: 'grid' },
     { href: '/dashboard/profile', label: 'Profile', icon: 'user' },
-];
+]
 
 function isActive(href: string, current: string): boolean {
     if (href === '/dashboard') {
-        return current === '/dashboard' || current === '/dashboard/';
+        return current === '/dashboard' || current === '/dashboard/'
     }
-    return current.startsWith(href);
+    return current.startsWith(href)
 }
 ---
 
@@ -40,7 +40,7 @@ function isActive(href: string, current: string): boolean {
     <nav class="flex flex-1 flex-col gap-1 px-3 py-6">
         {
             navLinks.map((link) => {
-                const active = isActive(link.href, currentPath);
+                const active = isActive(link.href, currentPath)
 
                 return (
                     <a
@@ -83,7 +83,7 @@ function isActive(href: string, current: string): boolean {
                         )}
                         {link.label}
                     </a>
-                );
+                )
             })
         }
     </nav>

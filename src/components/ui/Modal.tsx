@@ -3,12 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { X } from 'lucide-react'
 
 export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
-    isOpen: boolean;
-    onClose: () => void;
-    title?: string;
-    children: React.ReactNode;
-    footer?: React.ReactNode;
-    size?: 'sm' | 'md' | 'lg';
+    isOpen: boolean
+    onClose: () => void
+    title?: string
+    children: React.ReactNode
+    footer?: React.ReactNode
+    size?: 'sm' | 'md' | 'lg'
 }
 
 const sizeMap = {

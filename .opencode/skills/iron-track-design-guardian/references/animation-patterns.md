@@ -7,12 +7,12 @@ Patrones de animación con **Framer Motion** para el design system Voltage Indus
 ## 1. Modal con Entrada/Salida
 
 ```tsx
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion'
 
 interface ModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    children: React.ReactNode;
+    isOpen: boolean
+    onClose: () => void
+    children: React.ReactNode
 }
 
 export function Modal({ isOpen, onClose, children }: ModalProps) {
@@ -48,7 +48,7 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
                 </>
             )}
         </AnimatePresence>
-    );
+    )
 }
 ```
 
@@ -57,11 +57,11 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
 ## 2. Toast con Auto-Dismiss
 
 ```tsx
-import { motion } from 'framer-motion';
+import { motion } from 'framer-motion'
 
 interface ToastProps {
-    message: string;
-    onDismiss: () => void;
+    message: string
+    onDismiss: () => void
 }
 
 export function Toast({ message, onDismiss }: ToastProps) {
@@ -81,7 +81,7 @@ export function Toast({ message, onDismiss }: ToastProps) {
                 ×
             </button>
         </motion.div>
-    );
+    )
 }
 ```
 
@@ -90,7 +90,7 @@ export function Toast({ message, onDismiss }: ToastProps) {
 ## 3. Lista con Stagger Animation
 
 ```tsx
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion'
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -101,7 +101,7 @@ const containerVariants = {
             delayChildren: 0.1,
         },
     },
-};
+}
 
 const itemVariants = {
     hidden: { opacity: 0, y: 10 },
@@ -111,7 +111,7 @@ const itemVariants = {
         transition: { duration: 0.2, ease: 'easeOut' },
     },
     exit: { opacity: 0, y: -10 },
-};
+}
 
 export function ExerciseList({ exercises }: { exercises: Exercise[] }) {
     return (
@@ -134,7 +134,7 @@ export function ExerciseList({ exercises }: { exercises: Exercise[] }) {
                 ))}
             </AnimatePresence>
         </motion.div>
-    );
+    )
 }
 ```
 
@@ -143,12 +143,12 @@ export function ExerciseList({ exercises }: { exercises: Exercise[] }) {
 ## 4. Tabs con Transición Horizontal
 
 ```tsx
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion'
 
 interface TabsProps {
-    tabs: string[];
-    activeTab: number;
-    onTabChange: (index: number) => void;
+    tabs: string[]
+    activeTab: number
+    onTabChange: (index: number) => void
 }
 
 export function Tabs({ tabs, activeTab, onTabChange }: TabsProps) {
@@ -192,7 +192,7 @@ export function Tabs({ tabs, activeTab, onTabChange }: TabsProps) {
                 </motion.div>
             </AnimatePresence>
         </div>
-    );
+    )
 }
 ```
 
@@ -201,10 +201,10 @@ export function Tabs({ tabs, activeTab, onTabChange }: TabsProps) {
 ## 5. Botón con Feedback de Interacción
 
 ```tsx
-import { motion } from 'framer-motion';
+import { motion } from 'framer-motion'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    variant?: 'primary' | 'secondary';
+    variant?: 'primary' | 'secondary'
 }
 
 export function Button({
@@ -226,7 +226,7 @@ export function Button({
         >
             {children}
         </motion.button>
-    );
+    )
 }
 ```
 
@@ -235,10 +235,10 @@ export function Button({
 ## 6. Select con Dropdown Animado
 
 ```tsx
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion'
 
 export function Select({ options, value, onChange }: SelectProps) {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false)
 
     return (
         <div className="relative">
@@ -262,8 +262,8 @@ export function Select({ options, value, onChange }: SelectProps) {
                             <button
                                 key={option.value}
                                 onClick={() => {
-                                    onChange(option.value);
-                                    setIsOpen(false);
+                                    onChange(option.value)
+                                    setIsOpen(false)
                                 }}
                                 className="w-full px-4 py-2 text-left hover:bg-background-700"
                             >
@@ -274,7 +274,7 @@ export function Select({ options, value, onChange }: SelectProps) {
                 )}
             </AnimatePresence>
         </div>
-    );
+    )
 }
 ```
 
@@ -283,7 +283,7 @@ export function Select({ options, value, onChange }: SelectProps) {
 ## 7. Loading Spinner
 
 ```tsx
-import { motion } from 'framer-motion';
+import { motion } from 'framer-motion'
 
 export function Spinner() {
     return (
@@ -292,7 +292,7 @@ export function Spinner() {
             transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
             className="h-8 w-8 border-2 border-primary-300 border-t-transparent"
         />
-    );
+    )
 }
 ```
 
@@ -301,7 +301,7 @@ export function Spinner() {
 ## 8. Card con Hover Effect
 
 ```tsx
-import { motion } from 'framer-motion';
+import { motion } from 'framer-motion'
 
 export function RoutineCard({ routine }: { routine: Routine }) {
     return (
@@ -315,7 +315,7 @@ export function RoutineCard({ routine }: { routine: Routine }) {
             </h3>
             <p className="mt-2 text-secondary-400">{routine.days} days</p>
         </motion.div>
-    );
+    )
 }
 ```
 
@@ -324,13 +324,13 @@ export function RoutineCard({ routine }: { routine: Routine }) {
 ## 9. Page Transition
 
 ```tsx
-import { motion } from 'framer-motion';
+import { motion } from 'framer-motion'
 
 const pageVariants = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
     exit: { opacity: 0, y: -20 },
-};
+}
 
 export function PageTransition({ children }: { children: React.ReactNode }) {
     return (
@@ -343,7 +343,7 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
         >
             {children}
         </motion.div>
-    );
+    )
 }
 ```
 
@@ -352,10 +352,10 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
 ## 10. Accessibility: Reduced Motion
 
 ```tsx
-import { useReducedMotion } from 'framer-motion';
+import { useReducedMotion } from 'framer-motion'
 
 export function AnimatedComponent() {
-    const prefersReduced = useReducedMotion();
+    const prefersReduced = useReducedMotion()
 
     return (
         <motion.div
@@ -365,7 +365,7 @@ export function AnimatedComponent() {
         >
             Content
         </motion.div>
-    );
+    )
 }
 ```
 

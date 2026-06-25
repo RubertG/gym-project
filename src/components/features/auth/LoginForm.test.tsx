@@ -32,9 +32,7 @@ describe('LoginForm', () => {
         const { container } = render(<LoginForm />)
 
         // Dejar email vacio, escribir solo password
-        const passwordInput = container.querySelector(
-            'input[name="password"]'
-        )!
+        const passwordInput = container.querySelector('input[name="password"]')!
 
         fireEvent.change(passwordInput, { target: { value: 'somepassword' } })
 
@@ -58,9 +56,7 @@ describe('LoginForm', () => {
         const { container } = render(<LoginForm />)
 
         const emailInput = container.querySelector('input[name="email"]')!
-        const passwordInput = container.querySelector(
-            'input[name="password"]'
-        )!
+        const passwordInput = container.querySelector('input[name="password"]')!
 
         fireEvent.change(emailInput, { target: { value: 'test@example.com' } })
         fireEvent.change(passwordInput, { target: { value: 'password123' } })
@@ -86,9 +82,7 @@ describe('LoginForm', () => {
         const { container } = render(<LoginForm />)
 
         const emailInput = container.querySelector('input[name="email"]')!
-        const passwordInput = container.querySelector(
-            'input[name="password"]'
-        )!
+        const passwordInput = container.querySelector('input[name="password"]')!
 
         fireEvent.change(emailInput, { target: { value: 'test@example.com' } })
         fireEvent.change(passwordInput, { target: { value: 'wrong' } })
@@ -121,9 +115,7 @@ describe('LoginForm', () => {
         const { container } = render(<LoginForm />)
 
         const emailInput = container.querySelector('input[name="email"]')!
-        const passwordInput = container.querySelector(
-            'input[name="password"]'
-        )!
+        const passwordInput = container.querySelector('input[name="password"]')!
 
         fireEvent.change(emailInput, { target: { value: 'test@example.com' } })
         fireEvent.change(passwordInput, { target: { value: 'short' } })

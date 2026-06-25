@@ -1,13 +1,13 @@
 ---
 name: sdd-verify
-description: "Trigger: SDD verification phase, verify change. Execute tests and prove implementation matches specs, design, and tasks."
+description: 'Trigger: SDD verification phase, verify change. Execute tests and prove implementation matches specs, design, and tasks.'
 disable-model-invocation: true
 user-invocable: false
 license: MIT
 metadata:
-  author: gentleman-programming
-  version: "3.0"
-  delegate_only: true
+    author: gentleman-programming
+    version: '3.0'
+    delegate_only: true
 ---
 
 > **ORCHESTRATOR GATE**: If you loaded this skill via the `skill()` tool, you are
@@ -47,19 +47,19 @@ The orchestrator should provide structured status from `skills/_shared/sdd-statu
 
 ## Decision Gates
 
-| Condition | Action |
-|---|---|
-| Orchestrator says `STRICT TDD MODE IS ACTIVE` | Treat as authoritative. |
-| Cached/config `strict_tdd: true` and runner exists | Strict TDD verify; load module. |
-| Strict TDD false or no runner | Standard verify; skip TDD checks. |
-| `actionContext.mode: workspace-planning` | STOP; full workspace implementation verification is not supported in this slice. |
-| Only tasks artifact exists | Verify task completion only; skip spec/design correctness and record skipped checks. |
-| Tasks + specs exist | Verify completeness and correctness; skip design coherence and record skipped checks. |
-| Proposal/specs/design/tasks exist | Verify all dimensions. |
-| Task incomplete | CRITICAL for core task, WARNING for cleanup task. |
-| Test command exits non-zero | CRITICAL. |
-| Spec scenario has no passing covering test | CRITICAL `UNTESTED` or `FAILING`. |
-| Design deviation exists | WARNING unless it breaks a spec. |
+| Condition                                          | Action                                                                                |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| Orchestrator says `STRICT TDD MODE IS ACTIVE`      | Treat as authoritative.                                                               |
+| Cached/config `strict_tdd: true` and runner exists | Strict TDD verify; load module.                                                       |
+| Strict TDD false or no runner                      | Standard verify; skip TDD checks.                                                     |
+| `actionContext.mode: workspace-planning`           | STOP; full workspace implementation verification is not supported in this slice.      |
+| Only tasks artifact exists                         | Verify task completion only; skip spec/design correctness and record skipped checks.  |
+| Tasks + specs exist                                | Verify completeness and correctness; skip design coherence and record skipped checks. |
+| Proposal/specs/design/tasks exist                  | Verify all dimensions.                                                                |
+| Task incomplete                                    | CRITICAL for core task, WARNING for cleanup task.                                     |
+| Test command exits non-zero                        | CRITICAL.                                                                             |
+| Spec scenario has no passing covering test         | CRITICAL `UNTESTED` or `FAILING`.                                                     |
+| Design deviation exists                            | WARNING unless it breaks a spec.                                                      |
 
 ## Execution Steps
 

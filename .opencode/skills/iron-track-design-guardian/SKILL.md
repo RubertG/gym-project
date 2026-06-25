@@ -82,9 +82,8 @@ description: >-
 #### Entrada/Salida de Modales y Overlays
 
 ```tsx
-import { motion, AnimatePresence } from 'framer-motion';
-
-<AnimatePresence>
+import { motion, AnimatePresence } from 'framer-motion'
+;<AnimatePresence>
     {isOpen && (
         <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -95,7 +94,7 @@ import { motion, AnimatePresence } from 'framer-motion';
             {/* Modal content */}
         </motion.div>
     )}
-</AnimatePresence>;
+</AnimatePresence>
 ```
 
 #### Fade In/Out para Listas y Items

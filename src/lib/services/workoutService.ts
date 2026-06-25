@@ -189,9 +189,9 @@ export async function calculatePRs(
     userId: string,
     exerciseId: string
 ): Promise<{
-    maxWeight: number;
-    maxVolume: number;
-    bestSet: { reps: number; weightKg: number; volume: number } | null;
+    maxWeight: number
+    maxVolume: number
+    bestSet: { reps: number; weightKg: number; volume: number } | null
 }> {
     const db = getServerClient()
     const sets = await workoutRepo.findSetsByUserAndExercise(

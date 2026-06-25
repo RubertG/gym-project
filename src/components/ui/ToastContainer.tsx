@@ -3,16 +3,16 @@ import { AnimatePresence } from 'framer-motion'
 import { Toast, type ToastType, type ToastPosition } from './Toast'
 
 export interface ToastItem {
-    id: string;
-    message: string;
-    type: ToastType;
-    position: ToastPosition;
-    duration: number;
+    id: string
+    message: string
+    type: ToastType
+    position: ToastPosition
+    duration: number
 }
 
 export interface ToastContainerProps {
-    toasts: ToastItem[];
-    onRemove: (id: string) => void;
+    toasts: ToastItem[]
+    onRemove: (id: string) => void
 }
 
 const positionMap: Record<ToastPosition, string> = {

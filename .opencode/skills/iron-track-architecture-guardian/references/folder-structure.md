@@ -94,6 +94,7 @@ gym-project/
 ## Descripción por Carpeta
 
 ### `src/components/`
+
 Contiene todos los componentes visuales del proyecto, organizados por nivel de abstracción y dominio.
 
 - **`src/components/ui/`** — Primitivos UI compartidos (Button, Input, Card, Checkbox, Toast, Spinner, Badge). Deben ser 100% presentacionales: sin lógica de negocio, sin fetch, sin estado global.
@@ -102,9 +103,11 @@ Contiene todos los componentes visuales del proyecto, organizados por nivel de a
 - **`src/components/features/<modulo>/`** — Componentes específicos de cada módulo (auth, exercises, routines, workouts, calendar, community, landing). Cada subcarpeta agrupa la UI de su dominio.
 
 ### `src/layouts/`
+
 Layouts base de Astro que envuelven páginas enteras. Ejemplo: `Layout.astro` con meta tags, HTML semántico y slots.
 
 ### `src/lib/`
+
 Código de servidor y lógica compartida, estrictamente organizado en capas.
 
 - **`src/lib/db/`** — Configuración del cliente de Supabase (`@supabase/supabase-js`) y helpers de conexión a PostgreSQL.
@@ -115,6 +118,7 @@ Código de servidor y lógica compartida, estrictamente organizado en capas.
 - **`src/lib/utils/`** — Funciones helper genéricas y clases de error custom (`errors.ts`).
 
 ### `src/pages/`
+
 Páginas de Astro y API Routes.
 
 - **`src/pages/api/`** — Endpoints REST. Son los Controllers de la arquitectura. Reciben HTTP, validan input, llaman a Services y devuelven JSON. **Única vía permitida para mutaciones.**
@@ -122,16 +126,21 @@ Páginas de Astro y API Routes.
 - **`src/pages/index.astro`** — Landing page principal.
 
 ### `src/styles/`
+
 Archivos CSS globales. `global.css` es el entry point que importa Tailwind.
 
 ### `docs/`
+
 Documentación del proyecto legible por humanos y agentes: arquitectura, contributing, stack tecnológico, requerimientos, design system y skills fundamentales.
 
 ### `harness/`
+
 Prompts especializados y workflows del agente AI. Leer `harness/AGENTS.md` para contexto completo de reglas de arquitectura y design system.
 
 ### `planning/`
+
 Planificación del desarrollo por fases y módulos. Contiene el plan de trabajo y una carpeta `modules/` con un subdirectorio por cada uno de los 7 módulos core del sistema.
 
 ### `.opencode/skills/`
+
 Skills instalables para el agente OpenCode. Cada skill tiene su propio `SKILL.md` y carpeta `references/`.

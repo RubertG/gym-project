@@ -9,28 +9,28 @@ import type { User } from '@supabase/supabase-js'
 import type { Profile } from '@/lib/models'
 
 interface ValidationError {
-    field: string;
-    message: string;
+    field: string
+    message: string
 }
 
 interface UseAuthReturn {
-    user: User | null;
-    profile: Profile | null;
-    loading: boolean;
+    user: User | null
+    profile: Profile | null
+    loading: boolean
     signIn: (
         email: string,
         password: string
     ) => Promise<
         { ok: true } | { ok: false; error: string; details?: ValidationError[] }
-    >;
+    >
     signUp: (
         email: string,
         password: string,
         username?: string
     ) => Promise<
         { ok: true } | { ok: false; error: string; details?: ValidationError[] }
-    >;
-    signOut: () => Promise<void>;
+    >
+    signOut: () => Promise<void>
 }
 
 export function useAuth(): UseAuthReturn {

@@ -5,10 +5,10 @@
  * Muestra contenido de bienvenida al usuario autenticado.
  */
 
-import DashboardLayout from '@/components/layout/DashboardLayout.astro';
+import DashboardLayout from '@/components/layout/DashboardLayout.astro'
 
-const profile = Astro.locals.profile;
-const displayName = profile?.username ?? 'Athlete';
+const profile = Astro.locals.profile
+const displayName = profile?.username ?? 'Athlete'
 ---
 
 <DashboardLayout title="Dashboard — IRON TRACK">

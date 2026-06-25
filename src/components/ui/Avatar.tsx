@@ -2,9 +2,9 @@ import React from 'react'
 import { User } from 'lucide-react'
 
 export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
-    src?: string;
-    fallback?: string;
-    size?: 'sm' | 'md' | 'lg' | 'xl';
+    src?: string
+    fallback?: string
+    size?: 'sm' | 'md' | 'lg' | 'xl'
 }
 
 const sizeMap = {

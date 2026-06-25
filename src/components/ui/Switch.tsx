@@ -4,11 +4,11 @@ export interface SwitchProps extends Omit<
     React.InputHTMLAttributes<HTMLInputElement>,
     'type' | 'size'
 > {
-    checked?: boolean;
-    defaultChecked?: boolean;
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    disabled?: boolean;
-    size?: 'sm' | 'md';
+    checked?: boolean
+    defaultChecked?: boolean
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+    disabled?: boolean
+    size?: 'sm' | 'md'
 }
 
 const sizeMap = {

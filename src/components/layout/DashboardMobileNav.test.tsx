@@ -18,9 +18,7 @@ describe('DashboardMobileNav', () => {
     it('renderiza el header con hamburguesa', () => {
         render(<DashboardMobileNav user={{ id: 'user-123' }} profile={null} />)
 
-        expect(
-            screen.getByRole('button', { name: /abrir menu/i })
-        ).toBeTruthy()
+        expect(screen.getByRole('button', { name: /abrir menu/i })).toBeTruthy()
         expect(
             screen.getByText((content) => content.includes('IRON'))
         ).toBeTruthy()

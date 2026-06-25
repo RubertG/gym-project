@@ -11,8 +11,8 @@ import { IconButton } from '@/components/ui/IconButton'
 import { MobileNavOverlay } from '@/components/ui/MobileNavOverlay'
 
 interface DashboardMobileNavProps {
-    user: { id: string } | null;
-    profile: Profile | null;
+    user: { id: string } | null
+    profile: Profile | null
 }
 
 const dashboardLinks = [

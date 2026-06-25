@@ -6,10 +6,10 @@
 import React from 'react'
 
 interface NavLinkProps {
-    href: string;
-    children: React.ReactNode;
-    active?: boolean;
-    className?: string;
+    href: string
+    children: React.ReactNode
+    active?: boolean
+    className?: string
 }
 
 export const NavLink: React.FC<NavLinkProps> = ({

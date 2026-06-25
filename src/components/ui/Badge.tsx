@@ -1,8 +1,8 @@
 import React from 'react'
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
-    variant?: 'default' | 'primary' | 'success' | 'warning' | 'danger';
-    children: React.ReactNode;
+    variant?: 'default' | 'primary' | 'success' | 'warning' | 'danger'
+    children: React.ReactNode
 }
 
 const variantStyles = {
