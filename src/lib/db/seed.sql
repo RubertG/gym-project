@@ -31,80 +31,113 @@ values (
 )
 on conflict (id) do nothing;
 
+-- Usuario administrador de prueba
+insert into auth.users (id, email, encrypted_password, email_confirmed_at, created_at, updated_at)
+values (
+    '22222222-2222-2222-2222-222222222222',
+    'admin@irontrack.app',
+    crypt('admin123', gen_salt('bf')),
+    now(),
+    now(),
+    now()
+)
+on conflict (id) do nothing;
+
+insert into public.profiles (id, username, role, created_at, updated_at)
+values (
+    '22222222-2222-2222-2222-222222222222',
+    'seed_admin',
+    'admin',
+    now(),
+    now()
+)
+on conflict (id) do nothing;
+
 -- ============================================================
 -- 2. EJERCICIOS (30+ ejercicios aprobados)
 -- ============================================================
 
 -- Pecho
-insert into public.exercises (id, name, category, image_url, created_by, status, created_at) values
-  ('e1010000-0000-0000-0000-000000000001', 'Press Banca Plano', 'Pecho', null, null, 'approved', now()),
-  ('e1010000-0000-0000-0000-000000000002', 'Press Banca Inclinado', 'Pecho', null, null, 'approved', now()),
-  ('e1010000-0000-0000-0000-000000000003', 'Press Banca Declinado', 'Pecho', null, null, 'approved', now()),
-  ('e1010000-0000-0000-0000-000000000004', 'Aperturas con Mancuernas', 'Pecho', null, null, 'approved', now()),
-  ('e1010000-0000-0000-0000-000000000005', 'Fondos en Paralelas', 'Pecho', null, null, 'approved', now()),
-  ('e1010000-0000-0000-0000-000000000006', 'Cruces en Polea Baja', 'Pecho', null, null, 'approved', now()),
-  ('e1010000-0000-0000-0000-000000000007', 'Pullover con Mancuerna', 'Pecho', null, null, 'approved', now())
+insert into public.exercises (id, name, category, created_by, status, created_at) values
+  ('e1010000-0000-0000-0000-000000000001', 'Press Banca Plano', 'Pecho', null, 'approved', now()),
+  ('e1010000-0000-0000-0000-000000000002', 'Press Banca Inclinado', 'Pecho', null, 'approved', now()),
+  ('e1010000-0000-0000-0000-000000000003', 'Press Banca Declinado', 'Pecho', null, 'approved', now()),
+  ('e1010000-0000-0000-0000-000000000004', 'Aperturas con Mancuernas', 'Pecho', null, 'approved', now()),
+  ('e1010000-0000-0000-0000-000000000005', 'Fondos en Paralelas', 'Pecho', null, 'approved', now()),
+  ('e1010000-0000-0000-0000-000000000006', 'Cruces en Polea Baja', 'Pecho', null, 'approved', now()),
+  ('e1010000-0000-0000-0000-000000000007', 'Pullover con Mancuerna', 'Pecho', null, 'approved', now())
 on conflict (id) do nothing;
 
 -- Espalda
-insert into public.exercises (id, name, category, image_url, created_by, status, created_at) values
-  ('e1020000-0000-0000-0000-000000000001', 'Dominadas', 'Espalda', null, null, 'approved', now()),
-  ('e1020000-0000-0000-0000-000000000002', 'Jalón al Pecho', 'Espalda', null, null, 'approved', now()),
-  ('e1020000-0000-0000-0000-000000000003', 'Remo con Barra', 'Espalda', null, null, 'approved', now()),
-  ('e1020000-0000-0000-0000-000000000004', 'Remo con Mancuerna', 'Espalda', null, null, 'approved', now()),
-  ('e1020000-0000-0000-0000-000000000005', 'Remo en Máquina', 'Espalda', null, null, 'approved', now()),
-  ('e1020000-0000-0000-0000-000000000006', 'Pulldown con Agarre Neutro', 'Espalda', null, null, 'approved', now()),
-  ('e1020000-0000-0000-0000-000000000007', 'Hiperextensiones de Espalda', 'Espalda', null, null, 'approved', now())
+insert into public.exercises (id, name, category, created_by, status, created_at) values
+  ('e1020000-0000-0000-0000-000000000001', 'Dominadas', 'Espalda', null, 'approved', now()),
+  ('e1020000-0000-0000-0000-000000000002', 'Jalón al Pecho', 'Espalda', null, 'approved', now()),
+  ('e1020000-0000-0000-0000-000000000003', 'Remo con Barra', 'Espalda', null, 'approved', now()),
+  ('e1020000-0000-0000-0000-000000000004', 'Remo con Mancuerna', 'Espalda', null, 'approved', now()),
+  ('e1020000-0000-0000-0000-000000000005', 'Remo en Máquina', 'Espalda', null, 'approved', now()),
+  ('e1020000-0000-0000-0000-000000000006', 'Pulldown con Agarre Neutro', 'Espalda', null, 'approved', now()),
+  ('e1020000-0000-0000-0000-000000000007', 'Hiperextensiones de Espalda', 'Espalda', null, 'approved', now())
 on conflict (id) do nothing;
 
 -- Piernas
-insert into public.exercises (id, name, category, image_url, created_by, status, created_at) values
-  ('e1030000-0000-0000-0000-000000000001', 'Sentadilla Tradicional', 'Piernas', null, null, 'approved', now()),
-  ('e1030000-0000-0000-0000-000000000002', 'Sentadilla Frontal', 'Piernas', null, null, 'approved', now()),
-  ('e1030000-0000-0000-0000-000000000003', 'Prensa de Piernas', 'Piernas', null, null, 'approved', now()),
-  ('e1030000-0000-0000-0000-000000000004', 'Peso Muerto', 'Piernas', null, null, 'approved', now()),
-  ('e1030000-0000-0000-0000-000000000005', 'Peso Muerto Rumano', 'Piernas', null, null, 'approved', now()),
-  ('e1030000-0000-0000-0000-000000000006', 'Zancadas con Mancuernas', 'Piernas', null, null, 'approved', now()),
-  ('e1030000-0000-0000-0000-000000000007', 'Extensión de Cuádriceps', 'Piernas', null, null, 'approved', now()),
-  ('e1030000-0000-0000-0000-000000000008', 'Curl Femoral Acostado', 'Piernas', null, null, 'approved', now()),
-  ('e1030000-0000-0000-0000-000000000009', 'Elevación de Talones', 'Piernas', null, null, 'approved', now())
+insert into public.exercises (id, name, category, created_by, status, created_at) values
+  ('e1030000-0000-0000-0000-000000000001', 'Sentadilla Tradicional', 'Piernas', null, 'approved', now()),
+  ('e1030000-0000-0000-0000-000000000002', 'Sentadilla Frontal', 'Piernas', null, 'approved', now()),
+  ('e1030000-0000-0000-0000-000000000003', 'Prensa de Piernas', 'Piernas', null, 'approved', now()),
+  ('e1030000-0000-0000-0000-000000000004', 'Peso Muerto', 'Piernas', null, 'approved', now()),
+  ('e1030000-0000-0000-0000-000000000005', 'Peso Muerto Rumano', 'Piernas', null, 'approved', now()),
+  ('e1030000-0000-0000-0000-000000000006', 'Zancadas con Mancuernas', 'Piernas', null, 'approved', now()),
+  ('e1030000-0000-0000-0000-000000000007', 'Extensión de Cuádriceps', 'Piernas', null, 'approved', now()),
+  ('e1030000-0000-0000-0000-000000000008', 'Curl Femoral Acostado', 'Piernas', null, 'approved', now()),
+  ('e1030000-0000-0000-0000-000000000009', 'Elevación de Talones', 'Piernas', null, 'approved', now())
 on conflict (id) do nothing;
 
 -- Hombros
-insert into public.exercises (id, name, category, image_url, created_by, status, created_at) values
-  ('e1040000-0000-0000-0000-000000000001', 'Press Militar con Barra', 'Hombros', null, null, 'approved', now()),
-  ('e1040000-0000-0000-0000-000000000002', 'Press Militar con Mancuernas', 'Hombros', null, null, 'approved', now()),
-  ('e1040000-0000-0000-0000-000000000003', 'Elevaciones Laterales', 'Hombros', null, null, 'approved', now()),
-  ('e1040000-0000-0000-0000-000000000004', 'Elevaciones Frontales', 'Hombros', null, null, 'approved', now()),
-  ('e1040000-0000-0000-0000-000000000005', 'Pájaro con Mancuernas', 'Hombros', null, null, 'approved', now()),
-  ('e1040000-0000-0000-0000-000000000006', 'Face Pull', 'Hombros', null, null, 'approved', now())
+insert into public.exercises (id, name, category, created_by, status, created_at) values
+  ('e1040000-0000-0000-0000-000000000001', 'Press Militar con Barra', 'Hombros', null, 'approved', now()),
+  ('e1040000-0000-0000-0000-000000000002', 'Press Militar con Mancuernas', 'Hombros', null, 'approved', now()),
+  ('e1040000-0000-0000-0000-000000000003', 'Elevaciones Laterales', 'Hombros', null, 'approved', now()),
+  ('e1040000-0000-0000-0000-000000000004', 'Elevaciones Frontales', 'Hombros', null, 'approved', now()),
+  ('e1040000-0000-0000-0000-000000000005', 'Pájaro con Mancuernas', 'Hombros', null, 'approved', now()),
+  ('e1040000-0000-0000-0000-000000000006', 'Face Pull', 'Hombros', null, 'approved', now())
 on conflict (id) do nothing;
 
 -- Brazos
-insert into public.exercises (id, name, category, image_url, created_by, status, created_at) values
-  ('e1050000-0000-0000-0000-000000000001', 'Curl con Barra', 'Brazos', null, null, 'approved', now()),
-  ('e1050000-0000-0000-0000-000000000002', 'Curl con Mancuernas', 'Brazos', null, null, 'approved', now()),
-  ('e1050000-0000-0000-0000-000000000003', 'Curl Martillo', 'Brazos', null, null, 'approved', now()),
-  ('e1050000-0000-0000-0000-000000000004', 'Curl en Banco Scott', 'Brazos', null, null, 'approved', now()),
-  ('e1050000-0000-0000-0000-000000000005', 'Curl en Polea', 'Brazos', null, null, 'approved', now()),
-  ('e1050000-0000-0000-0000-000000000006', 'Press Francés', 'Brazos', null, null, 'approved', now()),
-  ('e1050000-0000-0000-0000-000000000007', 'Extensiones de Tríceps en Polea', 'Brazos', null, null, 'approved', now()),
-  ('e1050000-0000-0000-0000-000000000008', 'Fondos para Tríceps', 'Brazos', null, null, 'approved', now())
+insert into public.exercises (id, name, category, created_by, status, created_at) values
+  ('e1050000-0000-0000-0000-000000000001', 'Curl con Barra', 'Brazos', null, 'approved', now()),
+  ('e1050000-0000-0000-0000-000000000002', 'Curl con Mancuernas', 'Brazos', null, 'approved', now()),
+  ('e1050000-0000-0000-0000-000000000003', 'Curl Martillo', 'Brazos', null, 'approved', now()),
+  ('e1050000-0000-0000-0000-000000000004', 'Curl en Banco Scott', 'Brazos', null, 'approved', now()),
+  ('e1050000-0000-0000-0000-000000000005', 'Curl en Polea', 'Brazos', null, 'approved', now()),
+  ('e1050000-0000-0000-0000-000000000006', 'Press Francés', 'Brazos', null, 'approved', now()),
+  ('e1050000-0000-0000-0000-000000000007', 'Extensiones de Tríceps en Polea', 'Brazos', null, 'approved', now()),
+  ('e1050000-0000-0000-0000-000000000008', 'Fondos para Tríceps', 'Brazos', null, 'approved', now())
 on conflict (id) do nothing;
 
 -- Core y Cardio
-insert into public.exercises (id, name, category, image_url, created_by, status, created_at) values
-  ('e1060000-0000-0000-0000-000000000001', 'Crunch Abdominal', 'Core y Cardio', null, null, 'approved', now()),
-  ('e1060000-0000-0000-0000-000000000002', 'Plancha Frontal', 'Core y Cardio', null, null, 'approved', now()),
-  ('e1060000-0000-0000-0000-000000000003', 'Elevación de Piernas', 'Core y Cardio', null, null, 'approved', now()),
-  ('e1060000-0000-0000-0000-000000000004', 'Russian Twist', 'Core y Cardio', null, null, 'approved', now()),
-  ('e1060000-0000-0000-0000-000000000005', 'Cinta de Correr', 'Core y Cardio', null, null, 'approved', now()),
-  ('e1060000-0000-0000-0000-000000000006', 'Bicicleta Estática', 'Core y Cardio', null, null, 'approved', now()),
-  ('e1060000-0000-0000-0000-000000000007', 'Elíptica', 'Core y Cardio', null, null, 'approved', now())
+insert into public.exercises (id, name, category, created_by, status, created_at) values
+  ('e1060000-0000-0000-0000-000000000001', 'Crunch Abdominal', 'Core y Cardio', null, 'approved', now()),
+  ('e1060000-0000-0000-0000-000000000002', 'Plancha Frontal', 'Core y Cardio', null, 'approved', now()),
+  ('e1060000-0000-0000-0000-000000000003', 'Elevación de Piernas', 'Core y Cardio', null, 'approved', now()),
+  ('e1060000-0000-0000-0000-000000000004', 'Russian Twist', 'Core y Cardio', null, 'approved', now()),
+  ('e1060000-0000-0000-0000-000000000005', 'Cinta de Correr', 'Core y Cardio', null, 'approved', now()),
+  ('e1060000-0000-0000-0000-000000000006', 'Bicicleta Estática', 'Core y Cardio', null, 'approved', now()),
+  ('e1060000-0000-0000-0000-000000000007', 'Elíptica', 'Core y Cardio', null, 'approved', now())
 on conflict (id) do nothing;
 
 -- ============================================================
--- 3. RUTINAS DE EJEMPLO
+-- 3. MULTIMEDIA DE EJEMPLO
+-- ============================================================
+insert into public.exercise_media (id, exercise_id, type, url, thumbnail_url, order_index, created_at)
+values
+    ('m1010000-0000-0000-0000-000000000001', 'e1010000-0000-0000-0000-000000000001', 'image', 'https://pub-aa0db9342631451289ced5c0b814cf9f.r2.dev/exercises/press-banca-plano.jpg', null, 0, now()),
+    ('m1010000-0000-0000-0000-000000000002', 'e1010000-0000-0000-0000-000000000001', 'video', 'https://www.youtube.com/watch?v=0hvgw1drCh8', null, 1, now()),
+    ('m1030000-0000-0000-0000-000000000001', 'e1030000-0000-0000-0000-000000000001', 'image', 'https://pub-aa0db9342631451289ced5c0b814cf9f.r2.dev/exercises/sentadilla-tradicional.jpg', null, 0, now()),
+    ('m1020000-0000-0000-0000-000000000001', 'e1020000-0000-0000-0000-000000000001', 'video', 'https://www.youtube.com/watch?v=8BQJkC9iR5c', null, 0, now())
+on conflict (id) do nothing;
+
+-- ============================================================
+-- 4. RUTINAS DE EJEMPLO
 -- ============================================================
 
 -- Variables locales para IDs de usuario

@@ -21,10 +21,17 @@ export interface WorkoutSetInput {
     note: string | null
 }
 
+export interface ExerciseMediaInput {
+    type: 'image' | 'video'
+    url?: string
+    thumbnailUrl?: string | null
+    orderIndex?: number
+}
+
 export interface CreateExercisePayload {
     name: string
     category?: string | null
-    imageUrl?: string | null
+    media?: ExerciseMediaInput[]
 }
 
 export interface UpdateProfilePayload {

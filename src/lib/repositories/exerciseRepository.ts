@@ -70,20 +70,20 @@ export async function createExercise(
     db: DbClient,
     payload: {
         name: string
-        imageUrl?: string
         category?: string
         createdBy: string | null
-        status: 'pending' | 'approved'
+        status: 'pending' | 'approved' | 'rejected'
+        rejectionReason?: string | null
     }
 ): Promise<Exercise> {
     const { data, error } = await db
         .from<Exercise>('exercises')
         .insert({
             name: payload.name,
-            image_url: payload.imageUrl ?? null,
             category: payload.category ?? null,
             created_by: payload.createdBy,
             status: payload.status,
+            rejection_reason: payload.rejectionReason ?? null,
         })
         .select()
         .single()
@@ -97,15 +97,16 @@ export async function updateExercise(
     db: DbClient,
     id: string,
     payload: Partial<
-        Pick<Exercise, 'name' | 'imageUrl' | 'category' | 'status'>
+        Pick<Exercise, 'name' | 'category' | 'status' | 'rejectionReason'>
     >
 ): Promise<Exercise> {
     const mapped: Record<string, unknown> = {}
 
     if (payload.name !== undefined) mapped.name = payload.name
-    if (payload.imageUrl !== undefined) mapped.image_url = payload.imageUrl
     if (payload.category !== undefined) mapped.category = payload.category
     if (payload.status !== undefined) mapped.status = payload.status
+    if (payload.rejectionReason !== undefined)
+        mapped.rejection_reason = payload.rejectionReason
 
     const { data, error } = await db
         .from<Exercise>('exercises')

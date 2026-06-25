@@ -94,6 +94,42 @@ const EXERCISES_BY_CATEGORY: Record<string, string[]> = {
     ],
 }
 
+const R2_PUBLIC_BASE = 'https://pub-aa0db9342631451289ced5c0b814cf9f.r2.dev'
+
+const ADMIN_USER_ID = '22222222-2222-2222-2222-222222222222'
+
+const EXERCISE_MEDIA: {
+    name: string
+    type: 'image' | 'video'
+    url: string
+    orderIndex: number
+}[] = [
+    {
+        name: 'Press Banca Plano',
+        type: 'image',
+        url: `${R2_PUBLIC_BASE}/exercises/press-banca-plano.jpg`,
+        orderIndex: 0,
+    },
+    {
+        name: 'Press Banca Plano',
+        type: 'video',
+        url: 'https://www.youtube.com/watch?v=0hvgw1drCh8',
+        orderIndex: 1,
+    },
+    {
+        name: 'Sentadilla Tradicional',
+        type: 'image',
+        url: `${R2_PUBLIC_BASE}/exercises/sentadilla-tradicional.jpg`,
+        orderIndex: 0,
+    },
+    {
+        name: 'Dominadas',
+        type: 'video',
+        url: 'https://www.youtube.com/watch?v=8BQJkC9iR5c',
+        orderIndex: 0,
+    },
+]
+
 const EXERCISES: { name: string; category: string }[] = []
 
 for (const [category, names] of Object.entries(EXERCISES_BY_CATEGORY)) {
@@ -615,7 +651,33 @@ export async function runSeed(
         exerciseMap.set(ex.name, created.id)
     }
 
-    // 2. Insertar rutinas de ejemplo (si se provee un usuario seed)
+    // 2. Insertar multimedia de ejemplo
+    for (const media of EXERCISE_MEDIA) {
+        const exerciseId = exerciseMap.get(media.name)
+
+        if (!exerciseId) continue
+
+        const existing = await db
+            .from('exercise_media')
+            .select('id')
+            .eq('exercise_id', exerciseId)
+            .eq('url', media.url)
+            .maybeSingle()
+
+        if (!existing.data) {
+            await db.from('exercise_media').insert({
+                exercise_id: exerciseId,
+                type: media.type,
+                url: media.url,
+                order_index: media.orderIndex,
+            })
+        }
+    }
+
+    // 3. Asegurar perfil administrador de prueba
+    await ensureAdminProfile(db)
+
+    // 4. Insertar rutinas de ejemplo (si se provee un usuario seed)
     if (!seedUserId) {
         console.log(
             '[seed] Ejercicios insertados. No se insertaron rutinas porque no se proporcionó seedUserId.'
@@ -696,6 +758,40 @@ export async function runSeed(
  * Los nombres devueltos coinciden exactamente con los ejercicios insertados
  * en seed.sql para cada día.
  */
+/**
+ * Crea o actualiza el perfil de administrador de seed.
+ * Requiere que exista el usuario auth correspondiente en Supabase.
+ */
+async function ensureAdminProfile(db: DbClient): Promise<void> {
+    const existing = await db
+        .from('profiles')
+        .select('id')
+        .eq('id', ADMIN_USER_ID)
+        .maybeSingle()
+
+    if (existing.data) {
+        await db
+            .from('profiles')
+            .update({ role: 'admin' })
+            .eq('id', ADMIN_USER_ID)
+
+        return
+    }
+
+    const { error } = await db.from('profiles').insert({
+        id: ADMIN_USER_ID,
+        username: 'seed_admin',
+        role: 'admin',
+    })
+
+    if (error) {
+        console.warn(
+            '[seed] No se pudo crear el perfil admin (¿existe el usuario auth?):',
+            error.message
+        )
+    }
+}
+
 function resolveExerciseNamesForDay(
     routineName: string,
     dayName: string,

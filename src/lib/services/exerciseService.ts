@@ -24,7 +24,7 @@ export async function getExerciseById(id: string): Promise<Exercise | null> {
 export async function proposeExercise(
     userId: string,
     name: string,
-    imageUrl?: string
+    category?: string
 ): Promise<Exercise> {
     const db = getServerClient()
 
@@ -41,7 +41,7 @@ export async function proposeExercise(
 
     return exerciseRepo.createExercise(db, {
         name: trimmed,
-        imageUrl,
+        category,
         createdBy: userId,
         status: 'pending',
     })

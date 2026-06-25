@@ -8,7 +8,7 @@
 -- ============================================================
 -- EXTENSIONES
 -- ============================================================
-extension if not exists "pgcrypto" with schema extensions;
+create extension if not exists "pgcrypto" with schema extensions;
 
 -- ============================================================
 -- 1. TABLAS
@@ -34,15 +34,29 @@ create table if not exists public.exercises (
     id uuid primary key default gen_random_uuid(),
     name text not null,
     category text,
-    image_url text,
+    rejection_reason text,
     created_by uuid references public.profiles(id) on delete set null,
-    status text not null default 'pending' check (status in ('pending', 'approved')),
+    status text not null default 'pending' check (status in ('pending', 'approved', 'rejected')),
     created_at timestamptz not null default now(),
     deleted_at timestamptz
 );
 
 -- ------------------------------------------------------------
--- 1.3 routines
+-- 1.3 exercise_media (multimedia normalizada)
+-- ------------------------------------------------------------
+create table if not exists public.exercise_media (
+    id uuid primary key default gen_random_uuid(),
+    exercise_id uuid not null references public.exercises(id) on delete cascade,
+    type text not null check (type in ('image', 'video')),
+    url text not null,
+    thumbnail_url text,
+    order_index integer not null default 0,
+    created_at timestamptz not null default now(),
+    deleted_at timestamptz
+);
+
+-- ------------------------------------------------------------
+-- 1.4 routines
 -- ------------------------------------------------------------
 create table if not exists public.routines (
     id uuid primary key default gen_random_uuid(),
@@ -168,6 +182,8 @@ create index if not exists idx_routine_likes_routine_id on public.routine_likes(
 create index if not exists idx_routine_likes_user_id on public.routine_likes(user_id);
 create index if not exists idx_workout_sessions_user_date on public.workout_sessions(user_id, session_date);
 create index if not exists idx_exercises_category on public.exercises(category) where deleted_at is null;
+create index if not exists idx_exercise_media_exercise_id on public.exercise_media(exercise_id) where deleted_at is null;
+create index if not exists idx_exercise_media_exercise_order on public.exercise_media(exercise_id, order_index) where deleted_at is null;
 
 -- ============================================================
 -- 3. FUNCTIONS (HELPERS)
@@ -307,7 +323,26 @@ create trigger trigger_cascade_soft_delete_routine
     when (new.deleted_at is not null and old.deleted_at is null)
     execute function public.cascade_soft_delete_routine();
 
--- 4.4 Auto-actualizar updated_at en routines, profiles, routine_days y routine_exercises
+-- 4.4 Soft-delete en cascada de exercise_media al soft-deletear un exercise
+create or replace function public.cascade_soft_delete_exercise_media()
+returns trigger as $$
+begin
+    update public.exercise_media
+    set deleted_at = now()
+    where exercise_id = old.id
+      and deleted_at is null;
+
+    return new;
+end;
+$$ language plpgsql;
+
+create trigger trigger_cascade_soft_delete_exercise_media
+    before update of deleted_at on public.exercises
+    for each row
+    when (new.deleted_at is not null and old.deleted_at is null)
+    execute function public.cascade_soft_delete_exercise_media();
+
+-- 4.5 Auto-actualizar updated_at en routines, profiles, routine_days y routine_exercises
 create trigger trigger_set_updated_at_routines
     before update on public.routines
     for each row
@@ -377,7 +412,79 @@ create policy "exercises_update_own_or_admin"
     using ((created_by = auth.uid() or exists (select 1 from public.profiles where id = auth.uid() and role = 'admin' and deleted_at is null)) and deleted_at is null);
 
 -- ------------------------------------------------------------
--- 5.3 routines
+-- 5.3 exercise_media
+-- ------------------------------------------------------------
+-- SELECT: público para ejercicios aprobados; propietario/admin ven los suyos en cualquier estado.
+-- INSERT: propietario de ejercicio pending o admin.
+-- UPDATE/DELETE: propietario mientras está pending o admin.
+alter table public.exercise_media enable row level security;
+
+create policy "exercise_media_select_approved_or_own"
+    on public.exercise_media
+    for select
+    using (
+        deleted_at is null
+        and exists (
+            select 1 from public.exercises e
+            where e.id = exercise_id
+              and e.deleted_at is null
+              and (
+                  e.status = 'approved'
+                  or e.created_by = auth.uid()
+                  or exists (select 1 from public.profiles where id = auth.uid() and role = 'admin' and deleted_at is null)
+              )
+        )
+    );
+
+create policy "exercise_media_insert_own_pending_or_admin"
+    on public.exercise_media
+    for insert
+    with check (
+        exists (
+            select 1 from public.exercises e
+            where e.id = exercise_id
+              and e.deleted_at is null
+              and (
+                  (e.status = 'pending' and e.created_by = auth.uid())
+                  or exists (select 1 from public.profiles where id = auth.uid() and role = 'admin' and deleted_at is null)
+              )
+        )
+    );
+
+create policy "exercise_media_update_own_pending_or_admin"
+    on public.exercise_media
+    for update
+    using (
+        deleted_at is null
+        and exists (
+            select 1 from public.exercises e
+            where e.id = exercise_id
+              and e.deleted_at is null
+              and (
+                  (e.status = 'pending' and e.created_by = auth.uid())
+                  or exists (select 1 from public.profiles where id = auth.uid() and role = 'admin' and deleted_at is null)
+              )
+        )
+    );
+
+create policy "exercise_media_delete_own_pending_or_admin"
+    on public.exercise_media
+    for delete
+    using (
+        deleted_at is null
+        and exists (
+            select 1 from public.exercises e
+            where e.id = exercise_id
+              and e.deleted_at is null
+              and (
+                  (e.status = 'pending' and e.created_by = auth.uid())
+                  or exists (select 1 from public.profiles where id = auth.uid() and role = 'admin' and deleted_at is null)
+              )
+        )
+    );
+
+-- ------------------------------------------------------------
+-- 5.4 routines
 -- ------------------------------------------------------------
 -- Usuarios ven las suyas + las públicas. Solo editan las suyas.
 create policy "routines_select_own_or_public"

@@ -41,12 +41,10 @@ describe('exerciseService', () => {
                 id: 'ex-1',
                 name: 'Bench Press',
                 category: 'chest',
-                muscleGroup: 'pectorals',
                 status: 'approved',
-                imageUrl: null,
+                rejectionReason: null,
                 createdBy: 'admin-1',
-                createdAt: new Date(),
-                updatedAt: new Date(),
+                createdAt: new Date().toISOString(),
                 deletedAt: null,
             }
 
@@ -67,12 +65,10 @@ describe('exerciseService', () => {
                 id: 'ex-new',
                 name: 'New Exercise',
                 category: 'legs',
-                muscleGroup: 'quadriceps',
                 status: 'pending',
-                imageUrl: null,
+                rejectionReason: null,
                 createdBy: 'user-1',
-                createdAt: new Date(),
-                updatedAt: new Date(),
+                createdAt: new Date().toISOString(),
                 deletedAt: null,
             }
 
@@ -91,7 +87,6 @@ describe('exerciseService', () => {
                 expect.anything(),
                 {
                     name: 'New Exercise',
-                    imageUrl: undefined,
                     createdBy: 'user-1',
                     status: 'pending',
                 }
@@ -103,12 +98,10 @@ describe('exerciseService', () => {
                 id: 'ex-new',
                 name: 'New Exercise',
                 category: 'legs',
-                muscleGroup: 'quadriceps',
                 status: 'pending',
-                imageUrl: null,
+                rejectionReason: null,
                 createdBy: 'user-1',
-                createdAt: new Date(),
-                updatedAt: new Date(),
+                createdAt: new Date().toISOString(),
                 deletedAt: null,
             }
 
@@ -133,12 +126,10 @@ describe('exerciseService', () => {
             id: 'ex-1',
             name: 'Pending Exercise',
             category: 'chest',
-            muscleGroup: 'pectorals',
             status: 'pending',
-            imageUrl: null,
+            rejectionReason: null,
             createdBy: 'user-1',
-            createdAt: new Date(),
-            updatedAt: new Date(),
+            createdAt: new Date().toISOString(),
             deletedAt: null,
         }
 
@@ -166,13 +157,12 @@ describe('exerciseService', () => {
 
         it('should throw AuthError if user role is not admin', async () => {
             const regularProfile: Profile = {
-                id: 'profile-1',
-                userId: 'user-1',
+                id: 'user-1',
                 username: 'regular',
                 role: 'user',
                 avatarUrl: null,
-                createdAt: new Date(),
-                updatedAt: new Date(),
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
                 deletedAt: null,
             }
 
@@ -191,12 +181,11 @@ describe('exerciseService', () => {
         it('should approve exercise if user is admin', async () => {
             const adminProfile: Profile = {
                 id: 'admin-1',
-                userId: 'admin-1',
                 username: 'admin',
                 role: 'admin',
                 avatarUrl: null,
-                createdAt: new Date(),
-                updatedAt: new Date(),
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
                 deletedAt: null,
             }
 
@@ -233,12 +222,10 @@ describe('exerciseService', () => {
                     id: 'ex-1',
                     name: 'Bench Press',
                     category: 'chest',
-                    muscleGroup: 'pectorals',
                     status: 'approved',
-                    imageUrl: null,
+                    rejectionReason: null,
                     createdBy: 'admin',
-                    createdAt: new Date(),
-                    updatedAt: new Date(),
+                    createdAt: new Date().toISOString(),
                     deletedAt: null,
                 },
             ]
@@ -270,12 +257,10 @@ describe('exerciseService', () => {
                     id: 'ex-1',
                     name: 'Bench Press',
                     category: 'chest',
-                    muscleGroup: 'pectorals',
                     status: 'approved',
-                    imageUrl: null,
+                    rejectionReason: null,
                     createdBy: 'admin',
-                    createdAt: new Date(),
-                    updatedAt: new Date(),
+                    createdAt: new Date().toISOString(),
                     deletedAt: null,
                 },
             ]

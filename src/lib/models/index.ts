@@ -12,9 +12,20 @@ export interface Exercise {
     id: string
     name: string
     category: string | null
-    imageUrl: string | null
     createdBy: string | null
-    status: 'pending' | 'approved'
+    status: 'pending' | 'approved' | 'rejected'
+    rejectionReason: string | null
+    createdAt: string
+    deletedAt: string | null
+}
+
+export interface ExerciseMedia {
+    id: string
+    exerciseId: string
+    type: 'image' | 'video'
+    url: string
+    thumbnailUrl: string | null
+    orderIndex: number
     createdAt: string
     deletedAt: string | null
 }
